@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import path from 'node:path';
 import { loadConfig, MocklensError } from './config.js';
-import { discoverScreens } from './screens.js';
+import { discoverScreens, validateScreenDevices } from './screens.js';
 import type { Screen } from './screens.js';
 import { launchBrowser } from './browser.js';
 import { runScreenshots } from './screenshot.js';
@@ -9,6 +9,7 @@ import { runValidation, writeReport } from './validate.js';
 import { renderReport } from './report.js';
 import { startViewer } from './viewer.js';
 import { runInit } from './init.js';
+import { runNewScreen } from './new-screen.js';
 import type { Device } from './types.js';
 
 const USAGE = `mocklens — static mobile UI mockup tool
@@ -17,6 +18,7 @@ Usage: mocklens <command> [options]
 
 Commands:
   init         Create mocklens.config.json and starter screens
+  new-screen   Create a device-targeted static HTML screen
   list         List discovered screens and configured devices
   screenshot   Render PNG screenshots for every screen × device
   validate     Check screens for layout problems in a real browser
@@ -26,6 +28,7 @@ Commands:
 Options:
   --config <path>   Path to mocklens.config.json
   --dir <path>      Screens directory for init (default screens)
+  --form-factor <n> Form factor metadata for new-screen (default phone)
   --force           Overwrite scaffold files during init
   --screen <name>   Limit to one screen (repeatable)
   --device <name>   Limit to one device (repeatable)
@@ -36,10 +39,12 @@ Options:
 
 interface ParsedArgs {
   command: string | undefined;
+  commandArgs: string[];
   configPath: string | undefined;
   screenNames: string[];
   deviceNames: string[];
   initDir: string;
+  formFactor: string;
   force: boolean;
   fullPage: boolean;
   port: number;
@@ -49,10 +54,12 @@ interface ParsedArgs {
 function parseArgs(argv: string[]): ParsedArgs {
   const out: ParsedArgs = {
     command: undefined,
+    commandArgs: [],
     configPath: undefined,
     screenNames: [],
     deviceNames: [],
     initDir: 'screens',
+    formFactor: 'phone',
     force: false,
     fullPage: false,
     port: 4173,
@@ -76,6 +83,9 @@ function parseArgs(argv: string[]): ParsedArgs {
         break;
       case '--force':
         out.force = true;
+        break;
+      case '--form-factor':
+        out.formFactor = valueFor(arg);
         break;
       case '--screen':
         out.screenNames.push(valueFor(arg));
@@ -101,8 +111,8 @@ function parseArgs(argv: string[]): ParsedArgs {
         break;
       default:
         if (arg.startsWith('-')) throw new MocklensError(`unknown flag: ${arg}`);
-        if (out.command !== undefined) throw new MocklensError(`unexpected argument: ${arg}`);
-        out.command = arg;
+        if (out.command === undefined) out.command = arg;
+        else out.commandArgs.push(arg);
     }
     i += 1;
   }
@@ -144,6 +154,7 @@ async function main(argv: string[]): Promise<number> {
 
   const cwd = process.cwd();
   if (args.command === 'init') {
+    if (args.commandArgs.length > 0) throw new MocklensError(`unexpected argument: ${args.commandArgs[0]}`);
     console.log(
       runInit({
         cwd,
@@ -157,11 +168,39 @@ async function main(argv: string[]): Promise<number> {
 
   const config = loadConfig(args.configPath, cwd);
 
+  if (args.command === 'new-screen') {
+    if (args.commandArgs.length !== 1) {
+      throw new MocklensError('usage: mocklens new-screen <name> --device <configured-device> [--form-factor <name>]');
+    }
+    if (args.deviceNames.length !== 1) {
+      throw new MocklensError('new-screen requires exactly one --device <configured-device>');
+    }
+    console.log(
+      runNewScreen({
+        cwd,
+        config,
+        name: args.commandArgs[0]!,
+        deviceName: args.deviceNames[0]!,
+        formFactor: args.formFactor,
+      }),
+    );
+    return 0;
+  }
+
+  if (args.commandArgs.length > 0) throw new MocklensError(`unexpected argument: ${args.commandArgs[0]}`);
+
   switch (args.command) {
     case 'list': {
       const screens = discoverScreens(config.screensDir);
+      validateScreenDevices(screens, config.devices.map((device) => device.name));
       console.log(`screens (${screens.length}) in ${path.relative(cwd, config.screensDir) || '.'}:`);
-      for (const s of screens) console.log(`  ${s.name}`);
+      for (const s of screens) {
+        const target = s.metadata.primaryDevice ?? s.metadata.targetDevices.join(',');
+        const details = [target && `device=${target}`, s.metadata.formFactor && `form-factor=${s.metadata.formFactor}`]
+          .filter(Boolean)
+          .join(' ');
+        console.log(`  ${s.name}${details === '' ? '' : ` (${details})`}`);
+      }
       console.log(`devices (${config.devices.length}):`);
       for (const d of config.devices) console.log(`  ${d.name} ${d.width}×${d.height}`);
       return 0;
@@ -170,6 +209,7 @@ async function main(argv: string[]): Promise<number> {
     case 'validate':
     case 'check': {
       const discovered = discoverScreens(config.screensDir);
+      validateScreenDevices(discovered, config.devices.map((device) => device.name));
       if (discovered.length === 0) {
         throw new MocklensError(`no screens found in ${config.screensDir}`);
       }
