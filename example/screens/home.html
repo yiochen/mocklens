@@ -1,0 +1,100 @@
+<!-- GoodPlate — home feed.
+     Demonstrates: header, search, a horizontally scrolling chip row whose
+     off-screen chips are annotated with data-mocklens-ignore="carousel peek",
+     recipe cards, and a fixed bottom nav with matching bottom padding.
+     Expected: passes validation (chip overflow findings are suppressed). -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GoodPlate — Home</title>
+<link rel="stylesheet" href="./shared.css">
+<style>
+  .greeting { font-size: 13px; color: #8b7f70; margin: 0 0 10px; }
+  .search {
+    background: #fff; border-radius: 12px; padding: 11px 14px;
+    font-size: 14px; color: #a09384; box-shadow: 0 1px 4px rgba(60,40,20,.06);
+    margin-bottom: 14px;
+  }
+  /* Full-bleed chip carousel: the next chips peek in from the right edge on
+     purpose, so the row is annotated. The row itself scrolls (overflow-x:
+     auto); the page must not. */
+  .chip-row {
+    display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none;
+    margin: 0 -16px 16px; padding: 2px 16px;
+  }
+  .chip {
+    flex: none; background: #fff; border: 1px solid #eee2d5;
+    border-radius: 999px; padding: 7px 14px; font-size: 13px;
+  }
+  .chip.active { background: #e8552f; border-color: #e8552f; color: #fff; }
+  .section-title { font-size: 16px; margin: 0 0 10px; }
+  .recipe { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+  .thumb {
+    width: 84px; height: 84px; border-radius: 12px; flex: none;
+    display: flex; align-items: center; justify-content: center; font-size: 34px;
+  }
+  .t1 { background: linear-gradient(135deg, #ffe0b2, #ffab91); }
+  .t2 { background: linear-gradient(135deg, #c8e6c9, #80cbc4); }
+  .t3 { background: linear-gradient(135deg, #f8bbd0, #ce93d8); }
+  .t4 { background: linear-gradient(135deg, #b3e5fc, #9fa8da); }
+  .recipe h3 { font-size: 15px; margin: 0 0 4px; }
+  .recipe p { font-size: 12px; color: #8b7f70; margin: 0; }
+  /* room for the fixed bottom nav */
+  .pad-bottom { padding-bottom: 92px; }
+</style>
+</head>
+<body>
+<div class="screen pad-bottom">
+  <div class="appbar"><h1>GoodPlate</h1></div>
+  <p class="greeting">What are we cooking today?</p>
+  <div class="search">🔍&nbsp; Search recipes, ingredients…</div>
+
+  <div class="chip-row" data-mocklens-ignore="carousel peek">
+    <span class="chip active">All</span>
+    <span class="chip">Pasta</span>
+    <span class="chip">Soups</span>
+    <span class="chip">Salads</span>
+    <span class="chip">Desserts</span>
+    <span class="chip">Vegan</span>
+    <span class="chip">Quick</span>
+    <span class="chip">Baking</span>
+  </div>
+
+  <h2 class="section-title">Popular this week</h2>
+
+  <div class="card recipe">
+    <div class="thumb t1">🍜</div>
+    <div>
+      <h3>Weeknight ramen</h3>
+      <p>25 min · easy · 4.8 ★</p>
+    </div>
+  </div>
+  <div class="card recipe">
+    <div class="thumb t2">🥗</div>
+    <div>
+      <h3>Green goddess salad</h3>
+      <p>15 min · vegan · 4.6 ★</p>
+    </div>
+  </div>
+  <div class="card recipe">
+    <div class="thumb t3">🍰</div>
+    <div>
+      <h3>Strawberry shortcake</h3>
+      <p>50 min · dessert · 4.9 ★</p>
+    </div>
+  </div>
+  <div class="card recipe">
+    <div class="thumb t4">🐟</div>
+    <div>
+      <h3>Miso-glazed salmon</h3>
+      <p>30 min · pescatarian · 4.7 ★</p>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <span class="active">Home</span><span>Favorites</span><span>Pantry</span><span>Profile</span>
+</nav>
+</body>
+</html>

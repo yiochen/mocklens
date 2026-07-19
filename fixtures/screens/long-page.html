@@ -1,0 +1,37 @@
+<!-- Demonstrates: a very tall but horizontally clean static page (~2500px),
+     used to verify full-page screenshots capture everything.
+     Expected findings: none on all devices. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Travel guide</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { padding: 16px; }
+  h1 { font-size: 22px; margin: 4px 0 12px; }
+  .section { margin-bottom: 20px; }
+  .section h2 { font-size: 16px; margin: 0 0 8px; }
+  .photo { height: 300px; border-radius: 14px; margin-bottom: 8px; }
+  .p1 { background: linear-gradient(150deg, #8ec5fc, #e0c3fc); }
+  .p2 { background: linear-gradient(150deg, #a1c4fd, #c2e9fb); }
+  .p3 { background: linear-gradient(150deg, #fbc2eb, #a6c1ee); }
+  .p4 { background: linear-gradient(150deg, #84fab0, #8fd3f4); }
+  .p5 { background: linear-gradient(150deg, #ffecd2, #fcb69f); }
+  .p6 { background: linear-gradient(150deg, #d4fc79, #96e6a1); }
+  .section p { font-size: 13px; color: #555; line-height: 1.5; margin: 0 0 6px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <h1>Three days in Lisbon</h1>
+  <div class="section"><h2>Day 1 — Alfama</h2><div class="photo p1"></div><p>Get lost in the oldest quarter, then climb to the castle for sunset.</p></div>
+  <div class="section"><h2>Day 1 — Baixa</h2><div class="photo p2"></div><p>Grid streets, tiled facades, and coffee at Praça do Comércio.</p></div>
+  <div class="section"><h2>Day 2 — Belém</h2><div class="photo p3"></div><p>The monastery, the tower, and custard tarts still warm from the oven.</p></div>
+  <div class="section"><h2>Day 2 — LX Factory</h2><div class="photo p4"></div><p>Old industrial block turned into shops and studios.</p></div>
+  <div class="section"><h2>Day 3 — Sintra</h2><div class="photo p5"></div><p>Palaces in the mist, forty minutes by train.</p></div>
+  <div class="section"><h2>Day 3 — Cascais</h2><div class="photo p6"></div><p>End the trip with dinner by the harbor.</p></div>
+</div>
+</body>
+</html>

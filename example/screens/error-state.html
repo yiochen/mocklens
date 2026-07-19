@@ -1,0 +1,39 @@
+<!-- GoodPlate — pantry, load-failure state.
+     Demonstrates: a static mock of an error message (nothing actually throws —
+     this is the visual state a real error screen would show).
+     Expected: passes validation. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GoodPlate — Pantry</title>
+<link rel="stylesheet" href="./shared.css">
+<style>
+  .error {
+    margin-top: 110px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+  .illustration {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: linear-gradient(150deg, #ece2d5, #dcc9b8);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 54px; margin-bottom: 20px;
+  }
+  .error h2 { font-size: 18px; margin: 0 0 8px; }
+  .error p { font-size: 14px; line-height: 1.5; color: #8b7f70; margin: 0 0 22px; max-width: 260px; }
+  .error .button { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="appbar"><h1>Pantry</h1></div>
+  <div class="error">
+    <div class="illustration">🔌</div>
+    <h2>Couldn't load your pantry</h2>
+    <p>The connection dropped while syncing. Nothing is lost — your list is safe on this device.</p>
+    <a class="button" href="#">Try again</a>
+    <a class="button secondary" href="#">Go back</a>
+  </div>
+</div>
+</body>
+</html>

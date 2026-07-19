@@ -1,0 +1,48 @@
+<!-- Demonstrates: a fixed bottom action bar hiding the final content — the page
+     scrolls and has no bottom padding, so the last line ends up behind the bar.
+     Expected findings: fixed-bottom-cover (warning) naming the covered element. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Activity</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { padding: 16px; }
+  h1 { font-size: 22px; margin: 4px 0 12px; }
+  .row { background: #fff; border-radius: 12px; padding: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; font-size: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .row .amt { font-variant-numeric: tabular-nums; font-weight: 600; }
+  .final { font-size: 13px; color: #666; margin: 16px 0 0; }
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; height: 72px; background: #111; display: flex; align-items: center; justify-content: center; }
+  .bar button { background: #0a5cff; color: #fff; border: 0; border-radius: 10px; padding: 12px 28px; font-size: 15px; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <h1>April activity</h1>
+  <div class="row"><span>Coffee Shop</span><span class="amt">-$4.50</span></div>
+  <div class="row"><span>Grocery Store</span><span class="amt">-$32.10</span></div>
+  <div class="row"><span>Bookstore</span><span class="amt">-$12.00</span></div>
+  <div class="row"><span>Salary</span><span class="amt">+$3,100.00</span></div>
+  <div class="row"><span>Pharmacy</span><span class="amt">-$18.30</span></div>
+  <div class="row"><span>Bus pass</span><span class="amt">-$26.00</span></div>
+  <div class="row"><span>Hardware Store</span><span class="amt">-$41.75</span></div>
+  <div class="row"><span>Restaurant</span><span class="amt">-$58.20</span></div>
+  <div class="row"><span>Electronics</span><span class="amt">-$129.99</span></div>
+  <div class="row"><span>Clothing</span><span class="amt">-$74.50</span></div>
+  <div class="row"><span>Pet supplies</span><span class="amt">-$22.40</span></div>
+  <div class="row"><span>Cinema</span><span class="amt">-$15.00</span></div>
+  <div class="row"><span>Farmers market</span><span class="amt">-$27.65</span></div>
+  <div class="row"><span>Barber</span><span class="amt">-$30.00</span></div>
+  <div class="row"><span>Book club</span><span class="amt">-$9.99</span></div>
+  <div class="row"><span>Plant shop</span><span class="amt">-$16.25</span></div>
+  <div class="row"><span>Museum</span><span class="amt">-$12.50</span></div>
+  <div class="row"><span>Bakery</span><span class="amt">-$7.80</span></div>
+  <div class="row"><span>Tailor</span><span class="amt">-$19.00</span></div>
+  <div class="row"><span>Record store</span><span class="amt">-$24.10</span></div>
+  <p class="final">That's all your activity for April — but this closing line has no room below it, so the fixed button bar covers it.</p>
+</div>
+<div class="bar"><button>Download statement</button></div>
+</body>
+</html>

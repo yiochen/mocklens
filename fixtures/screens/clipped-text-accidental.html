@@ -1,0 +1,28 @@
+<!-- Demonstrates: accidentally clipped text — a paragraph in a fixed-height,
+     overflow-hidden box, so the rest of the sentence is silently cut off.
+     Expected findings: clipped-text (warning, unsuppressed). -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hotel detail</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { padding: 16px; }
+  h1 { font-size: 22px; margin: 4px 0 12px; }
+  .card { background: #fff; border-radius: 14px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card h2 { font-size: 15px; margin: 0 0 6px; }
+  .clamp { height: 44px; overflow: hidden; margin: 0; font-size: 14px; line-height: 1.5; color: #555; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <h1>Hotel Meridian</h1>
+  <div class="card">
+    <h2>About this stay</h2>
+    <p class="clamp">A quiet boutique hotel two blocks from the old market, with a rooftop terrace, complimentary breakfast, and rooms that were renovated last spring — but this description was given a fixed 44px height, so everything after the second line is cut off mid-sentence and the guest never sees it.</p>
+  </div>
+</div>
+</body>
+</html>

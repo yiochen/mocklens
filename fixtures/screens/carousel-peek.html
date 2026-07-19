@@ -1,0 +1,33 @@
+<!-- Demonstrates: intentional carousel peek — a horizontal scroll strip whose
+     next card peeks in from the right edge. The strip is annotated with
+     data-mocklens-ignore="carousel peek"; the document must not scroll.
+     Expected findings: element-overflow-right SUPPRESSED for off-viewport slides;
+     screen passes. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Discover</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { padding: 16px 0 16px 16px; }
+  h1 { font-size: 22px; margin: 4px 12px 12px 0; }
+  .carousel { display: flex; gap: 12px; overflow-x: auto; padding-right: 16px; scrollbar-width: none; }
+  .slide { flex: 0 0 78%; background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .slide h2 { font-size: 15px; margin: 0 0 4px; }
+  .slide p { font-size: 13px; color: #666; margin: 0; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <h1>Discover</h1>
+  <div class="carousel" data-mocklens-ignore="carousel peek">
+    <div class="slide"><h2>Hiking trails</h2><p>Twelve routes within an hour of the city.</p></div>
+    <div class="slide"><h2>Street food</h2><p>The next card peeks in to hint the strip scrolls.</p></div>
+    <div class="slide"><h2>Book clubs</h2><p>Three groups meeting this week.</p></div>
+    <div class="slide"><h2>Live music</h2><p>Small venues, big weekends.</p></div>
+  </div>
+</div>
+</body>
+</html>

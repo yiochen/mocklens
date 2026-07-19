@@ -1,0 +1,29 @@
+<!-- Demonstrates: an unexpected external network dependency — the logo is hotlinked
+     from a CDN instead of bundled locally. Offline it also fails to load.
+     Expected findings: external-request (error) + broken-image (error). -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Checkout</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { padding: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin: 4px 0 14px; }
+  .brand img { width: 36px; height: 36px; }
+  .brand h1 { font-size: 20px; margin: 0; }
+  .card { background: #fff; border-radius: 14px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card p { font-size: 13px; color: #666; margin: 0; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="brand">
+    <img src="https://cdn.example.com/logo.png" alt="Shop logo">
+    <h1>Checkout</h1>
+  </div>
+  <div class="card"><p>The logo is hotlinked from a CDN — mocks must render offline, so it should be a local file.</p></div>
+</div>
+</body>
+</html>

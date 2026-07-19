@@ -1,0 +1,102 @@
+<!-- GoodPlate — recipe detail.
+     Demonstrates: a genuinely LONG screen (~2000px) for full-page screenshots,
+     and a fixed bottom action bar done RIGHT — the content has enough bottom
+     padding that the bar never covers it.
+     Expected: passes validation. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>GoodPlate — Miso-glazed salmon</title>
+<link rel="stylesheet" href="./shared.css">
+<style>
+  .hero {
+    height: 300px; border-radius: 20px; margin-bottom: 16px;
+    background: linear-gradient(150deg, #ffb27d, #e8552f);
+    display: flex; align-items: center; justify-content: center; font-size: 110px;
+  }
+  h1 { font-size: 24px; margin: 0 0 6px; }
+  .meta { display: flex; gap: 14px; font-size: 13px; color: #8b7f70; margin-bottom: 16px; }
+  .intro { font-size: 14px; line-height: 1.55; color: #5c5347; margin: 0 0 16px; }
+  .card { margin-bottom: 14px; }
+  .card h2 { font-size: 16px; margin: 0 0 10px; }
+  .ing { display: flex; justify-content: space-between; font-size: 14px; padding: 7px 0; border-bottom: 1px solid #f4ece2; }
+  .ing:last-child { border-bottom: 0; }
+  .ing .qty { color: #8b7f70; font-variant-numeric: tabular-nums; }
+  .steps { margin: 0; padding-left: 22px; }
+  .steps li { font-size: 14px; line-height: 1.55; margin-bottom: 14px; color: #3c362e; }
+  .nutrition { display: flex; text-align: center; }
+  .nutrition div { flex: 1; }
+  .nutrition b { display: block; font-size: 16px; }
+  .nutrition span { font-size: 11px; color: #8b7f70; }
+  .note { font-size: 13px; line-height: 1.5; color: #5c5347; margin: 0; }
+  .cook-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; height: 76px;
+    background: rgba(255,255,255,.96); border-top: 1px solid #eee2d5;
+    display: flex; align-items: center; justify-content: center;
+  }
+  /* The bar is 76px tall; 120px of bottom padding keeps the last step clear. */
+  .pad-bottom { padding-bottom: 120px; }
+</style>
+</head>
+<body>
+<div class="screen pad-bottom">
+  <div class="hero">🐟</div>
+  <h1>Miso-glazed salmon</h1>
+  <div class="meta"><span>⏱ 30 min</span><span>🍽 2 servings</span><span>📶 easy</span></div>
+  <p class="intro">
+    A weeknight staple: sweet-savory miso glaze, crisp skin, and rice you can
+    start while the fish marinates. Everything happens in one pan.
+  </p>
+
+  <div class="card">
+    <h2>Ingredients</h2>
+    <div class="ing"><span>Salmon fillets</span><span class="qty">2 × 150 g</span></div>
+    <div class="ing"><span>White miso paste</span><span class="qty">2 tbsp</span></div>
+    <div class="ing"><span>Mirin</span><span class="qty">1 tbsp</span></div>
+    <div class="ing"><span>Soy sauce</span><span class="qty">1 tbsp</span></div>
+    <div class="ing"><span>Brown sugar</span><span class="qty">1 tsp</span></div>
+    <div class="ing"><span>Grated ginger</span><span class="qty">1 tsp</span></div>
+    <div class="ing"><span>Neutral oil</span><span class="qty">1 tbsp</span></div>
+    <div class="ing"><span>Spring onions</span><span class="qty">2</span></div>
+    <div class="ing"><span>Sesame seeds</span><span class="qty">1 tsp</span></div>
+    <div class="ing"><span>Short-grain rice</span><span class="qty">180 g</span></div>
+    <div class="ing"><span>Lime</span><span class="qty">½</span></div>
+    <div class="ing"><span>Steamed greens</span><span class="qty">to serve</span></div>
+  </div>
+
+  <div class="card">
+    <h2>Steps</h2>
+    <ol class="steps">
+      <li>Rinse the rice until the water runs clear, then cook it — it will be ready just as the fish comes out of the pan.</li>
+      <li>Whisk the miso, mirin, soy sauce, sugar, and ginger into a smooth glaze in a small bowl.</li>
+      <li>Pat the salmon dry, season lightly, and brush half the glaze over the flesh side of each fillet.</li>
+      <li>Heat the oil in a pan over medium heat. Lay the fillets in skin-side down and cook for 4 minutes without moving them, so the skin crisps.</li>
+      <li>Flip carefully, spoon over the remaining glaze, and cook 2–3 more minutes until the glaze bubbles and the fish flakes at the edges.</li>
+      <li>Rest for 2 minutes. Serve over rice with spring onions, sesame seeds, a squeeze of lime, and the greens on the side.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>Nutrition per serving</h2>
+    <div class="nutrition">
+      <div><b>520</b><span>kcal</span></div>
+      <div><b>38 g</b><span>protein</span></div>
+      <div><b>44 g</b><span>carbs</span></div>
+      <div><b>19 g</b><span>fat</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Chef's note</h2>
+    <p class="note">
+      If your glaze darkens too fast, drop the heat — miso burns quicker than you
+      think. Leftover glaze keeps in the fridge for a week and works on eggplant,
+      chicken, or tofu.
+    </p>
+  </div>
+</div>
+
+<div class="cook-bar"><a class="button" href="#">Start cooking mode</a></div>
+</body>
+</html>

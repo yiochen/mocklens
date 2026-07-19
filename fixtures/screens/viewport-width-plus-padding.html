@@ -1,0 +1,29 @@
+<!-- Demonstrates: the classic "100vw plus padding" mistake — box-sizing:
+     content-box makes the hero 100vw + 48px wide, overflowing every device.
+     Expected findings: document-overflow (error) + element-overflow-right (error). -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weather</title>
+<style>
+  /* note: intentionally NO box-sizing: border-box reset here */
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .hero { box-sizing: content-box; width: 100vw; padding: 24px; color: #fff; background: linear-gradient(160deg, #3a7bd5, #00d2ff); }
+  .hero h1 { margin: 0 0 4px; font-size: 20px; }
+  .hero p { margin: 0; font-size: 14px; opacity: .9; }
+  .screen { padding: 16px; }
+  .card { background: #fff; border-radius: 14px; padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card p { font-size: 13px; color: #666; margin: 0; }
+</style>
+</head>
+<body>
+<div class="hero">
+  <h1>24° and sunny</h1>
+  <p>This hero is width: 100vw plus 24px of padding on each side — 48px too wide.</p>
+</div>
+<div class="screen">
+  <div class="card"><p>Rest of the forecast fits normally.</p></div>
+</div>
+</body>
+</html>

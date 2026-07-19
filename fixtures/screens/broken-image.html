@@ -1,0 +1,29 @@
+<!-- Demonstrates: a broken local image — ./images/does-not-exist.png is missing.
+     Expected findings: broken-image (error). -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Profile — avatar</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { padding: 16px; }
+  .card { background: #fff; border-radius: 14px; padding: 16px; display: flex; gap: 14px; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .avatar { width: 64px; height: 64px; border-radius: 50%; background: #e6e6eb; flex: none; }
+  h1 { font-size: 18px; margin: 0 0 2px; }
+  p { font-size: 13px; color: #666; margin: 0; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="card">
+    <img class="avatar" src="./images/does-not-exist.png" alt="Marta's avatar">
+    <div>
+      <h1>Marta Kowalski</h1>
+      <p>The avatar file was never copied into the mock — everything else is fine.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

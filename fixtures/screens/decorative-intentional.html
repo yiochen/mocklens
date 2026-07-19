@@ -1,0 +1,31 @@
+<!-- Demonstrates: intentional decorative overflow — a blurred background blob
+     bleeds off the right edge on purpose and is annotated with
+     data-mocklens-ignore="decorative background blob". Document scroll is clamped.
+     Expected findings: element-overflow-right SUPPRESSED for the blob; screen passes. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Profile</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { position: relative; padding: 16px; }
+  .blob { position: absolute; top: 30px; right: -90px; width: 240px; height: 240px; border-radius: 50%; filter: blur(2px); background: radial-gradient(circle at 35% 35%, #ffd6e0, #ff9ebb); }
+  .content { position: relative; }
+  h1 { font-size: 22px; margin: 4px 0 12px; }
+  .card { background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card p { font-size: 13px; color: #666; margin: 0; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="blob" data-mocklens-ignore="decorative background blob"></div>
+  <div class="content">
+    <h1>Marta Kowalski</h1>
+    <div class="card"><p>Product designer. The pink blob behind this card is decoration and is allowed to bleed off-screen.</p></div>
+  </div>
+</div>
+</body>
+</html>

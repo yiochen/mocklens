@@ -1,0 +1,27 @@
+<!-- Demonstrates: a visible child pushed off the left edge by a negative margin
+     (document scroll clamped with overflow-x: hidden).
+     Expected findings: element-overflow-left (error), no document-overflow. -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Article</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { overflow-x: hidden; }
+  body { margin: 0; font-family: Georgia, serif; background: #fff; color: #222; }
+  .screen { padding: 16px; }
+  h1 { font-size: 24px; margin: 4px 0 12px; }
+  p { font-size: 15px; line-height: 1.55; }
+  .pull-quote { margin-left: -48px; width: 220px; padding: 12px 16px; border-left: 4px solid #0a5cff; background: #f2f6ff; font-style: italic; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <h1>Designing for small screens</h1>
+  <p>Mobile layouts fail in quiet ways. The most common failure is content that is simply wider than the phone.</p>
+  <div class="pull-quote">“A pull quote with a negative margin, now partly unreadable.”</div>
+  <p>Everything else on this page uses fluid widths and wraps normally.</p>
+</div>
+</body>
+</html>

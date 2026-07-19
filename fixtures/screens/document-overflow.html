@@ -1,0 +1,31 @@
+<!-- Demonstrates: a fixed-width banner (500px) wider than any phone viewport,
+     so the whole document scrolls horizontally.
+     Expected findings: document-overflow (error) + element-overflow-right (error). -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Shop — Sale</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f6f6f8; color: #1c1c1e; }
+  .screen { padding: 16px; }
+  h1 { font-size: 22px; margin: 4px 0 12px; }
+  .wide-banner { width: 500px; border-radius: 14px; padding: 18px; color: #fff; background: linear-gradient(120deg, #ff7a59, #e0447c); margin-bottom: 12px; }
+  .wide-banner h2 { margin: 0 0 4px; font-size: 18px; }
+  .wide-banner p { margin: 0; font-size: 13px; opacity: .9; }
+  .card { background: #fff; border-radius: 14px; padding: 14px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .card p { font-size: 13px; color: #666; margin: 0; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <h1>Spring sale</h1>
+  <div class="wide-banner">
+    <h2>Up to 40% off</h2>
+    <p>This banner was designed on a desktop canvas and hardcoded to 500px.</p>
+  </div>
+  <div class="card"><p>The rest of the screen is fine — only the banner is too wide.</p></div>
+</div>
+</body>
+</html>
