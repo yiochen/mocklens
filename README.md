@@ -11,29 +11,45 @@ mocklens is a **mockup tool, not an app framework**. Mockups need no routing,
 no application state, no backend, no build step. Plain HTML and CSS are
 first-class and sufficient; everything renders offline from `file://`.
 
-## Install & build
+## Install
 
-Requires Node ≥ 22.6 and Playwright's Chromium.
+Requires Node >= 22.6. For one-off use from an existing project:
 
 ```sh
-npm install
-npm run build          # compiles src/ → dist/ (TypeScript, strict)
+npx mocklens init
+npx mocklens check
 
-# only if Chromium is missing (it is verified by the first CLI run):
-npx playwright install chromium
+# if Chromium is missing:
+npm exec playwright install chromium
 ```
 
-The CLI entry point is `dist/cli.js` (`node dist/cli.js …`). `npm link` puts a
-`mocklens` binary on your PATH if you prefer.
+Or add it as a dev dependency and call it from package scripts:
+
+```sh
+npm install --save-dev mocklens
+npm exec mocklens -- init
+npm exec mocklens -- check
+npm exec playwright install chromium
+```
+
+`mocklens` depends on the Playwright package, but browser binaries are installed
+separately. In CI, install Chromium before running screenshot, validate, or
+check commands:
+
+```sh
+npm ci
+npm exec playwright install --with-deps chromium
+npm exec mocklens -- check
+```
 
 ## Quick start
 
 Create a starter mock workspace inside an existing project:
 
 ```sh
-mocklens init              # writes mocklens.config.json and screens/
-mocklens list              # confirms starter screens and devices
-mocklens check             # screenshots + validation
+npx mocklens init              # writes mocklens.config.json and screens/
+npx mocklens list              # confirms starter screens and devices
+npx mocklens check             # screenshots + validation
 ```
 
 Use `mocklens init --dir mocks/mobile` if you want the generated HTML/CSS files
@@ -44,13 +60,13 @@ Try it against the bundled example project (a recipe app, "GoodPlate"):
 
 ```sh
 # 1. Browse the screens in the phone-sized viewer
-node dist/cli.js serve --config example/mocklens.config.json
+npx mocklens serve --config example/mocklens.config.json
 #    → open http://localhost:4173
 
 # 2. Edit a screen, e.g. example/screens/home.html
 
 # 3. Screenshots + validation in one run
-node dist/cli.js check --config example/mocklens.config.json
+npx mocklens check --config example/mocklens.config.json
 
 # 4. Inspect: terminal report, example/.mocklens/report.json,
 #    and example/.mocklens/screenshots/<device>/*.png
@@ -267,10 +283,17 @@ tests/      vitest end-to-end suite driving the real CLI
 ```
 
 ```sh
+npm install
+npm run build   # compiles src/ to dist/ (TypeScript, strict)
 npm test        # builds dist/ via a vitest globalSetup, then runs the suite
                 # (~60s, 31 tests — real Chromium launches)
-npm run build   # tsc
+npm pack --dry-run
 ```
+
+`npm pack` runs `npm run build` first through the `prepack` lifecycle. The
+published package intentionally contains the compiled `dist/` files plus
+package metadata, README, and license; fixtures, tests, examples, and source
+files stay out of the tarball.
 
 Fixture philosophy: one fixture per finding, minimal and readable, with a
 header comment stating what it demonstrates and what it expects. To add one:

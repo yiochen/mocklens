@@ -3,12 +3,32 @@
   "version": "0.1.0",
   "description": "CLI tool for building, viewing, screenshotting, and validating static mobile UI mockups in plain HTML/CSS",
   "type": "module",
+  "keywords": [
+    "mockups",
+    "screenshots",
+    "playwright",
+    "cli",
+    "ui-testing",
+    "mobile"
+  ],
+  "homepage": "https://github.com/yiochen/mocklens#readme",
+  "bugs": {
+    "url": "https://github.com/yiochen/mocklens/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yiochen/mocklens.git"
+  },
+  "files": [
+    "dist"
+  ],
   "bin": {
     "mocklens": "dist/cli.js"
   },
   "scripts": {
     "lint": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
     "test": "vitest run",
     "ci": "npm run lint && npm run build && npm test",
     "mocklens": "npm run build && node dist/cli.js"
@@ -17,9 +37,11 @@
     "node": ">=22.6.0"
   },
   "license": "MIT",
+  "dependencies": {
+    "playwright": "^1.61.1"
+  },
   "devDependencies": {
     "@types/node": "^24.0.0",
-    "playwright": "^1.61.1",
     "typescript": "^5.8.0",
     "vitest": "^3.2.0"
   }
