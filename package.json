@@ -7,8 +7,10 @@
     "mocklens": "dist/cli.js"
   },
   "scripts": {
+    "lint": "tsc -p tsconfig.json",
     "build": "tsc -p tsconfig.build.json",
     "test": "vitest run",
+    "ci": "npm run lint && npm run build && npm test",
     "mocklens": "npm run build && node dist/cli.js"
   },
   "engines": {

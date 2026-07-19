@@ -28,6 +28,18 @@ The CLI entry point is `dist/cli.js` (`node dist/cli.js â€¦`). `npm link` puts a
 
 ## Quick start
 
+Create a starter mock workspace inside an existing project:
+
+```sh
+mocklens init              # writes mocklens.config.json and screens/
+mocklens list              # confirms starter screens and devices
+mocklens check             # screenshots + validation
+```
+
+Use `mocklens init --dir mocks/mobile` if you want the generated HTML/CSS files
+under a custom folder. Existing scaffold files are never overwritten unless you
+pass `--force`.
+
 Try it against the bundled example project (a recipe app, "GoodPlate"):
 
 ```sh
@@ -74,6 +86,7 @@ output lands in `example/.mocklens/`. Inside `example/` you can drop the flag â€
 ## CLI reference
 
 ```
+mocklens init      [--dir <path>] [--force]
 mocklens list
 mocklens screenshot [--full-page] [--screen <name>]... [--device <name>]...
 mocklens validate   [--screen <name>]... [--device <name>]...
@@ -86,6 +99,11 @@ Global flags: `--config <path>` (default `./mocklens.config.json`),
 `--screen`/`--device` (repeatable filters; unknown names are an error),
 `--full-page` (also capture full-page PNGs), `--help`.
 
+`init` also accepts `--dir <path>` for the generated screen folder (default
+`screens`) and `--force` to replace existing scaffold files. With `--config`,
+`init` writes the config at that path and resolves `--dir` relative to the
+config file's directory.
+
 Exit codes:
 
 | Code | Meaning |
@@ -97,6 +115,11 @@ Exit codes:
 Expected errors print a single clear line (never a stack trace).
 
 ## Configuration
+
+Run `mocklens init` to generate this file plus starter screens and
+agent-facing notes. `mocklens init --dir mocks/mobile` writes the screen HTML,
+shared CSS, and screen README under `mocks/mobile/` and records that path in the
+config.
 
 `mocklens.config.json` (all keys optional; shown with defaults):
 
