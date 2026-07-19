@@ -99,11 +99,11 @@ describe('init command', () => {
 });
 
 describe('new-screen command', () => {
-  it('creates device-aware variants with standalone metadata and the selected template', () => {
+  it('creates device-aware variants with standalone metadata and a blank scaffold', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
 
-    const created = runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14', '--template', 'list']);
+    const created = runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14']);
     expect(created.status).toBe(0);
     expect(created.stdout).toContain('screens/settings.iphone-14.html');
 
@@ -112,9 +112,9 @@ describe('new-screen command', () => {
     expect(html).toContain('<meta name="mocklens:form-factor" content="phone">');
     expect(html).toContain('<meta name="mocklens:primary-device" content="iphone-14">');
     expect(html).toContain('<meta name="mocklens:viewport" content="390x844">');
-    expect(html).toContain('First item');
+    expect(html).toContain('Start designing this screen.');
 
-    const second = runCli(cwd, ['new-screen', 'settings', '--device', 'pixel-7', '--template', 'detail']);
+    const second = runCli(cwd, ['new-screen', 'settings', '--device', 'pixel-7']);
     expect(second.status).toBe(0);
     expect(fs.existsSync(path.join(cwd, 'screens/settings.pixel-7.html'))).toBe(true);
 
@@ -124,25 +124,17 @@ describe('new-screen command', () => {
     expect(list.stdout).toContain('settings.pixel-7 (device=pixel-7 form-factor=phone)');
   });
 
-  it('supports every documented template and nested screen paths', () => {
+  it('supports nested screen paths', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
-    for (const template of ['blank', 'list', 'detail', 'empty', 'error', 'dialog-open']) {
-      const created = runCli(cwd, [
-        'new-screen',
-        `states/${template}`,
-        '--device',
-        'iphone-se',
-        '--template',
-        template,
-      ]);
-      expect(created.status, `${template}: ${created.stderr}`).toBe(0);
-      const html = fs.readFileSync(path.join(cwd, `screens/states/${template}.iphone-se.html`), 'utf8');
-      expect(html).toContain('href="../shared.css"');
-    }
+    const created = runCli(cwd, ['new-screen', 'states/empty', '--device', 'iphone-se']);
+    expect(created.status, created.stderr).toBe(0);
+    const html = fs.readFileSync(path.join(cwd, 'screens/states/empty.iphone-se.html'), 'utf8');
+    expect(html).toContain('href="../shared.css"');
+    expect(html).toContain('Start designing this screen.');
   });
 
-  it('refuses duplicates and gives actionable errors for devices and templates', () => {
+  it('refuses duplicates and gives actionable device errors', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
     expect(runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14']).status).toBe(0);
@@ -155,9 +147,16 @@ describe('new-screen command', () => {
     expect(device.status).toBe(2);
     expect(device.stderr).toContain('configured devices: iphone-se, iphone-14, pixel-7');
 
-    const template = runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14', '--template', 'wizard']);
-    expect(template.status).toBe(2);
-    expect(template.stderr).toContain('available: blank, list, detail, empty, error, dialog-open');
+    const removedTemplateFlag = runCli(cwd, [
+      'new-screen',
+      'settings',
+      '--device',
+      'iphone-14',
+      '--template',
+      'list',
+    ]);
+    expect(removedTemplateFlag.status).toBe(2);
+    expect(removedTemplateFlag.stderr).toContain('unknown flag: --template');
   });
 
   it('rejects unknown devices declared in screen metadata', () => {

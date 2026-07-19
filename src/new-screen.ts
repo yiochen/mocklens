@@ -3,16 +3,12 @@ import path from 'node:path';
 import { MocklensError } from './config.js';
 import type { Config, Device } from './types.js';
 
-export const SCREEN_TEMPLATES = ['blank', 'list', 'detail', 'empty', 'error', 'dialog-open'] as const;
-export type ScreenTemplate = (typeof SCREEN_TEMPLATES)[number];
-
 export interface NewScreenOptions {
   cwd: string;
   config: Config;
   name: string;
   deviceName: string;
   formFactor: string;
-  template: string;
 }
 
 const SAFE_SEGMENT = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -44,24 +40,7 @@ function titleFor(name: string): string {
     .join(' ');
 }
 
-function bodyFor(template: ScreenTemplate, title: string): string {
-  switch (template) {
-    case 'blank':
-      return `<main class="screen stack">\n  <header class="topbar"><h1>${title}</h1></header>\n  <section class="card"><p class="muted">Start designing this screen.</p></section>\n</main>`;
-    case 'list':
-      return `<main class="screen stack">\n  <header class="topbar"><h1>${title}</h1><button class="icon-button" aria-label="Add item">+</button></header>\n  <section class="stack">\n    <article class="card"><strong>First item</strong><p class="muted">Supporting information</p></article>\n    <article class="card"><strong>Second item</strong><p class="muted">Supporting information</p></article>\n    <article class="card"><strong>Third item</strong><p class="muted">Supporting information</p></article>\n  </section>\n</main>`;
-    case 'detail':
-      return `<main class="screen stack">\n  <header class="topbar"><h1>${title}</h1></header>\n  <section class="card stack"><h2>Item details</h2><p class="muted">Describe the selected item and its important attributes.</p></section>\n  <a class="button" href="#">Primary action</a>\n</main>`;
-    case 'empty':
-      return `<main class="screen centered">\n  <section class="stack centered-content"><div class="state-mark">+</div><h1>${title}</h1><p class="muted">Nothing is here yet.</p><a class="button" href="#">Create one</a></section>\n</main>`;
-    case 'error':
-      return `<main class="screen centered">\n  <section class="stack centered-content"><div class="state-mark error">!</div><h1>Something went wrong</h1><p class="muted">Check your connection and try again.</p><a class="button" href="#">Try again</a></section>\n</main>`;
-    case 'dialog-open':
-      return `<main class="screen stack" aria-hidden="true">\n  <header class="topbar"><h1>${title}</h1></header><section class="card"><p class="muted">Background content</p></section>\n</main>\n<div class="scrim"></div>\n<section class="dialog card" role="dialog" aria-modal="true" aria-labelledby="dialog-title">\n  <h2 id="dialog-title">Confirm action</h2><p class="muted">This is a static open-dialog state.</p><div class="dialog-actions"><a href="#" class="button secondary">Cancel</a><a href="#" class="button">Confirm</a></div>\n</section>`;
-  }
-}
-
-function screenHtml(name: string, device: Device, formFactor: string, template: ScreenTemplate, cssHref: string): string {
+function screenHtml(name: string, device: Device, formFactor: string, cssHref: string): string {
   const title = titleFor(name);
   return `<!doctype html>
 <html lang="en">
@@ -76,17 +55,13 @@ function screenHtml(name: string, device: Device, formFactor: string, template: 
 <link rel="stylesheet" href="${cssHref}">
 <style>
   h1, h2, p { margin: 0; }
-  .centered { min-height: 100vh; display: grid; place-items: center; text-align: center; }
-  .centered-content { justify-items: center; max-width: 300px; }
-  .state-mark { width: 72px; height: 72px; border-radius: 22px; display: grid; place-items: center; background: var(--soft); color: var(--primary); font-size: 30px; font-weight: 800; }
-  .state-mark.error { background: #fbe9e5; color: #a33b28; }
-  .scrim { position: fixed; inset: 0; background: rgba(20, 24, 28, 0.5); }
-  .dialog { position: fixed; left: 20px; right: 20px; top: 50%; transform: translateY(-50%); display: grid; gap: 14px; }
-  .dialog-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 </style>
 </head>
 <body>
-${bodyFor(template, title)}
+<main class="screen stack">
+  <header class="topbar"><h1>${title}</h1></header>
+  <section class="card"><p class="muted">Start designing this screen.</p></section>
+</main>
 </body>
 </html>
 `;
@@ -102,12 +77,6 @@ export function runNewScreen(options: NewScreenOptions): string {
     );
   }
   safeMetadataValue(device.name, 'configured device name');
-  if (!SCREEN_TEMPLATES.includes(options.template as ScreenTemplate)) {
-    throw new MocklensError(
-      `unknown template: ${options.template} — available: ${SCREEN_TEMPLATES.join(', ')}`,
-    );
-  }
-
   const relativeFile = `${name}.${device.name}.html`;
   const file = path.resolve(options.config.screensDir, ...relativeFile.split('/'));
   if (fs.existsSync(file)) {
@@ -125,7 +94,7 @@ export function runNewScreen(options: NewScreenOptions): string {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(
     file,
-    screenHtml(name, device, formFactor, options.template as ScreenTemplate, cssHref),
+    screenHtml(name, device, formFactor, cssHref),
     { encoding: 'utf8', flag: 'wx' },
   );
 

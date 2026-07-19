@@ -9,7 +9,7 @@ import { runValidation, writeReport } from './validate.js';
 import { renderReport } from './report.js';
 import { startViewer } from './viewer.js';
 import { runInit } from './init.js';
-import { runNewScreen, SCREEN_TEMPLATES } from './new-screen.js';
+import { runNewScreen } from './new-screen.js';
 import type { Device } from './types.js';
 
 const USAGE = `mocklens — static mobile UI mockup tool
@@ -28,7 +28,6 @@ Commands:
 Options:
   --config <path>   Path to mocklens.config.json
   --dir <path>      Screens directory for init (default screens)
-  --template <name> Screen template for new-screen (${SCREEN_TEMPLATES.join(', ')})
   --form-factor <n> Form factor metadata for new-screen (default phone)
   --force           Overwrite scaffold files during init
   --screen <name>   Limit to one screen (repeatable)
@@ -45,7 +44,6 @@ interface ParsedArgs {
   screenNames: string[];
   deviceNames: string[];
   initDir: string;
-  template: string;
   formFactor: string;
   force: boolean;
   fullPage: boolean;
@@ -61,7 +59,6 @@ function parseArgs(argv: string[]): ParsedArgs {
     screenNames: [],
     deviceNames: [],
     initDir: 'screens',
-    template: 'blank',
     formFactor: 'phone',
     force: false,
     fullPage: false,
@@ -86,9 +83,6 @@ function parseArgs(argv: string[]): ParsedArgs {
         break;
       case '--force':
         out.force = true;
-        break;
-      case '--template':
-        out.template = valueFor(arg);
         break;
       case '--form-factor':
         out.formFactor = valueFor(arg);
@@ -176,7 +170,7 @@ async function main(argv: string[]): Promise<number> {
 
   if (args.command === 'new-screen') {
     if (args.commandArgs.length !== 1) {
-      throw new MocklensError('usage: mocklens new-screen <name> --device <configured-device> [--template <name>]');
+      throw new MocklensError('usage: mocklens new-screen <name> --device <configured-device> [--form-factor <name>]');
     }
     if (args.deviceNames.length !== 1) {
       throw new MocklensError('new-screen requires exactly one --device <configured-device>');
@@ -188,7 +182,6 @@ async function main(argv: string[]): Promise<number> {
         name: args.commandArgs[0]!,
         deviceName: args.deviceNames[0]!,
         formFactor: args.formFactor,
-        template: args.template,
       }),
     );
     return 0;

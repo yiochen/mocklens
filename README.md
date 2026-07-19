@@ -48,7 +48,7 @@ Create a starter mock workspace inside an existing project:
 
 ```sh
 npx mocklens init              # writes mocklens.config.json and screens/
-npx mocklens new-screen settings --device iphone-14 --template blank
+npx mocklens new-screen settings --device iphone-14
 npx mocklens list              # confirms starter screens and devices
 npx mocklens check             # screenshots + validation
 ```
@@ -108,7 +108,7 @@ output lands in `example/.mocklens/`. Inside `example/` you can drop the flag â€
 
 ```
 mocklens init      [--dir <path>] [--force]
-mocklens new-screen <name> --device <name> [--template <name>] [--form-factor <name>]
+mocklens new-screen <name> --device <name> [--form-factor <name>]
 mocklens list
 mocklens screenshot [--full-page] [--screen <name>]... [--device <name>]...
 mocklens validate   [--screen <name>]... [--device <name>]...
@@ -127,14 +127,14 @@ Global flags: `--config <path>` (default `./mocklens.config.json`),
 config file's directory.
 
 `new-screen` creates `<name>.<device>.html` and never overwrites an existing
-file. The device must be present in `mocklens.config.json`. Available templates
-are `blank`, `list`, `detail`, `empty`, `error`, and `dialog-open`; the default
-is `blank`. `--form-factor` defaults to `phone`. Names, devices, and form
-factors use lowercase kebab-case, and names may contain nested path segments:
+file. The device must be present in `mocklens.config.json`. It generates a
+neutral blank scaffold for agents to design freely. `--form-factor` defaults
+to `phone`. Names, devices, and form factors use lowercase kebab-case, and
+names may contain nested path segments:
 
 ```sh
-mocklens new-screen settings --device iphone-14 --template blank
-mocklens new-screen states/no-results --device pixel-7 --template empty
+mocklens new-screen settings --device iphone-14
+mocklens new-screen states/no-results --device pixel-7
 ```
 
 Generated heads include metadata that both humans and agents can inspect:
