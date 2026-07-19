@@ -48,6 +48,7 @@ Create a starter mock workspace inside an existing project:
 
 ```sh
 npx mocklens init              # writes mocklens.config.json and screens/
+npx mocklens new-screen settings --device iphone-14 --template blank
 npx mocklens list              # confirms starter screens and devices
 npx mocklens check             # screenshots + validation
 ```
@@ -86,6 +87,10 @@ output lands in `example/.mocklens/`. Inside `example/` you can drop the flag �
   state, dialog open…). Discovered recursively under `screensDir`; the screen
   name is the relative path without `.html` (`home`, `states/empty`). Files and
   directories starting with `_` or `.` are skipped (partials, drafts).
+- **Screen variant** — generated files use `<screen>.<device>.html`, such as
+  `settings.iphone-14.html`, so the target is visible without opening config.
+  `mocklens:*` metadata in the document head records the form factor, primary
+  device, target devices, and exact primary viewport.
 - **Device** — a named viewport size from the config (`iphone-14 390×844`).
   Every command runs screen × device.
 - **`screenshot`** — deterministic PNGs per screen × device at
@@ -103,6 +108,7 @@ output lands in `example/.mocklens/`. Inside `example/` you can drop the flag �
 
 ```
 mocklens init      [--dir <path>] [--force]
+mocklens new-screen <name> --device <name> [--template <name>] [--form-factor <name>]
 mocklens list
 mocklens screenshot [--full-page] [--screen <name>]... [--device <name>]...
 mocklens validate   [--screen <name>]... [--device <name>]...
@@ -120,6 +126,29 @@ Global flags: `--config <path>` (default `./mocklens.config.json`),
 `init` writes the config at that path and resolves `--dir` relative to the
 config file's directory.
 
+`new-screen` creates `<name>.<device>.html` and never overwrites an existing
+file. The device must be present in `mocklens.config.json`. Available templates
+are `blank`, `list`, `detail`, `empty`, `error`, and `dialog-open`; the default
+is `blank`. `--form-factor` defaults to `phone`. Names, devices, and form
+factors use lowercase kebab-case, and names may contain nested path segments:
+
+```sh
+mocklens new-screen settings --device iphone-14 --template blank
+mocklens new-screen states/no-results --device pixel-7 --template empty
+```
+
+Generated heads include metadata that both humans and agents can inspect:
+
+```html
+<meta name="mocklens:form-factor" content="phone">
+<meta name="mocklens:primary-device" content="iphone-14">
+<meta name="mocklens:target-devices" content="iphone-14">
+<meta name="mocklens:viewport" content="390x844">
+```
+
+`list`, `screenshot`, `validate`, and `check` reject metadata that refers to an
+unknown configured device and explain whether to update the config or the HTML.
+
 Exit codes:
 
 | Code | Meaning |
@@ -136,6 +165,12 @@ Run `mocklens init` to generate this file plus starter screens and
 agent-facing notes. `mocklens init --dir mocks/mobile` writes the screen HTML,
 shared CSS, and screen README under `mocks/mobile/` and records that path in the
 config.
+
+Starter screens target `iphone-14` and follow the same suffix and metadata
+convention. To create another device variant, use `new-screen` rather than
+removing the suffix or copying a file with stale metadata. Agents should keep
+the filename, `mocklens:*` tags, and configured device in sync, then run
+`mocklens list` and `mocklens check --screen <name.device> --device <device>`.
 
 `mocklens.config.json` (all keys optional; shown with defaults):
 

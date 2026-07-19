@@ -37,9 +37,9 @@ describe('init command', () => {
     for (const rel of [
       'mocklens.config.json',
       'screens/shared.css',
-      'screens/home.html',
-      'screens/detail.html',
-      'screens/empty-state.html',
+      'screens/home.iphone-14.html',
+      'screens/detail.iphone-14.html',
+      'screens/empty-state.iphone-14.html',
       'screens/README.md',
     ]) {
       expect(fs.existsSync(path.join(cwd, rel)), rel).toBe(true);
@@ -61,7 +61,7 @@ describe('init command', () => {
     const cwd = tempProject();
     const init = runCli(cwd, ['init', '--dir', 'mocks/mobile']);
     expect(init.status).toBe(0);
-    expect(fs.existsSync(path.join(cwd, 'mocks/mobile/home.html'))).toBe(true);
+    expect(fs.existsSync(path.join(cwd, 'mocks/mobile/home.iphone-14.html'))).toBe(true);
     const config = JSON.parse(fs.readFileSync(path.join(cwd, 'mocklens.config.json'), 'utf8')) as {
       screensDir: string;
     };
@@ -71,23 +71,23 @@ describe('init command', () => {
   it('refuses to overwrite existing scaffold files by default', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
-    fs.writeFileSync(path.join(cwd, 'screens', 'home.html'), 'custom home', 'utf8');
+    fs.writeFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'custom home', 'utf8');
 
     const second = runCli(cwd, ['init']);
     expect(second.status).toBe(2);
     expect(second.stderr).toContain('init would overwrite existing file(s)');
-    expect(fs.readFileSync(path.join(cwd, 'screens', 'home.html'), 'utf8')).toBe('custom home');
+    expect(fs.readFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'utf8')).toBe('custom home');
   });
 
   it('overwrites scaffold files when --force is passed', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
-    fs.writeFileSync(path.join(cwd, 'screens', 'home.html'), 'custom home', 'utf8');
+    fs.writeFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'custom home', 'utf8');
 
     const forced = runCli(cwd, ['init', '--force']);
     expect(forced.status).toBe(0);
     expect(forced.stdout).toContain('mocklens init updated a starter workspace');
-    expect(fs.readFileSync(path.join(cwd, 'screens', 'home.html'), 'utf8')).toContain('Launch Board');
+    expect(fs.readFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'utf8')).toContain('Launch Board');
   });
 
   it('rejects unsafe screen directories', () => {
@@ -95,5 +95,84 @@ describe('init command', () => {
     const init = runCli(cwd, ['init', '--dir', '../outside']);
     expect(init.status).toBe(2);
     expect(init.stderr).toContain('--dir must stay inside the config file directory');
+  });
+});
+
+describe('new-screen command', () => {
+  it('creates device-aware variants with standalone metadata and the selected template', () => {
+    const cwd = tempProject();
+    expect(runCli(cwd, ['init']).status).toBe(0);
+
+    const created = runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14', '--template', 'list']);
+    expect(created.status).toBe(0);
+    expect(created.stdout).toContain('screens/settings.iphone-14.html');
+
+    const file = path.join(cwd, 'screens/settings.iphone-14.html');
+    const html = fs.readFileSync(file, 'utf8');
+    expect(html).toContain('<meta name="mocklens:form-factor" content="phone">');
+    expect(html).toContain('<meta name="mocklens:primary-device" content="iphone-14">');
+    expect(html).toContain('<meta name="mocklens:viewport" content="390x844">');
+    expect(html).toContain('First item');
+
+    const second = runCli(cwd, ['new-screen', 'settings', '--device', 'pixel-7', '--template', 'detail']);
+    expect(second.status).toBe(0);
+    expect(fs.existsSync(path.join(cwd, 'screens/settings.pixel-7.html'))).toBe(true);
+
+    const list = runCli(cwd, ['list']);
+    expect(list.status).toBe(0);
+    expect(list.stdout).toContain('settings.iphone-14 (device=iphone-14 form-factor=phone)');
+    expect(list.stdout).toContain('settings.pixel-7 (device=pixel-7 form-factor=phone)');
+  });
+
+  it('supports every documented template and nested screen paths', () => {
+    const cwd = tempProject();
+    expect(runCli(cwd, ['init']).status).toBe(0);
+    for (const template of ['blank', 'list', 'detail', 'empty', 'error', 'dialog-open']) {
+      const created = runCli(cwd, [
+        'new-screen',
+        `states/${template}`,
+        '--device',
+        'iphone-se',
+        '--template',
+        template,
+      ]);
+      expect(created.status, `${template}: ${created.stderr}`).toBe(0);
+      const html = fs.readFileSync(path.join(cwd, `screens/states/${template}.iphone-se.html`), 'utf8');
+      expect(html).toContain('href="../shared.css"');
+    }
+  });
+
+  it('refuses duplicates and gives actionable errors for devices and templates', () => {
+    const cwd = tempProject();
+    expect(runCli(cwd, ['init']).status).toBe(0);
+    expect(runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14']).status).toBe(0);
+
+    const duplicate = runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14']);
+    expect(duplicate.status).toBe(2);
+    expect(duplicate.stderr).toContain('screen already exists');
+
+    const device = runCli(cwd, ['new-screen', 'settings', '--device', 'unknown-phone']);
+    expect(device.status).toBe(2);
+    expect(device.stderr).toContain('configured devices: iphone-se, iphone-14, pixel-7');
+
+    const template = runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14', '--template', 'wizard']);
+    expect(template.status).toBe(2);
+    expect(template.stderr).toContain('available: blank, list, detail, empty, error, dialog-open');
+  });
+
+  it('rejects unknown devices declared in screen metadata', () => {
+    const cwd = tempProject();
+    expect(runCli(cwd, ['init']).status).toBe(0);
+    const file = path.join(cwd, 'screens/home.iphone-14.html');
+    const html = fs.readFileSync(file, 'utf8').replace(
+      'content="iphone-14">\n<meta name="mocklens:target-devices" content="iphone-14"',
+      'content="future-phone">\n<meta name="mocklens:target-devices" content="future-phone"',
+    );
+    fs.writeFileSync(file, html, 'utf8');
+
+    const list = runCli(cwd, ['list']);
+    expect(list.status).toBe(2);
+    expect(list.stderr).toContain('references unknown device(s): future-phone');
+    expect(list.stderr).toContain('add them to mocklens.config.json or update the screen');
   });
 });

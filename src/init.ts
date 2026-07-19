@@ -165,6 +165,10 @@ const homeHtml = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mocklens:form-factor" content="phone">
+<meta name="mocklens:primary-device" content="iphone-14">
+<meta name="mocklens:target-devices" content="iphone-14">
+<meta name="mocklens:viewport" content="390x844">
 <title>Mocklens Starter - Home</title>
 <link rel="stylesheet" href="./shared.css">
 <style>
@@ -231,6 +235,10 @@ const detailHtml = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mocklens:form-factor" content="phone">
+<meta name="mocklens:primary-device" content="iphone-14">
+<meta name="mocklens:target-devices" content="iphone-14">
+<meta name="mocklens:viewport" content="390x844">
 <title>Mocklens Starter - Detail</title>
 <link rel="stylesheet" href="./shared.css">
 <style>
@@ -282,8 +290,8 @@ const detailHtml = `<!doctype html>
   </section>
 
   <section class="actions">
-    <a class="button" href="./home.html">Preview home</a>
-    <a class="button secondary" href="./empty-state.html">Empty state</a>
+    <a class="button" href="./home.iphone-14.html">Preview home</a>
+    <a class="button secondary" href="./empty-state.iphone-14.html">Empty state</a>
   </section>
 </main>
 </body>
@@ -295,6 +303,10 @@ const emptyStateHtml = `<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mocklens:form-factor" content="phone">
+<meta name="mocklens:primary-device" content="iphone-14">
+<meta name="mocklens:target-devices" content="iphone-14">
+<meta name="mocklens:viewport" content="390x844">
 <title>Mocklens Starter - Empty State</title>
 <link rel="stylesheet" href="./shared.css">
 <style>
@@ -326,7 +338,7 @@ const emptyStateHtml = `<!doctype html>
     <div class="mark">+</div>
     <h1>No mock screens yet</h1>
     <p class="muted">Add independent HTML files for loading, error, empty, and success states.</p>
-    <a class="button" href="./home.html">Start from home</a>
+    <a class="button" href="./home.iphone-14.html">Start from home</a>
   </section>
 </main>
 </body>
@@ -339,7 +351,9 @@ This folder contains static mobile UI mockups. Each HTML file is an independent 
 
 - Keep screens plain HTML/CSS with local assets only.
 - Link \`./shared.css\` for shared tokens and base components.
-- Duplicate a screen when modeling another state such as loading, empty, error, or dialog-open.
+- Name variants \`<screen>.<device>.html\`; use \`mocklens new-screen <name> --device <device>\` instead of copying boilerplate.
+- Keep the generated \`mocklens:*\` metadata in the document head accurate. Device names must exist in \`mocklens.config.json\`.
+- Use \`--template blank|list|detail|empty|error|dialog-open\` to start from a common static state.
 - Run \`mocklens list\` to confirm discovery and \`mocklens check\` before handoff.
 - If overflow is intentional, add \`data-mocklens-ignore="short reason"\` to the element.
 `;
@@ -349,9 +363,9 @@ function scaffoldFiles(configFile: string, screensDir: string): ScaffoldFile[] {
   return [
     { path: configFile, contents: configJson(screensDir) },
     { path: path.join(screenRoot, 'shared.css'), contents: sharedCss },
-    { path: path.join(screenRoot, 'home.html'), contents: homeHtml },
-    { path: path.join(screenRoot, 'detail.html'), contents: detailHtml },
-    { path: path.join(screenRoot, 'empty-state.html'), contents: emptyStateHtml },
+    { path: path.join(screenRoot, 'home.iphone-14.html'), contents: homeHtml },
+    { path: path.join(screenRoot, 'detail.iphone-14.html'), contents: detailHtml },
+    { path: path.join(screenRoot, 'empty-state.iphone-14.html'), contents: emptyStateHtml },
     { path: path.join(screenRoot, 'README.md'), contents: guidanceMd },
   ];
 }
@@ -385,7 +399,7 @@ Files:
 ${created}
 
 Next steps:
-  1. Edit ${relScreens}/home.html, detail.html, and empty-state.html for your product.
+  1. Edit the device-aware starter screens in ${relScreens} for your product.
   2. Customize ${relConfig} if you want different devices, output, or screen folders.
   3. Run mocklens list to confirm discovery.
   4. Run mocklens check to capture screenshots and validate layout.
