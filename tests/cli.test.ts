@@ -114,9 +114,6 @@ beforeAll(() => {
   fullRun = runCli(['validate']);
   report = readJson<Report>('report.json');
 
-  shotRun = runCli(['screenshot', '--full-page']);
-  manifest = readJson<Manifest>('screenshots/manifest.json');
-
   expect(filteredRun.status).toBe(1);
 }, 600_000);
 
@@ -257,6 +254,11 @@ describe('valid screens pass', () => {
 });
 
 describe('screenshots for every screen × device', () => {
+  beforeAll(() => {
+    shotRun = runCli(['screenshot', '--full-page']);
+    manifest = readJson<Manifest>('screenshots/manifest.json');
+  }, 600_000);
+
   it('screenshot --full-page exits 0', () => {
     expect(shotRun.status).toBe(0);
   });

@@ -8,6 +8,7 @@ import { runScreenshots } from './screenshot.js';
 import { runValidation, writeReport } from './validate.js';
 import { renderReport } from './report.js';
 import { startViewer } from './viewer.js';
+import { runInit } from './init.js';
 import type { Device } from './types.js';
 
 const USAGE = `mocklens — static mobile UI mockup tool
@@ -15,6 +16,7 @@ const USAGE = `mocklens — static mobile UI mockup tool
 Usage: mocklens <command> [options]
 
 Commands:
+  init         Create mocklens.config.json and starter screens
   list         List discovered screens and configured devices
   screenshot   Render PNG screenshots for every screen × device
   validate     Check screens for layout problems in a real browser
@@ -23,6 +25,8 @@ Commands:
 
 Options:
   --config <path>   Path to mocklens.config.json
+  --dir <path>      Screens directory for init (default screens)
+  --force           Overwrite scaffold files during init
   --screen <name>   Limit to one screen (repeatable)
   --device <name>   Limit to one device (repeatable)
   --full-page       Also capture full-page screenshots
@@ -35,6 +39,8 @@ interface ParsedArgs {
   configPath: string | undefined;
   screenNames: string[];
   deviceNames: string[];
+  initDir: string;
+  force: boolean;
   fullPage: boolean;
   port: number;
   help: boolean;
@@ -46,6 +52,8 @@ function parseArgs(argv: string[]): ParsedArgs {
     configPath: undefined,
     screenNames: [],
     deviceNames: [],
+    initDir: 'screens',
+    force: false,
     fullPage: false,
     port: 4173,
     help: false,
@@ -62,6 +70,12 @@ function parseArgs(argv: string[]): ParsedArgs {
     switch (arg) {
       case '--config':
         out.configPath = valueFor(arg);
+        break;
+      case '--dir':
+        out.initDir = valueFor(arg);
+        break;
+      case '--force':
+        out.force = true;
         break;
       case '--screen':
         out.screenNames.push(valueFor(arg));
@@ -129,6 +143,18 @@ async function main(argv: string[]): Promise<number> {
   }
 
   const cwd = process.cwd();
+  if (args.command === 'init') {
+    console.log(
+      runInit({
+        cwd,
+        configPath: args.configPath,
+        screensDir: args.initDir,
+        force: args.force,
+      }),
+    );
+    return 0;
+  }
+
   const config = loadConfig(args.configPath, cwd);
 
   switch (args.command) {
