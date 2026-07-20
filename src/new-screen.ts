@@ -6,7 +6,7 @@ import type { Config, Device } from './types.js';
 export interface NewScreenOptions {
   cwd: string;
   config: Config;
-  name: string;
+  names: string[];
   deviceName: string;
   formFactor: string;
 }
@@ -68,7 +68,11 @@ function screenHtml(name: string, device: Device, formFactor: string, cssHref: s
 }
 
 export function runNewScreen(options: NewScreenOptions): string {
-  const name = normalizedName(options.name);
+  const names = options.names.map(normalizedName);
+  const duplicates = names.filter((name, index) => names.indexOf(name) !== index);
+  if (duplicates.length > 0) {
+    throw new MocklensError(`duplicate screen name(s): ${[...new Set(duplicates)].join(', ')}`);
+  }
   const formFactor = safeMetadataValue(options.formFactor, '--form-factor');
   const device = options.config.devices.find((candidate) => candidate.name === options.deviceName);
   if (device === undefined) {
@@ -77,28 +81,41 @@ export function runNewScreen(options: NewScreenOptions): string {
     );
   }
   safeMetadataValue(device.name, 'configured device name');
-  const relativeFile = `${name}.${device.name}.html`;
-  const file = path.resolve(options.config.screensDir, ...relativeFile.split('/'));
-  if (fs.existsSync(file)) {
-    throw new MocklensError(`screen already exists: ${path.relative(options.cwd, file)} — choose another name or device`);
-  }
-
   const sharedCss = path.join(options.config.screensDir, 'shared.css');
   if (!fs.existsSync(sharedCss)) {
     throw new MocklensError(
       `shared stylesheet not found: ${path.relative(options.cwd, sharedCss)} — run mocklens init or create shared.css first`,
     );
   }
-  let cssHref = path.relative(path.dirname(file), sharedCss).split(path.sep).join('/');
-  if (!cssHref.startsWith('.')) cssHref = `./${cssHref}`;
-  fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(
-    file,
-    screenHtml(name, device, formFactor, cssHref),
-    { encoding: 'utf8', flag: 'wx' },
-  );
+  const planned = names.map((name) => {
+    const relativeFile = `${name}.${device.name}.html`;
+    const file = path.resolve(options.config.screensDir, ...relativeFile.split('/'));
+    let cssHref = path.relative(path.dirname(file), sharedCss).split(path.sep).join('/');
+    if (!cssHref.startsWith('.')) cssHref = `./${cssHref}`;
+    return { name, relativeFile, file, cssHref };
+  });
+  const conflicts = planned.filter((item) => fs.existsSync(item.file));
+  if (conflicts.length > 0) {
+    throw new MocklensError(
+      `screen file(s) already exist: ${conflicts.map((item) => path.relative(options.cwd, item.file)).join(', ')} — no files created`,
+    );
+  }
 
-  const relative = path.relative(options.cwd, file);
-  const screenName = relativeFile.slice(0, -'.html'.length);
-  return `created ${relative}\n\nNext steps:\n  1. Edit ${relative}.\n  2. Run mocklens check --screen ${screenName} --device ${device.name}.`;
+  for (const item of planned) {
+    fs.mkdirSync(path.dirname(item.file), { recursive: true });
+    fs.writeFileSync(item.file, screenHtml(item.name, device, formFactor, item.cssHref), {
+      encoding: 'utf8',
+      flag: 'wx',
+    });
+  }
+
+  const created = planned.map((item) => `  - ${path.relative(options.cwd, item.file)}`).join('\n');
+  const filters = planned.map((item) => `--screen ${item.relativeFile.slice(0, -'.html'.length)}`).join(' ');
+  return `MOCKLENS CREATED ${planned.length} SCREEN${planned.length === 1 ? '' : 'S'}
+
+Files:
+${created}
+
+Primary target: ${device.name} (${device.width}×${device.height}, ${formFactor})
+Next: mocklens check ${filters} --device ${device.name}`;
 }

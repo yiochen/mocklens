@@ -1,0 +1,5 @@
+interface:
+  display_name: "Mocklens Design Loop"
+  short_description: "Iterate static UI mockups with Mocklens"
+  brand_color: "#256D5A"
+  default_prompt: "Use $mocklens-design to design and iterate polished static UI mockups with Mocklens."

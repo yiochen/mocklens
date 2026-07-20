@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { MocklensError, DEFAULT_DEVICES } from './config.js';
+import { MocklensError, DEFAULT_DEVICES, loadConfig } from './config.js';
+import type { Config } from './types.js';
 
 export interface InitOptions {
   cwd: string;
@@ -40,6 +41,30 @@ function configJson(screensDir: string): string {
     null,
     2,
   )}\n`;
+}
+
+function effectiveConfigJson(configFile: string, config: Config): string {
+  const baseDir = path.dirname(configFile);
+  const relative = (value: string): string => path.relative(baseDir, value).split(path.sep).join('/') || '.';
+  return `${JSON.stringify(
+    {
+      screensDir: relative(config.screensDir),
+      outDir: relative(config.outDir),
+      fullPage: config.fullPage,
+      devices: config.devices,
+      allowedExternalHosts: config.allowedExternalHosts,
+    },
+    null,
+    2,
+  )}\n`;
+}
+
+function resolvedWorkspace(cwd: string, config: Config): string {
+  const rel = (value: string): string => path.relative(cwd, value) || '.';
+  return `Resolved workspace:
+  config: ${rel(config.configFile)}
+  screensDir: ${rel(config.screensDir)}
+  outDir: ${rel(config.outDir)}`;
 }
 
 const sharedCss = `* { box-sizing: border-box; }
@@ -160,191 +185,6 @@ body {
 }
 `;
 
-const homeHtml = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="mocklens:form-factor" content="phone">
-<meta name="mocklens:primary-device" content="iphone-14">
-<meta name="mocklens:target-devices" content="iphone-14">
-<meta name="mocklens:viewport" content="390x844">
-<title>Mocklens Starter - Home</title>
-<link rel="stylesheet" href="./shared.css">
-<style>
-  .hero {
-    background: linear-gradient(135deg, #256d5a, #1c5147);
-    color: #fff;
-    border-radius: 8px;
-    padding: 18px;
-  }
-  .hero p { margin: 8px 0 0; color: rgba(255,255,255,0.78); }
-  .metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .metric strong { display: block; font-size: 24px; margin-bottom: 4px; }
-  .item { display: flex; align-items: center; gap: 12px; }
-  .swatch { width: 44px; height: 44px; border-radius: 8px; flex: none; }
-  .s1 { background: #f4b860; }
-  .s2 { background: #86b6f6; }
-  .s3 { background: #d98ba6; }
-  .item h2 { margin: 0 0 3px; font-size: 15px; }
-  .item p { margin: 0; font-size: 13px; }
-</style>
-</head>
-<body>
-<main class="screen with-bottom-nav stack">
-  <header class="topbar">
-    <h1>Launch Board</h1>
-    <div class="icon-button" aria-label="Notifications">!</div>
-  </header>
-
-  <section class="hero">
-    <strong>Today</strong>
-    <p>Review the key states before handing this UI to an app builder.</p>
-  </section>
-
-  <section class="metric-row">
-    <div class="card metric"><strong>12</strong><span class="muted">Open tasks</span></div>
-    <div class="card metric"><strong>3</strong><span class="muted">Ready screens</span></div>
-  </section>
-
-  <section class="stack">
-    <article class="card item">
-      <div class="swatch s1"></div>
-      <div><h2>Morning review</h2><p class="muted">Check spacing, empty states, and text fit.</p></div>
-    </article>
-    <article class="card item">
-      <div class="swatch s2"></div>
-      <div><h2>Detail handoff</h2><p class="muted">Keep each visual state in its own HTML file.</p></div>
-    </article>
-    <article class="card item">
-      <div class="swatch s3"></div>
-      <div><h2>Validation pass</h2><p class="muted">Run mocklens check after edits.</p></div>
-    </article>
-  </section>
-</main>
-
-<nav class="bottom-nav">
-  <span class="active">Home</span><span>Details</span><span>Empty</span>
-</nav>
-</body>
-</html>
-`;
-
-const detailHtml = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="mocklens:form-factor" content="phone">
-<meta name="mocklens:primary-device" content="iphone-14">
-<meta name="mocklens:target-devices" content="iphone-14">
-<meta name="mocklens:viewport" content="390x844">
-<title>Mocklens Starter - Detail</title>
-<link rel="stylesheet" href="./shared.css">
-<style>
-  .summary { display: grid; gap: 8px; }
-  .summary h2 { margin: 0; font-size: 20px; }
-  .summary p { margin: 0; line-height: 1.45; }
-  .steps { display: grid; gap: 10px; }
-  .step { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
-  .num {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--soft);
-    color: var(--primary);
-    display: grid;
-    place-items: center;
-    font-weight: 800;
-  }
-  .step h3 { margin: 2px 0 3px; font-size: 15px; }
-  .step p { margin: 0; font-size: 13px; line-height: 1.35; }
-  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-</style>
-</head>
-<body>
-<main class="screen stack">
-  <header class="topbar">
-    <h1>Project Detail</h1>
-    <div class="icon-button" aria-label="More options">...</div>
-  </header>
-
-  <section class="card summary">
-    <h2>Static mock workflow</h2>
-    <p class="muted">Use this screen for dense content, detail pages, and common action clusters.</p>
-  </section>
-
-  <section class="card steps">
-    <div class="step">
-      <div class="num">1</div>
-      <div><h3>Duplicate a screen</h3><p class="muted">Create one file per visual state instead of adding app routing.</p></div>
-    </div>
-    <div class="step">
-      <div class="num">2</div>
-      <div><h3>Keep assets local</h3><p class="muted">Bundle images next to the screen so checks work offline.</p></div>
-    </div>
-    <div class="step">
-      <div class="num">3</div>
-      <div><h3>Validate frequently</h3><p class="muted">Fix overflow, broken images, and runtime errors before handoff.</p></div>
-    </div>
-  </section>
-
-  <section class="actions">
-    <a class="button" href="./home.iphone-14.html">Preview home</a>
-    <a class="button secondary" href="./empty-state.iphone-14.html">Empty state</a>
-  </section>
-</main>
-</body>
-</html>
-`;
-
-const emptyStateHtml = `<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="mocklens:form-factor" content="phone">
-<meta name="mocklens:primary-device" content="iphone-14">
-<meta name="mocklens:target-devices" content="iphone-14">
-<meta name="mocklens:viewport" content="390x844">
-<title>Mocklens Starter - Empty State</title>
-<link rel="stylesheet" href="./shared.css">
-<style>
-  .empty {
-    min-height: calc(100vh - 32px);
-    display: grid;
-    place-items: center;
-    text-align: center;
-  }
-  .panel { display: grid; gap: 14px; justify-items: center; }
-  .mark {
-    width: 82px;
-    height: 82px;
-    border-radius: 24px;
-    background: #e7f0ec;
-    color: var(--primary);
-    display: grid;
-    place-items: center;
-    font-size: 34px;
-    font-weight: 900;
-  }
-  h1 { margin: 0; font-size: 22px; line-height: 1.15; }
-  p { margin: 0; line-height: 1.45; }
-</style>
-</head>
-<body>
-<main class="screen empty">
-  <section class="panel">
-    <div class="mark">+</div>
-    <h1>No mock screens yet</h1>
-    <p class="muted">Add independent HTML files for loading, error, empty, and success states.</p>
-    <a class="button" href="./home.iphone-14.html">Start from home</a>
-  </section>
-</main>
-</body>
-</html>
-`;
-
 const guidanceMd = `# Mocklens Screens
 
 This folder contains static mobile UI mockups. Each HTML file is an independent screen or state.
@@ -362,9 +202,6 @@ function scaffoldFiles(configFile: string, screensDir: string): ScaffoldFile[] {
   return [
     { path: configFile, contents: configJson(screensDir) },
     { path: path.join(screenRoot, 'shared.css'), contents: sharedCss },
-    { path: path.join(screenRoot, 'home.iphone-14.html'), contents: homeHtml },
-    { path: path.join(screenRoot, 'detail.iphone-14.html'), contents: detailHtml },
-    { path: path.join(screenRoot, 'empty-state.iphone-14.html'), contents: emptyStateHtml },
     { path: path.join(screenRoot, 'README.md'), contents: guidanceMd },
   ];
 }
@@ -374,6 +211,20 @@ export function runInit(options: InitOptions): string {
     options.configPath !== undefined
       ? path.resolve(options.cwd, options.configPath)
       : path.join(options.cwd, 'mocklens.config.json');
+  if (fs.existsSync(configFile) && !options.force) {
+    const config = loadConfig(path.relative(options.cwd, configFile), options.cwd);
+    const relConfig = path.relative(options.cwd, configFile) || path.basename(configFile);
+    return `MOCKLENS ALREADY INITIALIZED
+
+Config: ${relConfig}
+${effectiveConfigJson(configFile, config)}
+${resolvedWorkspace(options.cwd, config)}
+
+No files changed.
+
+Workspace: 0 screen files are required; create screens with mocklens new-screen <name>... --device <device>.`;
+  }
+
   const screensDir = normalizeScreensDir(options.screensDir);
   const files = scaffoldFiles(configFile, screensDir);
   const conflicts = files.filter((f) => fs.existsSync(f.path)).map((f) => path.relative(options.cwd, f.path));
@@ -392,15 +243,18 @@ export function runInit(options: InitOptions): string {
   const relConfig = path.relative(options.cwd, configFile) || path.basename(configFile);
   const relScreens = path.relative(options.cwd, path.join(path.dirname(configFile), screensDir)) || '.';
   const created = files.map((f) => `  - ${path.relative(options.cwd, f.path)}`).join('\n');
-  return `mocklens init ${options.force ? 'updated' : 'created'} a starter workspace
+  const config = loadConfig(path.relative(options.cwd, configFile), options.cwd);
+  return `MOCKLENS INITIALIZED
 
-Files:
+${options.force ? 'Replaced' : 'Created'} init-owned files:
 ${created}
 
-Next steps:
-  1. Edit the device-aware starter screens in ${relScreens} for your product.
-  2. Customize ${relConfig} if you want different devices, output, or screen folders.
-  3. Run mocklens list to confirm discovery.
-  4. Run mocklens check to capture screenshots and validate layout.
+Config: ${relConfig}
+${effectiveConfigJson(configFile, config)}
+${resolvedWorkspace(options.cwd, config)}
+
+Workspace: ${relScreens} contains shared.css and README.md; no HTML screens were created.
+
+Next: mocklens new-screen <name>... --device iphone-14
 `;
 }

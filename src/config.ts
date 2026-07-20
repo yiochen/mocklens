@@ -91,6 +91,8 @@ export function loadConfig(configPath: string | undefined, cwd: string): Config 
   }
 
   return {
+    configFile: file,
+    baseDir,
     screensDir: path.resolve(baseDir, screensDir),
     outDir: path.resolve(baseDir, outDir),
     fullPage,

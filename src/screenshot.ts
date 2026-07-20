@@ -6,7 +6,7 @@ import { round1 } from './types.js';
 import type { Screen } from './screens.js';
 import { openScreenPage } from './browser.js';
 
-interface ManifestEntry {
+export interface ManifestEntry {
   screen: string;
   device: string;
   viewport: { width: number; height: number };
@@ -25,7 +25,7 @@ export async function runScreenshots(
   screens: Screen[],
   devices: Device[],
   fullPage: boolean,
-): Promise<void> {
+): Promise<ManifestEntry[]> {
   const shotsDir = path.join(config.outDir, 'screenshots');
   fs.mkdirSync(shotsDir, { recursive: true });
   const manifest: ManifestEntry[] = [];
@@ -69,4 +69,5 @@ export async function runScreenshots(
   const manifestFile = path.join(shotsDir, 'manifest.json');
   fs.writeFileSync(manifestFile, JSON.stringify({ version: 1, screenshots: manifest }, null, 2) + '\n');
   console.log(`wrote ${path.relative(cwd, manifestFile)}`);
+  return manifest;
 }

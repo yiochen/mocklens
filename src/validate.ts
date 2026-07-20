@@ -39,6 +39,7 @@ interface RawElement {
   clipScroll: number;
   clipClient: number;
   isBar: boolean;
+  isOverlay: boolean;
 }
 
 interface RawBrokenImage {
@@ -65,7 +66,24 @@ interface RawBarCover {
   ignore: string | null;
   coveredSelector: string;
   coveredText: string;
-  overlap: number;
+  coveredTag: string;
+  coveredId: string;
+  coveredClasses: string[];
+  coveredRect: RawRect;
+  overlapWidth: number;
+  overlapHeight: number;
+  scrollX: number;
+  scrollY: number;
+  phase: 'initial' | 'end';
+}
+
+export interface ValidationRunOptions {
+  command: 'validate' | 'check';
+  allScreens: Screen[];
+  allDevices: Device[];
+  requestedScreens: string[];
+  requestedDevices: string[];
+  screenshotPaths?: Map<string, string>;
 }
 
 // ---------------------------------------------------------------------------
@@ -192,9 +210,17 @@ function scanPage(tol: number): RawScan {
       }
     }
 
+    const fixedOrSticky = cs.position === 'fixed' || cs.position === 'sticky';
+    const identity = `${el.id} ${Array.from(el.classList).join(' ')}`.toLowerCase();
+    const modalLike =
+      el.matches('dialog, [role="dialog"], [aria-modal="true"]') ||
+      el.querySelector('dialog, [role="dialog"], [aria-modal="true"]') !== null ||
+      /(^|[\s_-])(modal|dialog|backdrop)([\s_-]|$)/.test(identity);
+    const decorative =
+      cs.pointerEvents === 'none' || el.getAttribute('aria-hidden') === 'true' || el.getAttribute('role') === 'presentation';
     const isBar =
-      (cs.position === 'fixed' || cs.position === 'sticky') &&
-      r.bottom >= ih - tol &&
+      fixedOrSticky &&
+      r.bottom >= ih - 32 &&
       r.width >= iw * 0.4;
 
     elements.push({
@@ -214,6 +240,7 @@ function scanPage(tol: number): RawScan {
       clipScroll,
       clipClient,
       isBar,
+      isOverlay: fixedOrSticky && !modalLike && !decorative && r.width * r.height >= 100,
     });
   }
 
@@ -248,8 +275,8 @@ function scanPage(tol: number): RawScan {
  * find content hidden behind them. Bars are re-located by the selector built
  * in scanPage. Helpers are duplicated because evaluate serializes functions.
  */
-function scanBarCovers(args: { tol: number; selectors: string[] }): (RawBarCover | null)[] {
-  const { tol, selectors } = args;
+function scanBarCovers(args: { tol: number; selectors: string[]; phase: 'initial' | 'end' }): (RawBarCover | null)[] {
+  const { tol, selectors, phase } = args;
   const SKIP = new Set([
     'HTML', 'HEAD', 'BODY', 'SCRIPT', 'STYLE', 'LINK', 'META', 'TITLE', 'BASE', 'TEMPLATE', 'NOSCRIPT',
   ]);
@@ -259,7 +286,7 @@ function scanBarCovers(args: { tol: number; selectors: string[] }): (RawBarCover
     'BLOCKQUOTE', 'FIGCAPTION', 'DT', 'DD', 'SUMMARY', 'LEGEND', 'OPTION', 'INPUT', 'TEXTAREA',
   ]);
   const scrollingEl = document.scrollingElement ?? document.documentElement;
-  window.scrollTo(0, scrollingEl.scrollHeight);
+  window.scrollTo(0, phase === 'end' ? scrollingEl.scrollHeight : 0);
   const body = document.body;
 
   const isVisible = (el: Element): boolean => {
@@ -314,6 +341,14 @@ function scanBarCovers(args: { tol: number; selectors: string[] }): (RawBarCover
     return false;
   };
 
+  const isMeaningful = (el: Element): boolean => {
+    if (el.matches('input, select, textarea, button, a[href]')) return true;
+    if (el instanceof HTMLImageElement) {
+      return el.alt.trim() !== '' && el.getAttribute('aria-hidden') !== 'true';
+    }
+    return isTextBearer(el) && collapseText(el) !== '';
+  };
+
   return selectors.map((sel): RawBarCover | null => {
     let bar: Element | null = null;
     try {
@@ -323,27 +358,43 @@ function scanBarCovers(args: { tol: number; selectors: string[] }): (RawBarCover
     }
     if (bar === null || !isVisible(bar)) return null;
     const br = bar.getBoundingClientRect();
-    let best: { el: Element; overlap: number } | null = null;
+    let best: { el: Element; width: number; height: number } | null = null;
     for (const el of Array.from(document.querySelectorAll('*'))) {
       if (SKIP.has(el.tagName)) continue;
       if (el === bar || bar.contains(el) || el.contains(bar)) continue;
-      if (!isVisible(el) || !isTextBearer(el)) continue;
+      if (!isVisible(el) || !isMeaningful(el)) continue;
       const r = el.getBoundingClientRect();
       const vOverlap = Math.min(r.bottom, br.bottom) - Math.max(r.top, br.top);
       const hOverlap = Math.min(r.right, br.right) - Math.max(r.left, br.left);
-      if (vOverlap > 4 && hOverlap > 0 && (best === null || vOverlap > best.overlap)) {
-        best = { el, overlap: vOverlap };
+      if (vOverlap <= 4 || hOverlap <= 0) continue;
+      const hitX = Math.max(0, Math.min(window.innerWidth - 1, Math.max(r.left, br.left) + hOverlap / 2));
+      const hitY = Math.max(0, Math.min(window.innerHeight - 1, Math.max(r.top, br.top) + vOverlap / 2));
+      const stack = document.elementsFromPoint(hitX, hitY);
+      const barIndex = stack.indexOf(bar);
+      const victimIndex = stack.indexOf(el);
+      if (barIndex < 0 || (victimIndex >= 0 && barIndex > victimIndex)) continue;
+      if (best === null || vOverlap * hOverlap > best.width * best.height) {
+        best = { el, width: hOverlap, height: vOverlap };
       }
     }
     if (best === null) return null;
-    const winner: { el: Element; overlap: number } = best;
+    const winner: { el: Element; width: number; height: number } = best;
+    const wr = winner.el.getBoundingClientRect();
     return {
       barSelector: sel,
       barRect: { x: br.x, y: br.y, width: br.width, height: br.height },
       ignore: ignoreReasonOf(bar),
       coveredSelector: selectorOf(winner.el),
       coveredText: collapseText(winner.el),
-      overlap: winner.overlap,
+      coveredTag: winner.el.tagName.toLowerCase(),
+      coveredId: winner.el.id,
+      coveredClasses: Array.from(winner.el.classList),
+      coveredRect: { x: wr.x, y: wr.y, width: wr.width, height: wr.height },
+      overlapWidth: winner.width,
+      overlapHeight: winner.height,
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+      phase,
     };
   });
 }
@@ -390,6 +441,8 @@ async function validateScreen(
   config: Config,
   screen: Screen,
   device: Device,
+  source: string,
+  screenshot: string | null,
 ): Promise<ScreenReport> {
   const { page, context, events } = await openScreenPage(browser, screen.file, device, 1);
   try {
@@ -443,6 +496,9 @@ async function validateScreen(
           (top.length > 0 ? ` — likely offenders: ${top.join(', ')}` : ''),
         suggestion:
           'Find and fix the elements wider than the viewport (fixed widths, 100vw plus padding, absolutely positioned elements). Only clamp overflow-x at the root when the overflow is purely decorative.',
+        element: rightOffenders.find((e) => e.ignore === null) !== undefined
+          ? elementInfo(rightOffenders.find((e) => e.ignore === null)!)
+          : undefined,
       });
     }
 
@@ -538,25 +594,65 @@ async function validateScreen(
       pushPageError(`console error: ${ce.text}`, ce.url !== '' ? `${ce.text} (at ${ce.url})` : ce.text);
     }
 
-    // 7. fixed/sticky bottom bar covering content at the end of the page
-    const barSelectors = scan.elements.filter((e) => e.isBar).map((e) => e.selector);
-    if (barSelectors.length > 0 && scan.docScrollHeight > scan.innerHeight + 50) {
-      const covers = await page.evaluate(scanBarCovers, { tol: TOL, selectors: barSelectors });
-      await page.evaluate(() => window.scrollTo(0, 0));
-      for (const cover of covers) {
-        if (cover === null) continue;
-        const barEl = scan.elements.find((e) => e.selector === cover.barSelector);
-        const { suppressed, suffix } = ignoreSuffix(cover.ignore);
-        findings.push({
-          type: 'fixed-bottom-cover',
-          severity: 'warning',
-          suppressed,
-          message: `fixed/sticky bottom bar covers content when scrolled to the end${suffix}`,
-          suggestion: `Add padding-bottom (at least the bar's height, ${round1(cover.barRect.height)}px) to the page or scroll container so trailing content clears the fixed bar.`,
-          element: barEl !== undefined ? elementInfo(barEl) : undefined,
-          detail: `covers ${cover.coveredSelector} — "${cover.coveredText}" (overlap ${round1(cover.overlap)}px)`,
-        });
-      }
+    // 7. fixed/sticky overlays covering meaningful controls, text, amounts,
+    //    or images. Bottom bars are checked at the end of the page; other
+    //    overlays are checked initially and at max scroll.
+    const overlayElements = scan.elements.filter((e) => e.isOverlay);
+    const barSelectors = overlayElements.filter((e) => e.isBar).map((e) => e.selector);
+    const freeSelectors = overlayElements.filter((e) => !e.isBar).map((e) => e.selector);
+    const initial =
+      freeSelectors.length === 0
+        ? []
+        : await page.evaluate(scanBarCovers, { tol: TOL, selectors: freeSelectors, phase: 'initial' as const });
+    const endingSelectors = [...barSelectors, ...freeSelectors];
+    const ending =
+      endingSelectors.length === 0
+        ? []
+        : await page.evaluate(scanBarCovers, { tol: TOL, selectors: endingSelectors, phase: 'end' as const });
+    await page.evaluate(() => window.scrollTo(0, 0));
+
+    const endKeys = new Set(
+      ending.filter((cover): cover is RawBarCover => cover !== null).map((cover) => `${cover.barSelector}\0${cover.coveredSelector}`),
+    );
+    const covers = [...initial, ...ending].filter((cover): cover is RawBarCover => cover !== null);
+    const seenCover = new Set<string>();
+    for (const cover of covers) {
+      const pair = `${cover.barSelector}\0${cover.coveredSelector}`;
+      if (seenCover.has(pair)) continue;
+      seenCover.add(pair);
+      const overlay = overlayElements.find((e) => e.selector === cover.barSelector);
+      const shortPage = scan.docScrollHeight <= scan.innerHeight + 1;
+      const permanent = shortPage || cover.phase === 'end' || endKeys.has(pair);
+      const isBottomBar = overlay?.isBar === true;
+      const { suppressed, suffix } = ignoreSuffix(cover.ignore);
+      findings.push({
+        type: isBottomBar ? 'fixed-bottom-cover' : 'fixed-overlay-cover',
+        severity: permanent ? 'error' : 'warning',
+        suppressed,
+        message: permanent
+          ? `fixed/sticky overlay makes meaningful content inaccessible${suffix}`
+          : `fixed/sticky overlay crowds meaningful content initially, but it is reachable by scrolling${suffix}`,
+        suggestion: isBottomBar
+          ? `Reserve bottom space (at least ${round1(cover.barRect.height)}px) in the page or scroll container so trailing content clears the bar.`
+          : 'Move or resize the overlay, reposition the covered content, or reserve layout space so the two do not overlap.',
+        element: overlay !== undefined ? elementInfo(overlay) : undefined,
+        coveredElement: elementInfo({
+          selector: cover.coveredSelector,
+          tag: cover.coveredTag,
+          id: cover.coveredId,
+          classes: cover.coveredClasses,
+          text: cover.coveredText,
+          rect: cover.coveredRect,
+        }),
+        overlap: {
+          width: round1(cover.overlapWidth),
+          height: round1(cover.overlapHeight),
+          area: round1(cover.overlapWidth * cover.overlapHeight),
+          scrollX: round1(cover.scrollX),
+          scrollY: round1(cover.scrollY),
+        },
+        detail: `overlay ${cover.barSelector} covers ${cover.coveredSelector} — "${cover.coveredText}" at ${cover.phase}`,
+      });
     }
 
     // Deterministic order: by type, then selector, then message.
@@ -575,6 +671,8 @@ async function validateScreen(
 
     return {
       name: screen.name,
+      source,
+      screenshot,
       device: device.name,
       viewport: { width: round1(device.width), height: round1(device.height) },
       ok: errorCount === 0,
@@ -592,19 +690,40 @@ export async function runValidation(
   config: Config,
   screens: Screen[],
   devices: Device[],
+  options: ValidationRunOptions,
 ): Promise<Report> {
   const reports: ScreenReport[] = [];
   for (const screen of screens) {
     for (const device of devices) {
-      reports.push(await validateScreen(browser, config, screen, device));
+      const source = path.relative(config.baseDir, screen.file).split(path.sep).join('/');
+      const screenshot = options.screenshotPaths?.get(`${screen.name}\0${device.name}`) ?? null;
+      reports.push(await validateScreen(browser, config, screen, device, source, screenshot));
     }
   }
   return {
-    version: 1,
+    version: 2,
     tool: 'mocklens',
+    scope: {
+      command: options.command,
+      coverage: options.requestedScreens.length === 0 && options.requestedDevices.length === 0 ? 'FULL' : 'FILTERED',
+      config: path.relative(config.baseDir, config.configFile).split(path.sep).join('/') || path.basename(config.configFile),
+      requested: { screens: options.requestedScreens, devices: options.requestedDevices },
+      configured: {
+        uniqueScreens: options.allScreens.length,
+        devices: options.allDevices.length,
+        combinations: options.allScreens.length * options.allDevices.length,
+      },
+      covered: {
+        uniqueScreens: screens.length,
+        devices: devices.length,
+        combinations: reports.length,
+      },
+    },
     screens: reports,
     summary: {
-      screens: reports.length,
+      uniqueScreens: screens.length,
+      devices: devices.length,
+      combinations: reports.length,
       errors: reports.reduce((n, r) => n + r.counts.error, 0),
       warnings: reports.reduce((n, r) => n + r.counts.warning, 0),
       suppressed: reports.reduce((n, r) => n + r.counts.suppressed, 0),
