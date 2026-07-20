@@ -28,18 +28,17 @@ function tempProject(): string {
 }
 
 describe('init command', () => {
-  it('creates a starter workspace that list can use', () => {
+  it('creates config and shared files without inventing screens', () => {
     const cwd = tempProject();
     const init = runCli(cwd, ['init']);
     expect(init.status).toBe(0);
-    expect(init.stdout).toContain('mocklens init created a starter workspace');
+    expect(init.stdout).toContain('MOCKLENS INITIALIZED');
+    expect(init.stdout).toContain('"iphone-14"');
+    expect(init.stdout).toContain('no HTML screens were created');
 
     for (const rel of [
       'mocklens.config.json',
       'screens/shared.css',
-      'screens/home.iphone-14.html',
-      'screens/detail.iphone-14.html',
-      'screens/empty-state.iphone-14.html',
       'screens/README.md',
     ]) {
       expect(fs.existsSync(path.join(cwd, rel)), rel).toBe(true);
@@ -52,42 +51,53 @@ describe('init command', () => {
 
     const list = runCli(cwd, ['list']);
     expect(list.status).toBe(0);
-    expect(list.stdout).toContain('home');
-    expect(list.stdout).toContain('detail');
-    expect(list.stdout).toContain('empty-state');
+    expect(list.stdout).toContain('screens (0)');
   });
 
   it('uses --dir for the generated screen folder', () => {
     const cwd = tempProject();
     const init = runCli(cwd, ['init', '--dir', 'mocks/mobile']);
     expect(init.status).toBe(0);
-    expect(fs.existsSync(path.join(cwd, 'mocks/mobile/home.iphone-14.html'))).toBe(true);
+    expect(fs.existsSync(path.join(cwd, 'mocks/mobile/shared.css'))).toBe(true);
     const config = JSON.parse(fs.readFileSync(path.join(cwd, 'mocklens.config.json'), 'utf8')) as {
       screensDir: string;
     };
     expect(config.screensDir).toBe('mocks/mobile');
   });
 
-  it('refuses to overwrite existing scaffold files by default', () => {
+  it('is idempotent when a valid config already exists', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
-    fs.writeFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'custom home', 'utf8');
+    fs.writeFileSync(path.join(cwd, 'screens', 'shared.css'), 'custom css', 'utf8');
 
     const second = runCli(cwd, ['init']);
-    expect(second.status).toBe(2);
-    expect(second.stderr).toContain('init would overwrite existing file(s)');
-    expect(fs.readFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'utf8')).toBe('custom home');
+    expect(second.status).toBe(0);
+    expect(second.stdout).toContain('MOCKLENS ALREADY INITIALIZED');
+    expect(second.stdout).toContain('No files changed');
+    expect(fs.readFileSync(path.join(cwd, 'screens', 'shared.css'), 'utf8')).toBe('custom css');
   });
 
-  it('overwrites scaffold files when --force is passed', () => {
+  it('--force replaces init-owned files but never screen HTML', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
-    fs.writeFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'custom home', 'utf8');
+    fs.writeFileSync(path.join(cwd, 'screens', 'shared.css'), 'custom css', 'utf8');
+    fs.writeFileSync(path.join(cwd, 'screens', 'custom.html'), 'custom screen', 'utf8');
 
     const forced = runCli(cwd, ['init', '--force']);
     expect(forced.status).toBe(0);
-    expect(forced.stdout).toContain('mocklens init updated a starter workspace');
-    expect(fs.readFileSync(path.join(cwd, 'screens', 'home.iphone-14.html'), 'utf8')).toContain('Launch Board');
+    expect(forced.stdout).toContain('Replaced init-owned files');
+    expect(fs.readFileSync(path.join(cwd, 'screens', 'shared.css'), 'utf8')).not.toBe('custom css');
+    expect(fs.readFileSync(path.join(cwd, 'screens', 'custom.html'), 'utf8')).toBe('custom screen');
+  });
+
+  it('rejects malformed existing config without modifying it', () => {
+    const cwd = tempProject();
+    const file = path.join(cwd, 'mocklens.config.json');
+    fs.writeFileSync(file, '{bad json', 'utf8');
+    const result = runCli(cwd, ['init']);
+    expect(result.status).toBe(2);
+    expect(result.stderr).toContain('invalid JSON');
+    expect(fs.readFileSync(file, 'utf8')).toBe('{bad json');
   });
 
   it('rejects unsafe screen directories', () => {
@@ -134,6 +144,23 @@ describe('new-screen command', () => {
     expect(html).toContain('Start designing this screen.');
   });
 
+  it('creates batches atomically and prints one focused check command', () => {
+    const cwd = tempProject();
+    expect(runCli(cwd, ['init']).status).toBe(0);
+    const created = runCli(cwd, ['new-screen', 'today', 'add-expense', 'summary', '--device', 'iphone-14']);
+    expect(created.status, created.stderr).toBe(0);
+    expect(created.stdout).toContain('MOCKLENS CREATED 3 SCREENS');
+    expect(created.stdout).toContain('--screen today.iphone-14 --screen add-expense.iphone-14 --screen summary.iphone-14');
+    for (const name of ['today', 'add-expense', 'summary']) {
+      expect(fs.existsSync(path.join(cwd, `screens/${name}.iphone-14.html`))).toBe(true);
+    }
+
+    const conflict = runCli(cwd, ['new-screen', 'another', 'today', '--device', 'iphone-14']);
+    expect(conflict.status).toBe(2);
+    expect(conflict.stderr).toContain('no files created');
+    expect(fs.existsSync(path.join(cwd, 'screens/another.iphone-14.html'))).toBe(false);
+  });
+
   it('refuses duplicates and gives actionable device errors', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
@@ -141,7 +168,7 @@ describe('new-screen command', () => {
 
     const duplicate = runCli(cwd, ['new-screen', 'settings', '--device', 'iphone-14']);
     expect(duplicate.status).toBe(2);
-    expect(duplicate.stderr).toContain('screen already exists');
+    expect(duplicate.stderr).toContain('screen file(s) already exist');
 
     const device = runCli(cwd, ['new-screen', 'settings', '--device', 'unknown-phone']);
     expect(device.status).toBe(2);
@@ -162,6 +189,7 @@ describe('new-screen command', () => {
   it('rejects unknown devices declared in screen metadata', () => {
     const cwd = tempProject();
     expect(runCli(cwd, ['init']).status).toBe(0);
+    expect(runCli(cwd, ['new-screen', 'home', '--device', 'iphone-14']).status).toBe(0);
     const file = path.join(cwd, 'screens/home.iphone-14.html');
     const html = fs.readFileSync(file, 'utf8').replace(
       'content="iphone-14">\n<meta name="mocklens:target-devices" content="iphone-14"',

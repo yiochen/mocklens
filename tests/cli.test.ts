@@ -37,6 +37,7 @@ const FINDING_TYPES = new Set([
   'page-error',
   'external-request',
   'fixed-bottom-cover',
+  'fixed-overlay-cover',
 ]);
 
 interface CliResult {
@@ -73,6 +74,7 @@ function hasFinding(s: ScreenReport, type: Finding['type'], suppressed?: boolean
 let listRun: CliResult;
 let unknownRun: CliResult;
 let validOnlyRun: CliResult;
+let checkRun: CliResult;
 let filteredReport: Report;
 let fullRun: CliResult;
 let report: Report;
@@ -85,6 +87,7 @@ beforeAll(() => {
   listRun = runCli(['list']);
   unknownRun = runCli(['frobnicate']);
   validOnlyRun = runCli(['validate', '--screen', 'valid']);
+  checkRun = runCli(['check', '--screen', 'valid', '--device', 'iphone-14']);
 
   // Filtered run first, because every validate overwrites report.json.
   const filteredRun = runCli(['validate', '--screen', 'document-overflow']);
@@ -234,14 +237,16 @@ describe('valid screens pass', () => {
 
 describe('machine-readable output is structurally stable', () => {
   it('report.json has the exact documented shape', () => {
-    expect(Object.keys(report).sort()).toEqual(['screens', 'summary', 'tool', 'version']);
-    expect(report.version).toBe(1);
+    expect(Object.keys(report).sort()).toEqual(['scope', 'screens', 'summary', 'tool', 'version']);
+    expect(report.version).toBe(2);
     expect(report.tool).toBe('mocklens');
-    expect(Object.keys(report.summary).sort()).toEqual(['errors', 'ok', 'screens', 'suppressed', 'warnings']);
-    expect(report.summary.screens).toBe(42);
+    expect(Object.keys(report.summary).sort()).toEqual(['combinations', 'devices', 'errors', 'ok', 'suppressed', 'uniqueScreens', 'warnings']);
+    expect(report.summary.combinations).toBe(42);
+    expect(report.summary.uniqueScreens).toBe(14);
+    expect(report.scope.coverage).toBe('FULL');
 
     for (const s of report.screens) {
-      expect(Object.keys(s).sort()).toEqual(['counts', 'device', 'findings', 'name', 'ok', 'viewport']);
+      expect(Object.keys(s).sort()).toEqual(['counts', 'device', 'findings', 'name', 'ok', 'screenshot', 'source', 'viewport']);
       expect(Object.keys(s.counts).sort()).toEqual(['error', 'suppressed', 'warning']);
       expect(Object.keys(s.viewport).sort()).toEqual(['height', 'width']);
       for (const f of s.findings) {
@@ -249,7 +254,7 @@ describe('machine-readable output is structurally stable', () => {
           expect(Object.keys(f), `finding missing key ${key}`).toContain(key);
         }
         for (const key of Object.keys(f)) {
-          expect(['type', 'severity', 'suppressed', 'message', 'suggestion', 'element', 'detail']).toContain(key);
+          expect(['type', 'severity', 'suppressed', 'message', 'suggestion', 'element', 'coveredElement', 'overlap', 'detail']).toContain(key);
         }
         expect(FINDING_TYPES.has(f.type)).toBe(true);
         expect(['error', 'warning']).toContain(f.severity);
@@ -283,19 +288,32 @@ describe('clipped-text', () => {
 });
 
 describe('fixed-bottom-cover', () => {
-  it('warns and identifies the covered content', () => {
+  it('errors and identifies the covered content', () => {
     for (const s of screensOf('fixed-bottom-cover')) {
       const f = s.findings.find((x) => x.type === 'fixed-bottom-cover' && !x.suppressed);
       expect(f).toBeDefined();
-      expect(f?.severity).toBe('warning');
+      expect(f?.severity).toBe('error');
       expect(f?.element?.selector).toContain('bar');
       expect(`${f?.message ?? ''} ${f?.detail ?? ''}`).toContain('final');
-      expect(s.ok).toBe(true);
+      expect(s.ok).toBe(false);
     }
   });
 });
 
 describe('CLI surface', () => {
+  it('check output is a complete agent-facing sanity report', () => {
+    expect(checkRun.status).toBe(0);
+    expect(checkRun.stdout).toContain('MOCKLENS SANITY CHECK — PASS');
+    expect(checkRun.stdout).toContain('Coverage: FILTERED');
+    expect(checkRun.stdout).toContain('Configured: 14 unique screens × 3 devices = 42 combinations');
+    expect(checkRun.stdout).toContain('Checked: 1 unique screens × 1 devices = 1 combinations');
+    expect(checkRun.stdout).toContain('Rules checked (9):');
+    expect(checkRun.stdout).toContain('Sanity check only');
+    expect(checkRun.stdout).toContain('source: screens/valid.html');
+    expect(checkRun.stdout).toContain('screenshot: .mocklens/screenshots/iphone-14/valid.png');
+    expect(checkRun.stdout).not.toContain('verify visually');
+  });
+
   it('list exits 0 and shows all 14 screens and 3 devices', () => {
     expect(listRun.status).toBe(0);
     for (const name of SCREENS) {

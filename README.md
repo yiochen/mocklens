@@ -44,18 +44,19 @@ npm exec mocklens -- check
 
 ## Quick start
 
-Create a starter mock workspace inside an existing project:
+Initialize a mock workspace inside an existing project:
 
 ```sh
 npx mocklens init              # writes mocklens.config.json and screens/
 npx mocklens new-screen settings --device iphone-14
-npx mocklens list              # confirms starter screens and devices
+npx mocklens list              # confirms created screens and devices
 npx mocklens check             # screenshots + validation
 ```
 
-Use `mocklens init --dir mocks/mobile` if you want the generated HTML/CSS files
-under a custom folder. Existing scaffold files are never overwritten unless you
-pass `--force`.
+Use `mocklens init --dir mocks/mobile` if you want shared screen files under a
+custom folder. `init` creates no HTML screens and is idempotent: when a valid
+config already exists it prints the full effective config and changes nothing.
+Pass `--force` to replace only init-owned config, CSS, and guidance files.
 
 Try it against the bundled example project (a recipe app, "GoodPlate"):
 
@@ -108,7 +109,7 @@ output lands in `example/.mocklens/`. Inside `example/` you can drop the flag �
 
 ```
 mocklens init      [--dir <path>] [--force]
-mocklens new-screen <name> --device <name> [--form-factor <name>]
+mocklens new-screen <name>... --device <name> [--form-factor <name>]
 mocklens list
 mocklens screenshot [--full-page] [--screen <name>]... [--device <name>]...
 mocklens validate   [--screen <name>]... [--device <name>]...
@@ -126,15 +127,17 @@ Global flags: `--config <path>` (default `./mocklens.config.json`),
 `init` writes the config at that path and resolves `--dir` relative to the
 config file's directory.
 
-`new-screen` creates `<name>.<device>.html` and never overwrites an existing
-file. The device must be present in `mocklens.config.json`. It generates a
-neutral blank scaffold for agents to design freely. `--form-factor` defaults
-to `phone`. Names, devices, and form factors use lowercase kebab-case, and
-names may contain nested path segments:
+`new-screen` creates one or more `<name>.<device>.html` files and never
+overwrites an existing file. A batch is atomic: every name, device, shared
+stylesheet, duplicate, and destination is validated before any file is written.
+The device must be present in `mocklens.config.json`. It generates neutral blank
+scaffolds for agents to design freely. `--form-factor` defaults to `phone`.
+Names, devices, and form factors use lowercase kebab-case, and names may contain
+nested path segments:
 
 ```sh
 mocklens new-screen settings --device iphone-14
-mocklens new-screen states/no-results --device pixel-7
+mocklens new-screen today add-expense monthly-summary --device iphone-14
 ```
 
 Generated heads include metadata that both humans and agents can inspect:
@@ -161,16 +164,10 @@ Expected errors print a single clear line (never a stack trace).
 
 ## Configuration
 
-Run `mocklens init` to generate this file plus starter screens and
-agent-facing notes. `mocklens init --dir mocks/mobile` writes the screen HTML,
-shared CSS, and screen README under `mocks/mobile/` and records that path in the
-config.
-
-Starter screens target `iphone-14` and follow the same suffix and metadata
-convention. To create another device variant, use `new-screen` rather than
-removing the suffix or copying a file with stale metadata. Agents should keep
-the filename, `mocklens:*` tags, and configured device in sync, then run
-`mocklens list` and `mocklens check --screen <name.device> --device <device>`.
+Run `mocklens init` to generate this complete config plus `shared.css` and
+agent-facing notes. It deliberately creates zero HTML screens. Use
+`new-screen` for every screen so filenames, `mocklens:*` metadata, and device
+settings stay aligned.
 
 `mocklens.config.json` (all keys optional; shown with defaults):
 
@@ -198,6 +195,16 @@ the filename, `mocklens:*` tags, and configured device in sync, then run
 
 Malformed config (bad JSON, wrong shapes) exits 2 with a specific message.
 
+## Agent design-loop skill
+
+The repo includes [`skills/mocklens-design`](skills/mocklens-design), a reusable
+skill that teaches the complete Mocklens loop:
+
+**Frame → Inventory → Create → Compose → Sanity-check → Refine → Visually verify → Deliver**
+
+It treats `check` stdout as the authoritative iteration report and requires
+visual inspection of the final screenshots as the delivery gate.
+
 ## What `validate` checks
 
 All checks run on the rendered page in headless Chromium (bounding boxes,
@@ -211,7 +218,8 @@ computed styles, scroll dimensions, network events) with a 1px tolerance.
 | `broken-image` | error | An `<img>` finished loading with `naturalWidth === 0`. Detail has the resolved src. | Fix the path; bundle the asset next to the screen. |
 | `page-error` | error | Uncaught exceptions or console errors (resource-load noise is deduped against broken-image/external-request). | Fix or remove the failing script — mocks should render error-free. |
 | `external-request` | error | Any `http(s)` request to a non-localhost host not in `allowedExternalHosts` — the *attempt* counts, even offline. | Bundle the resource locally; mocks must render offline. |
-| `fixed-bottom-cover` | warning | A fixed/sticky bottom bar hides text-bearing content when scrolled to the very end. | Add `padding-bottom` ≥ the bar's height to the scroll container. |
+| `fixed-bottom-cover` | error | A fixed/sticky bottom bar covers meaningful content at maximum scroll or on a short page. | Reserve bottom space at least equal to the bar height. |
+| `fixed-overlay-cover` | error/warning | A fixed/sticky overlay covers meaningful text, amounts, controls, or images. Permanently inaccessible content is an error; initially crowded but scroll-reachable content is a warning. | Move/resize the overlay or reserve layout space. |
 
 ## Intentional exceptions
 
@@ -224,7 +232,7 @@ items. Annotate the element (or any ancestor) with a reason:
 
 The finding is still reported — marked `suppressed`, with your reason — but it
 never affects the exit code. This applies to `element-overflow-*`,
-`clipped-text`, and `fixed-bottom-cover`. It does **not** apply to
+`clipped-text`, `fixed-bottom-cover`, and `fixed-overlay-cover`. It does **not** apply to
 `document-overflow`, `broken-image`, `page-error`, or `external-request`.
 
 Document-level scrolling is never suppressible on purpose: an annotation must
@@ -246,30 +254,42 @@ allowed per host via `allowedExternalHosts` — prefer bundling locally.
 
 ## Reports
 
-Terminal report — per screen × device, findings with offender and a fix hint,
-suppressed findings listed with their reason, and a one-line verdict:
+Terminal output from `check` is the complete agent-facing sanity report. It
+includes PASS/FAIL, FULL/FILTERED coverage, unique screen/device/combination
+counts, requested filters, every rule checked, source and screenshot paths,
+findings with both overlay and victim geometry where relevant, suggestions,
+and the scope disclaimer. Agents do not need to read `report.json` to recover
+information omitted from stdout.
 
 ```
+MOCKLENS SANITY CHECK — FAIL
+Coverage: FILTERED
+Rules checked (9): document-overflow, element-overflow-left, element-overflow-right, clipped-text, broken-image, page-error, external-request, fixed-bottom-cover, fixed-overlay-cover
+
 document-overflow (iphone-14 390×844)
+  source: screens/document-overflow.html
+  screenshot: .mocklens/screenshots/iphone-14/document-overflow.png
   ERROR document-overflow — page scrolls horizontally — document is 516px wide in a 390px viewport — likely offenders: div.screen > div.wide-banner:nth-of-type(1)
     → Find and fix the elements wider than the viewport (fixed widths, 100vw plus padding, absolutely positioned elements). Only clamp overflow-x at the root when the overflow is purely decorative.
   ERROR element-overflow-right  div.screen > div.wide-banner:nth-of-type(1) — extends 126px past the right edge of a 390px viewport
     → Element extends 126px past the right edge of a 390px viewport — check fixed widths, vw units plus padding, or missing overflow clipping.
 
-1 screens × 1 devices: 2 errors, 0 warnings, 0 suppressed — FAIL
+SANITY CHECK FAIL: 1 unique screens × 1 devices = 1 combinations; 2 errors, 0 warnings, 0 suppressed.
 ```
 
 `<outDir>/report.json` is the machine-readable form (2-space indent,
-deterministic key order, no timestamps — diffs are stable within `version: 1`):
+deterministic key order, no timestamps — diffs are stable within `version: 2`):
 
 ```
-{ version: 1, tool: "mocklens", screens: ScreenReport[], summary }
-ScreenReport = { name, device, viewport: {width,height}, ok, findings: Finding[],
+{ version: 2, tool: "mocklens", scope, screens: ScreenReport[], summary }
+scope        = { command, coverage, config, requested, configured, covered }
+ScreenReport = { name, source, screenshot, device, viewport: {width,height}, ok, findings: Finding[],
                  counts: { error, warning, suppressed } }
 Finding      = { type, severity: "error"|"warning", suppressed, message, suggestion,
                  element?: { selector, tag, id, classes, text, rect: {x,y,width,height} },
+                 coveredElement?: ElementInfo, overlap?: {width,height,area,scrollX,scrollY},
                  detail?: string }
-summary      = { screens, errors, warnings, suppressed, ok }
+summary      = { uniqueScreens, devices, combinations, errors, warnings, suppressed, ok }
 ```
 
 Findings are sorted (type, then selector); rect/viewport numbers are rounded to
@@ -288,9 +308,10 @@ with `path` relative to the screenshots dir (`iphone-14/home.png`,
   that is visually clipped by an ancestor can still be flagged — annotate it.
 - **Outermost-offender dedupe** reports the widest offending ancestor, which is
   usually but not always the exact culprit; treat the selector as a strong hint.
-- **`fixed-bottom-cover`** only fires when the page actually scrolls
-  (`scrollHeight > innerHeight + 50`) and a text-bearing element ends up >4px
-  behind the bar at max scroll. Short pages and well-padded pages are silent.
+- **Overlay coverage** uses computed positioning, visibility, semantic content,
+  overlap geometry, and browser hit-testing at initial and maximum scroll.
+  Dialogs, hidden/transient elements, decorative fixed elements, and correctly
+  padded bottom bars are ignored. Short pages are checked too.
 - **`clipped-text`** is deliberately conservative: only elements with direct
   text or known text tags are candidates, so wrapper divs don't false-positive —
   at the cost of missing some deeply-nested clips.
@@ -311,10 +332,10 @@ with `path` relative to the screenshots dir (`iphone-14/home.png`,
 ```
 src/        the tool (types, config, screens, browser, screenshot, validate,
             report, viewer, cli — plain TypeScript, strict, ESM)
-fixtures/   the test project: 14 screens, each demonstrating one finding,
-            plus fixtures/mocklens.config.json
+fixtures/   the main test project plus focused overlay-coverage fixtures
 example/    the GoodPlate demo project (all screens pass)
 tests/      vitest end-to-end suite driving the real CLI
+skills/     the repo-local Mocklens design-loop skill
 ```
 
 ```sh

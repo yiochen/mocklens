@@ -5,6 +5,7 @@ import { discoverScreens, validateScreenDevices } from './screens.js';
 import type { Screen } from './screens.js';
 import { launchBrowser } from './browser.js';
 import { runScreenshots } from './screenshot.js';
+import type { ManifestEntry } from './screenshot.js';
 import { runValidation, writeReport } from './validate.js';
 import { renderReport } from './report.js';
 import { startViewer } from './viewer.js';
@@ -17,8 +18,8 @@ const USAGE = `mocklens — static mobile UI mockup tool
 Usage: mocklens <command> [options]
 
 Commands:
-  init         Create mocklens.config.json and starter screens
-  new-screen   Create a device-targeted static HTML screen
+  init         Idempotently initialize config and shared screen files
+  new-screen   Atomically create one or more device-targeted screens
   list         List discovered screens and configured devices
   screenshot   Render PNG screenshots for every screen × device
   validate     Check screens for layout problems in a real browser
@@ -29,7 +30,7 @@ Options:
   --config <path>   Path to mocklens.config.json
   --dir <path>      Screens directory for init (default screens)
   --form-factor <n> Form factor metadata for new-screen (default phone)
-  --force           Overwrite scaffold files during init
+  --force           Replace init-owned config/shared files during init
   --screen <name>   Limit to one screen (repeatable)
   --device <name>   Limit to one device (repeatable)
   --full-page       Also capture full-page screenshots
@@ -169,8 +170,8 @@ async function main(argv: string[]): Promise<number> {
   const config = loadConfig(args.configPath, cwd);
 
   if (args.command === 'new-screen') {
-    if (args.commandArgs.length !== 1) {
-      throw new MocklensError('usage: mocklens new-screen <name> --device <configured-device> [--form-factor <name>]');
+    if (args.commandArgs.length === 0) {
+      throw new MocklensError('usage: mocklens new-screen <name>... --device <configured-device> [--form-factor <name>]');
     }
     if (args.deviceNames.length !== 1) {
       throw new MocklensError('new-screen requires exactly one --device <configured-device>');
@@ -179,7 +180,7 @@ async function main(argv: string[]): Promise<number> {
       runNewScreen({
         cwd,
         config,
-        name: args.commandArgs[0]!,
+        names: args.commandArgs,
         deviceName: args.deviceNames[0]!,
         formFactor: args.formFactor,
       }),
@@ -217,11 +218,26 @@ async function main(argv: string[]): Promise<number> {
       const devices = selectDevices(config.devices, args.deviceNames);
       const browser = await launchBrowser();
       try {
+        let screenshots: ManifestEntry[] = [];
         if (args.command !== 'validate') {
-          await runScreenshots(browser, config, screens, devices, args.fullPage || config.fullPage);
+          screenshots = await runScreenshots(browser, config, screens, devices, args.fullPage || config.fullPage);
         }
         if (args.command !== 'screenshot') {
-          const report = await runValidation(browser, config, screens, devices);
+          const screenshotPaths = new Map<string, string>();
+          for (const shot of screenshots.filter((entry) => !entry.fullPage)) {
+            screenshotPaths.set(
+              `${shot.screen}\0${shot.device}`,
+              path.relative(config.baseDir, path.join(config.outDir, 'screenshots', shot.path)).split(path.sep).join('/'),
+            );
+          }
+          const report = await runValidation(browser, config, screens, devices, {
+            command: args.command,
+            allScreens: discovered,
+            allDevices: config.devices,
+            requestedScreens: args.screenNames,
+            requestedDevices: args.deviceNames,
+            screenshotPaths,
+          });
           const reportFile = writeReport(config, report);
           console.log(renderReport(report));
           console.log(`\nreport written to ${path.relative(cwd, reportFile)}`);

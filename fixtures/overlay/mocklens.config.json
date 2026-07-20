@@ -1,0 +1,5 @@
+{
+  "screensDir": "screens",
+  "outDir": ".mocklens",
+  "devices": [{ "name": "iphone-14", "width": 390, "height": 844 }]
+}

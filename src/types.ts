@@ -5,6 +5,8 @@ export interface Device {
 }
 
 export interface Config {
+  configFile: string;
+  baseDir: string;
   screensDir: string;
   outDir: string;
   fullPage: boolean;
@@ -22,7 +24,8 @@ export type FindingType =
   | 'broken-image'
   | 'page-error'
   | 'external-request'
-  | 'fixed-bottom-cover';
+  | 'fixed-bottom-cover'
+  | 'fixed-overlay-cover';
 
 export interface Rect {
   x: number;
@@ -47,11 +50,15 @@ export interface Finding {
   message: string;
   suggestion: string;
   element?: ElementInfo;
+  coveredElement?: ElementInfo;
+  overlap?: { width: number; height: number; area: number; scrollX: number; scrollY: number };
   detail?: string;
 }
 
 export interface ScreenReport {
   name: string;
+  source: string;
+  screenshot: string | null;
   device: string;
   viewport: { width: number; height: number };
   ok: boolean;
@@ -60,11 +67,21 @@ export interface ScreenReport {
 }
 
 export interface Report {
-  version: 1;
+  version: 2;
   tool: 'mocklens';
+  scope: {
+    command: 'validate' | 'check';
+    coverage: 'FULL' | 'FILTERED';
+    config: string;
+    requested: { screens: string[]; devices: string[] };
+    configured: { uniqueScreens: number; devices: number; combinations: number };
+    covered: { uniqueScreens: number; devices: number; combinations: number };
+  };
   screens: ScreenReport[];
   summary: {
-    screens: number;
+    uniqueScreens: number;
+    devices: number;
+    combinations: number;
     errors: number;
     warnings: number;
     suppressed: number;
