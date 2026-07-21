@@ -1,10 +1,12 @@
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import type { Browser } from 'playwright';
 import type { Config, Device } from './types.js';
 import { round1 } from './types.js';
 import type { Screen } from './screens.js';
 import { openScreenPage } from './browser.js';
+import { buildVisualInputs } from './checkpoint.js';
 
 export interface ManifestEntry {
   screen: string;
@@ -13,6 +15,14 @@ export interface ManifestEntry {
   fullPage: boolean;
   /** Path relative to the screenshots dir, posix separators. */
   path: string;
+}
+
+interface ScreenshotStateEntry {
+  screen: string;
+  device: string;
+  path: string;
+  inputHash: string;
+  screenshotSha256: string;
 }
 
 /**
@@ -29,10 +39,12 @@ export async function runScreenshots(
   const shotsDir = path.join(config.outDir, 'screenshots');
   fs.mkdirSync(shotsDir, { recursive: true });
   const manifest: ManifestEntry[] = [];
+  const state: Record<string, ScreenshotStateEntry> = {};
   const cwd = process.cwd();
 
   for (const screen of screens) {
     for (const device of devices) {
+      const inputHash = buildVisualInputs(config, screen, device).hash;
       const { page, context } = await openScreenPage(browser, screen.file, device, 2);
       try {
         const rel = `${device.name}/${screen.name}.png`;
@@ -47,6 +59,13 @@ export async function runScreenshots(
           fullPage: false,
           path: rel,
         });
+        state[`${screen.name}@${device.name}`] = {
+          screen: screen.name,
+          device: device.name,
+          path: rel,
+          inputHash,
+          screenshotSha256: crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'),
+        };
         if (fullPage) {
           const fullRel = `${device.name}/${screen.name}.full.png`;
           const fullFile = path.join(shotsDir, fullRel);
@@ -68,6 +87,7 @@ export async function runScreenshots(
 
   const manifestFile = path.join(shotsDir, 'manifest.json');
   fs.writeFileSync(manifestFile, JSON.stringify({ version: 1, screenshots: manifest }, null, 2) + '\n');
+  fs.writeFileSync(path.join(shotsDir, 'state.json'), JSON.stringify({ version: 1, screenshots: state }, null, 2) + '\n');
   console.log(`wrote ${path.relative(cwd, manifestFile)}`);
   return manifest;
 }

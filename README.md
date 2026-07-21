@@ -100,6 +100,11 @@ output lands in `example/.mocklens/`. Inside `example/` you can drop the flag �
   checks; writes `report.json`; fails (exit 1) on unsuppressed errors.
 - **`check`** — `screenshot` + `validate` in one run; the usual iteration
   command.
+- **UX requirement** — a named, source-controlled statement of evidence that
+  must be demonstrated by one screen, a screen family, or a cross-screen flow.
+- **Checkpoint** — specific review evidence tied to hashes of the requirement,
+  relevant HTML/CSS, device dimensions, and (for visual review) the PNG. A
+  checkpoint records review; it does not score or judge UX quality.
 - **`list`** — prints discovered screens and configured devices.
 - **`serve`** — the local viewer: sidebar of screens, device picker, each
   screen in an `<iframe>` sized exactly to the device in a CSS phone bezel.
@@ -114,6 +119,8 @@ mocklens list
 mocklens screenshot [--full-page] [--screen <name>]... [--device <name>]...
 mocklens validate   [--screen <name>]... [--device <name>]...
 mocklens check      [--full-page] [--screen <name>]... [--device <name>]...
+mocklens checkpoint ux <requirement-id> --proof "<specific evidence>"
+mocklens checkpoint visual --screen <name>... --device <name>... --proof "<specific evidence>"
 mocklens serve      [--port <n>]          # default 4173
 mocklens --help
 ```
@@ -194,6 +201,96 @@ settings stay aligned.
   `external-request` error (see below).
 
 Malformed config (bad JSON, wrong shapes) exits 2 with a specific message.
+
+## UX requirements and checkpoints
+
+Projects may define `mocklens.ux.json` beside `mocklens.config.json`. The file
+is optional: when it is absent, every existing Mocklens command behaves as it
+did before. `mocklens init` deliberately remains config-only and never creates
+UX requirements. Both the UX manifest and the resulting
+`mocklens.checkpoints.json` ledger are intended for source control and PR
+review.
+
+The version 1 schema is:
+
+```json
+{
+  "version": 1,
+  "goal": "Ship a recipe flow that makes the next action obvious.",
+  "delivery": {
+    "screens": ["home", "detail", "states/empty"],
+    "devices": ["iphone-14", "pixel-7"]
+  },
+  "requirements": [
+    {
+      "id": "discoverable-create-action",
+      "kind": "screen",
+      "description": "The home screen exposes a clearly labeled create entry point.",
+      "screens": ["home"]
+    },
+    {
+      "id": "empty-to-created-flow",
+      "kind": "flow",
+      "description": "The empty state explains recovery and leads into the created detail state.",
+      "screens": ["states/empty", "detail"]
+    },
+    {
+      "id": "dense-content-hierarchy",
+      "kind": "screen-family",
+      "description": "Primary data and actions precede low-value decoration across dense screens.",
+      "screens": ["home", "detail"]
+    }
+  ]
+}
+```
+
+Requirement IDs use stable lowercase kebab-case. `kind` is `screen`,
+`screen-family`, or `flow`. Delivery screens, requirement screens, and delivery
+devices must exist. Mocklens rejects malformed JSON, duplicate IDs, unsafe
+paths, and unknown screens/devices before touching checkpoint state.
+
+After reviewing a requirement, record concrete evidence rather than a verdict:
+
+```sh
+mocklens checkpoint ux discoverable-create-action \
+  --proof "The labeled Add recipe button is visible in the first viewport above recent recipes."
+```
+
+The command adds or replaces that requirement in
+`mocklens.checkpoints.json`, prints the affected screens, and suggests a focused
+`mocklens check`. For visual review, first run a successful focused check and
+inspect every resulting viewport PNG, then record the complete screen/device
+batch:
+
+```sh
+mocklens check --screen home --screen detail --device iphone-14
+mocklens checkpoint visual \
+  --screen home --screen detail \
+  --device iphone-14 \
+  --proof "Primary actions, hierarchy, and long labels were inspected in both viewport PNGs."
+```
+
+Visual checkpointing is all-or-nothing. Every requested combination must have
+a current successful sanity result and current viewport screenshot; one
+missing, stale, or failing target refuses the entire batch.
+
+The ledger is deterministic, human-readable JSON: stable key order, two-space
+formatting, POSIX-relative paths, and no timestamps. SHA-256 inputs include the
+screen HTML, recursively linked local stylesheets (including CSS `@import`),
+the applicable device names/dimensions, and the canonical requirement. Visual
+proof also records the viewport PNG hash. Consequently, relevant HTML, shared
+CSS, requirement, device, or screenshot changes make proof stale while an
+unrelated screen edit and an identical regenerated screenshot do not. Stale
+reasons identify inputs such as `screens/shared.css changed`.
+
+When a UX manifest is present, `mocklens check` prints a separate checkpoint
+summary with `CURRENT`, `MISSING`, or `STALE` for every requirement and delivery
+screen/device combination, plus specific stale reasons. This is evidence
+reporting only: it does not alter `check` exit semantics or `report.json`.
+
+Checkpoint writes take an exclusive bounded lock, reload the latest ledger,
+write a temporary file, and atomically rename it. Parallel agents can therefore
+record independent evidence without silently losing one another's entries.
 
 ## Agent design-loop skill
 
