@@ -12,6 +12,13 @@ import { startViewer } from './viewer.js';
 import { runInit } from './init.js';
 import { runNewScreen } from './new-screen.js';
 import type { Device } from './types.js';
+import {
+  checkpointUx,
+  checkpointVisual,
+  loadUxManifest,
+  recordSanityState,
+  renderCheckpointSummary,
+} from './checkpoint.js';
 
 const USAGE = `mocklens — static mobile UI mockup tool
 
@@ -24,6 +31,10 @@ Commands:
   screenshot   Render PNG screenshots for every screen × device
   validate     Check screens for layout problems in a real browser
   check        screenshot + validate in one run
+  checkpoint ux <id> --proof <text>
+               Record hash-aware evidence for one UX requirement
+  checkpoint visual --screen <name>... --device <name>... --proof <text>
+               Record an atomically validated visual review batch
   serve        Start the local phone-sized viewer (default port 4173)
 
 Options:
@@ -33,6 +44,7 @@ Options:
   --force           Replace init-owned config/shared files during init
   --screen <name>   Limit to one screen (repeatable)
   --device <name>   Limit to one device (repeatable)
+  --proof <text>    Specific evidence for a checkpoint
   --full-page       Also capture full-page screenshots
   --port <n>        Viewer port (default 4173)
   --help            Show this help
@@ -50,6 +62,7 @@ interface ParsedArgs {
   fullPage: boolean;
   port: number;
   help: boolean;
+  proof: string | undefined;
 }
 
 function parseArgs(argv: string[]): ParsedArgs {
@@ -65,6 +78,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     fullPage: false,
     port: 4173,
     help: false,
+    proof: undefined,
   };
   let i = 0;
   const valueFor = (flag: string): string => {
@@ -103,6 +117,9 @@ function parseArgs(argv: string[]): ParsedArgs {
         out.port = v;
         break;
       }
+      case '--proof':
+        out.proof = valueFor(arg);
+        break;
       case '--full-page':
         out.fullPage = true;
         break;
@@ -188,6 +205,44 @@ async function main(argv: string[]): Promise<number> {
     return 0;
   }
 
+  if (args.command === 'checkpoint') {
+    const discovered = discoverScreens(config.screensDir);
+    validateScreenDevices(discovered, config.devices.map((device) => device.name));
+    const subtype = args.commandArgs[0];
+    if (subtype === 'ux') {
+      if (args.commandArgs.length !== 2) {
+        throw new MocklensError('usage: mocklens checkpoint ux <requirement-id> --proof <specific evidence>');
+      }
+      if (args.screenNames.length > 0 || args.deviceNames.length > 0) {
+        throw new MocklensError('checkpoint ux gets its screens and devices from mocklens.ux.json');
+      }
+      const manifest = loadUxManifest(config, discovered);
+      if (manifest === null) {
+        throw new MocklensError(`UX manifest not found: ${path.join(config.baseDir, 'mocklens.ux.json')}`);
+      }
+      console.log(checkpointUx(config, manifest, discovered, args.commandArgs[1]!, args.proof));
+      return 0;
+    }
+    if (subtype === 'visual') {
+      if (args.commandArgs.length !== 1) {
+        throw new MocklensError('usage: mocklens checkpoint visual --screen <name>... --device <name>... --proof <specific evidence>');
+      }
+      if (args.screenNames.length === 0 || args.deviceNames.length === 0) {
+        throw new MocklensError('checkpoint visual requires at least one --screen and one --device');
+      }
+      console.log(
+        checkpointVisual(
+          config,
+          selectScreens(discovered, args.screenNames),
+          selectDevices(config.devices, args.deviceNames),
+          args.proof,
+        ),
+      );
+      return 0;
+    }
+    throw new MocklensError('usage: mocklens checkpoint <ux|visual> ...');
+  }
+
   if (args.commandArgs.length > 0) throw new MocklensError(`unexpected argument: ${args.commandArgs[0]}`);
 
   switch (args.command) {
@@ -211,6 +266,7 @@ async function main(argv: string[]): Promise<number> {
     case 'check': {
       const discovered = discoverScreens(config.screensDir);
       validateScreenDevices(discovered, config.devices.map((device) => device.name));
+      const uxManifest = loadUxManifest(config, discovered);
       if (discovered.length === 0) {
         throw new MocklensError(`no screens found in ${config.screensDir}`);
       }
@@ -239,7 +295,11 @@ async function main(argv: string[]): Promise<number> {
             screenshotPaths,
           });
           const reportFile = writeReport(config, report);
+          recordSanityState(config, report, discovered, config.devices);
           console.log(renderReport(report));
+          if (args.command === 'check' && uxManifest !== null) {
+            console.log(`\n${renderCheckpointSummary(config, uxManifest, discovered)}`);
+          }
           console.log(`\nreport written to ${path.relative(cwd, reportFile)}`);
           return report.summary.ok ? 0 : 1;
         }

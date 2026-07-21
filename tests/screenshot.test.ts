@@ -95,6 +95,7 @@ describe('screenshots for every screen x device', () => {
     expect(manifest.version).toBe(1);
     expect(manifest.screenshots).toHaveLength(84);
     for (const e of manifest.screenshots) {
+      expect(Object.keys(e).sort()).toEqual(['device', 'fullPage', 'path', 'screen', 'viewport']);
       expect(SCREENS).toContain(e.screen);
       expect(DEVICES).toContain(e.device);
       expect(e.viewport.width).toBeGreaterThan(0);

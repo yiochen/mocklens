@@ -9,7 +9,7 @@ Use this loop from the start and repeat the middle steps as needed:
 
 **Frame → Inventory → Create → Compose → Sanity-check → Refine → Visually verify → Deliver**
 
-The loop ends only when all delivery screens satisfy the brief, the final focused or full `mocklens check` passes, and the final screenshots have been visually inspected at every requested device. A passing check is necessary but not sufficient: it is a browser-rendered sanity check, not an aesthetic judgment.
+The loop ends only when all delivery screens satisfy the brief, the final focused or full `mocklens check` passes, and the final screenshots have been visually inspected at every requested device. When `mocklens.ux.json` exists, every named UX requirement must also have concrete review evidence recorded with `mocklens checkpoint`. A passing check is necessary but not sufficient: it is a browser-rendered sanity check, not an aesthetic judgment.
 
 ## 1. Frame the design
 
@@ -34,6 +34,8 @@ mocklens list
 `mocklens init` is idempotent. On a new workspace it creates only the complete config, shared stylesheet, screen directory, and screen README. On an initialized workspace it prints the effective config and changes nothing. Read its terminal output before deciding whether any config edit is needed.
 
 Use `mocklens list` to understand existing screens and devices. Reuse the configured device names and shared design tokens. Inspect existing HTML/CSS only when it is needed to preserve or intentionally change the visual system.
+
+If `mocklens.ux.json` exists beside the config, read its delivery goal, screen/device coverage, and named requirements before composing. Treat requirements as an evidence checklist, not an automated UX score.
 
 ## 3. Create the screen set atomically
 
@@ -103,6 +105,15 @@ Open the final viewport screenshots printed by `mocklens check` and inspect ever
 
 If visual review exposes a problem, edit the source, re-run the relevant `mocklens check`, and inspect the regenerated screenshot. Repeat until the final screenshots are both visually satisfactory and sanity-check clean.
 
+After review, record specific evidence. UX proof explains where a named requirement is demonstrated; visual proof covers the complete inspected screen/device batch:
+
+```sh
+mocklens checkpoint ux <requirement-id> --proof "<specific evidence>"
+mocklens checkpoint visual --screen <name>... --device <name>... --proof "<specific evidence>"
+```
+
+Visual checkpointing requires current passing sanity results and viewport PNGs from `mocklens check`. If relevant HTML, imported CSS, requirement definitions, device dimensions, or screenshots change later, treat the associated proof as stale and review again.
+
 ## 8. Deliver
 
-Report the completed screens, primary device, any important design decisions, the final check coverage and verdict, and the screenshot paths. Mention suppressed findings or known limitations explicitly. Do not claim completion while a requested screen/device remains unchecked, a final screenshot remains unreviewed, or the brief is visibly unmet.
+Report the completed screens, primary device, any important design decisions, the final check coverage and verdict, the screenshot paths, and recorded UX/visual checkpoints when requirements are present. Mention suppressed findings or known limitations explicitly. Do not claim completion while a requested screen/device remains unchecked, a final screenshot remains unreviewed, a named requirement lacks current evidence, or the brief is visibly unmet.
