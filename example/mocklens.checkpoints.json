@@ -1,0 +1,1130 @@
+{
+  "ux": {
+    "collection-state-coverage": {
+      "inputHash": "5de31ee2b1e7e9331338363f109e845d928a55f468c41f3974c1e93f5136867f",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:collection-state-coverage": "d4580cace855f6556bbc5d04e773b414bf795ff913b7e4692dfc157ec6760e83",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8",
+        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after the staleness drill: Empty and One Item expose Add expense; Today shows four items; Dense shows 25; Long Content wraps long names and marks missing notes; Edit and Delete remain visible.",
+      "screens": [
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "today.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14"
+      ]
+    },
+    "daily-capture-canonical": {
+      "inputHash": "2ce8bf568882366548fdf464d86dbabd07b1e9480aaa357d4f41ab734bf6cfa4",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:daily-capture-canonical": "768aae16ea53a11aa84c3afcb54f07689b8905160486825f9dbdc4c45a1193a4",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Today presents one filled Add expense action beside the reconciled USD 68.42 total; Add expense has one top Close dismissal, a recognizable type selector/category select, explicit USD guidance, retained details, and one active Save expense completion action visible even at 375×667.",
+      "screens": [
+        "today.iphone-14",
+        "add-expense.iphone-14"
+      ]
+    },
+    "daily-collection-coverage": {
+      "inputHash": "3af0107d39efa571bf87514780a5e484419fa7d1ee6500058c074c8b1b44f04a",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:daily-collection-coverage": "b4e6e512efc6dc1886ada5db2b7ecc11aa2ff2c85aa10eea62b0f12bbf91f3a3",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb",
+        "screens/states/one-item.iphone-14.html": "454a205aa16d7719e6a8adfe4b496ac6c56560c7e7271e2b7ab05d7396bb3b69",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "The stable Today family shows 0 entries with one first-add CTA, 1 entry with singular copy and No note, 4 typical expenses, a 25-entry dense state totaling USD 456.32 with an explicit Scroll for all 25 cue, and a 3-transaction long state with wrapped names and notes plus a labeled negative USD 14.99 refund.",
+      "screens": [
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "today.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14"
+      ]
+    },
+    "daily-creation-and-correction": {
+      "inputHash": "517452663bffe3202539d16c87246d466110a18221b59f57db36b3bdf58d688a",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:daily-creation-and-correction": "bc2229e05a5c09f4e3d42672128f3ffa88f66a12d2a943a21750c6937b56495f",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after restore: Today and Empty place Add expense first; the form shows all fields, retained invalid input, correction guidance, Cancel, and disabled Save expense.",
+      "screens": [
+        "today.iphone-14",
+        "add-expense.iphone-14",
+        "states/empty.iphone-14"
+      ]
+    },
+    "documented-interaction-behavior": {
+      "inputHash": "c933b044c2e46f857a8340a321e6b39b2ebb18eb5871dce4675c7b377c8d6baa",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:documented-interaction-behavior": "8e03f9bdd0cf0c908666da94197ad41c21096a282df8cca476673c6346e5f368",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/monthly-summary.iphone-14.html": "518c40ae4df075312e11e2f7bbcb22b9f3100651bb2a6e0000ab4691adc38d14",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5",
+        "screens/states/deleted.iphone-14.html": "a2b6aa41d5914c15ee8ff225cfe6309c540768b97f1de46890674c0f785a6214",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5",
+        "screens/states/expense-menu.iphone-14.html": "7564c4d389c522cb79277fdea2c9464ebcb8d77a429e84824db532970b42842e",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Every transaction row data-mocklens-action says tap opens the prefilled transaction editor, swipe left reveals Delete, long press opens the transaction actions menu, and tapping the row then More actions provides the same operations without a gesture. Category rows declare tap drill-in. Edit expense and Edit refund annotate overflow; Expense menu says Delete opens confirmation without deleting immediately; Delete confirmation says deletion recalculates totals and shows Undo; Deleted says Undo restores the expense and totals. The edit, menu, confirmation, and deleted screens demonstrate those material outcomes.",
+      "screens": [
+        "today.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "monthly-summary.iphone-14",
+        "states/category-detail.iphone-14",
+        "edit-expense.iphone-14",
+        "states/edit-refund.iphone-14",
+        "states/expense-menu.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "monthly-category-understanding": {
+      "inputHash": "5b6e15c0b711640468459aaaa5250955f183f17c55bc35ab17159aebf906fc62",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:monthly-category-understanding": "2d4b511843679ddcfe991fac50a71572712467903c661ec2857c32e2b362c08a",
+        "screens/monthly-summary.iphone-14.html": "518c40ae4df075312e11e2f7bbcb22b9f3100651bb2a6e0000ab4691adc38d14",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680"
+      },
+      "proof": "Month displays six category net totals and allocations; each category row annotation declares tap opens transaction detail. Groceries states 8 expenses plus 1 refund, USD 361.06 net, USD 138.94 left, and 72.21%; its detail repeats those facts, identifies signed net ordering, shows annotated transaction rows, and says Scroll for all 9 rather than claiming all contributors fit above the fold.",
+      "screens": [
+        "monthly-summary.iphone-14",
+        "states/category-detail.iphone-14"
+      ]
+    },
+    "mutable-expense-actions": {
+      "inputHash": "4237e60103291cd34f424536ec2ba739f505f76a556302184cfac0f14b854a3f",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:mutable-expense-actions": "435a1938fd5fd823362b83f051d8ca1cf247b0de96c09189be93a9ce757ed1ea",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10",
+        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after restore: expense rows show Edit and Delete; confirmation names Corner Market and $24.86; the completed state reports the change and offers Undo delete.",
+      "screens": [
+        "today.iphone-14",
+        "states/long-content.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "nested-monthly-summary": {
+      "inputHash": "48addff88f5dd00726f92c6e9cffccd6b15dcb6dcffb1daf822f8aef6e714e29",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:nested-monthly-summary": "631be1fd10c37f47240c37e9c6dd05433ae7baa3ca2f3330cb21df2a032197b7",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed after restore: Monthly Summary groups Housing, Food, and Transit with nested entries, a negative credit, long merchant text, and category drill-in controls.",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ]
+    },
+    "safe-destructive-recovery": {
+      "inputHash": "420e459ecc839b56bfffa5e10658d2df1958676eb362281e79cd1c319bddd7f4",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:safe-destructive-recovery": "ed7aa1f565d1996068d43561ca289df470ecec28e183c2d5684bc746b7938636",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5",
+        "screens/states/deleted.iphone-14.html": "a2b6aa41d5914c15ee8ff225cfe6309c540768b97f1de46890674c0f785a6214",
+        "screens/states/expense-menu.iphone-14.html": "7564c4d389c522cb79277fdea2c9464ebcb8d77a429e84824db532970b42842e"
+      },
+      "proof": "Edit overflow declares that tap opens the expense actions menu. Expense menu declares that Delete opens final confirmation without deleting immediately; its action stays text-led on a neutral surface. Confirmation names Corner Market and USD 24.86, and its annotated coral action says deletion recalculates today and Groceries then shows Undo. Deleted reports USD 43.56, 56.44, and 867.02; annotated Undo says it restores the expense and previous totals.",
+      "screens": [
+        "edit-expense.iphone-14",
+        "states/expense-menu.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "semantic-refund-color": {
+      "inputHash": "d8c2e9f52bbdb3a12c1b843010a6caacaa67dad060da954a3e26e73403bf29ff",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:semantic-refund-color": "3095885d2c63e2b111dc74ddf8e93be2fc0da7abcb709a749c1d572f279ab43f",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Add refund and Edit refund use credit-green selected states and borders; Long content and Groceries use the same credit green for RF glyphs and negative values; validation uses coral only for invalid fields, expense overflow stays neutral before confirmation, and coral fill appears only on Delete expense at commit.",
+      "screens": [
+        "add-refund.iphone-14",
+        "states/edit-refund.iphone-14",
+        "states/long-content.iphone-14",
+        "states/category-detail.iphone-14",
+        "states/validation.iphone-14",
+        "states/delete-confirmation.iphone-14"
+      ]
+    },
+    "semantic-value-integrity": {
+      "inputHash": "e43109476cf89a976ef84ab964fb1f940e4ff124fc7618617673d65cbce19923",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:semantic-value-integrity": "45b2edcddfe3d329c0b74392da43ee1264723f7c5760c77f22a666e52acaa96f",
+        "screens/monthly-summary.iphone-14.html": "518c40ae4df075312e11e2f7bbcb22b9f3100651bb2a6e0000ab4691adc38d14",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680",
+        "screens/states/deleted.iphone-14.html": "a2b6aa41d5914c15ee8ff225cfe6309c540768b97f1de46890674c0f785a6214",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb",
+        "screens/states/one-item.iphone-14.html": "454a205aa16d7719e6a8adfe4b496ac6c56560c7e7271e2b7ab05d7396bb3b69",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Node decimal recalculation confirms Today USD 68.42 and 31.58 left; post-delete USD 43.56, 56.44, and 867.02; Dense 25 rows equals USD 456.32 and 356.32 over; Long 9,875.00 plus 128.67 minus 14.99 equals 9,988.68; Groceries eight expenses 368.57 minus 7.51 equals 361.06; categories equal 1,657.84 with 842.16 left at 66.31%.",
+      "screens": [
+        "today.iphone-14",
+        "monthly-summary.iphone-14",
+        "states/category-detail.iphone-14",
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "stable-task-first-shell": {
+      "inputHash": "a682ea77b996aa57cfecd84a9619b6b8ff35864dbdc2d297abcaec3765fbf872",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:stable-task-first-shell": "9d74c1847e5c50b266afc648be59213d7aa1385042c232d38d3bbb2ed29ecc5e",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/monthly-summary.iphone-14.html": "518c40ae4df075312e11e2f7bbcb22b9f3100651bb2a6e0000ab4691adc38d14",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5",
+        "screens/states/deleted.iphone-14.html": "a2b6aa41d5914c15ee8ff225cfe6309c540768b97f1de46890674c0f785a6214",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e",
+        "screens/states/expense-menu.iphone-14.html": "7564c4d389c522cb79277fdea2c9464ebcb8d77a429e84824db532970b42842e",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb",
+        "screens/states/one-item.iphone-14.html": "454a205aa16d7719e6a8adfe4b496ac6c56560c7e7271e2b7ab05d7396bb3b69",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Today, Month, empty, one-item, dense, long-content, and deleted screens keep the 38px Ledgerly/month app bar, 38px Today-Month control in the same order, data-first summary, and budget metrics; Dense keeps those regions fixed while its list scrolls; create and edit screens share one centered taskbar and a single contextual dismissal.",
+      "screens": [
+        "today.iphone-14",
+        "monthly-summary.iphone-14",
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "add-expense.iphone-14",
+        "add-refund.iphone-14",
+        "edit-expense.iphone-14",
+        "states/edit-refund.iphone-14",
+        "states/expense-menu.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "stress-resilient-hierarchy": {
+      "inputHash": "e12e2b111c02a1fe039a0aee77f1c9f66dea07e50da6cb8e58f7a7690a20825f",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:stress-resilient-hierarchy": "a749c38c9a7565582ad6b3857298c3d2de14cca011ee143473629e10d7d67925",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Across 375×667, 390×844, and 412×915, Dense preserves the full shell and confines 25 quiet chevron rows to an internal scrolling list; Long wraps multi-line merchants and notes without displacing signed amounts; category detail cues scrolling; validation guidance remains adjacent; confirmation actions remain unobscured. Natural-language source annotations do not alter any rendered geometry.",
+      "screens": [
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "states/category-detail.iphone-14",
+        "states/validation.iphone-14",
+        "states/delete-confirmation.iphone-14"
+      ]
+    },
+    "stress-resilient-layout": {
+      "inputHash": "15b90f15f68f174868aa118202fb0554d9e1dc14f88e5cb7ef9fdbe12640098b",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:stress-resilient-layout": "f4aabbd471a877ed02dc81dddcbc5b5ff6f926ec91144fc5215277703a6e88dc",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+      },
+      "proof": "Re-reviewed on all three devices: the 25-item list, multi-line localized names, $1,234,567.89 and -$9,876.54 values, nested summary, and invalid form retain readable layout and controls.",
+      "screens": [
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "monthly-summary.iphone-14",
+        "add-expense.iphone-14"
+      ]
+    },
+    "task-first-value-budget": {
+      "inputHash": "9ae2695f5c69f824ad1c17db8e1eed670292417cc4f76be1ab3608cdc3cc65fa",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:task-first-value-budget": "64f81bf2c29ad9664d9857a2052362c622aa008b1971b88051e343bdc4a076f2",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10",
+        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8",
+        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after restore: all nine first viewports lead with totals, collection state, form fields, destructive consequences, or recovery actions and contain no low-value hero or promotional filler.",
+      "screens": [
+        "today.iphone-14",
+        "add-expense.iphone-14",
+        "monthly-summary.iphone-14",
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "transaction-variant-parity": {
+      "inputHash": "8d6b96de4d064398300d2512c02a0153b96cde9bf57dc5d6b8c0ca0476b32861",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:transaction-variant-parity": "be506ca6b3015ed27a14bf35452b187fdc278d2f35cee8d7d572c5b91e38b9f8",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb"
+      },
+      "proof": "Add expense and Add refund each show an explicit Expense/Refund selector, positive USD amount magnitude, merchant, category select, date, time, note, and active type-specific Save; Edit expense and Edit refund preserve those fields and allow type correction; refund forms preview negative USD 14.99 and 7.51, matching green signed refund rows in Long content and Groceries.",
+      "screens": [
+        "add-expense.iphone-14",
+        "add-refund.iphone-14",
+        "edit-expense.iphone-14",
+        "states/edit-refund.iphone-14",
+        "states/long-content.iphone-14",
+        "states/category-detail.iphone-14"
+      ]
+    },
+    "validation-and-correction": {
+      "inputHash": "7c1c6e98325c694abf70e7e2782d0539319c5794296a614e06d29fee01c3e823",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:validation-and-correction": "793d69a88ebef419e149f2f4e5e61ff3ef97bb3946f176d87247fb3b64536390",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Today row annotations declare that tap opens the prefilled editor and that tap then More actions is the non-gesture alternative to swipe-left or long-press shortcuts. Edit expense and Edit refund are prefilled with Back, one Save action, annotated overflow, and type correction. Validation retains Green Leaf Deli and Lunch with Sam, marks USD 0.00 and category inline, states two corrections, disables Save, and uses only top Close.",
+      "screens": [
+        "today.iphone-14",
+        "states/validation.iphone-14",
+        "edit-expense.iphone-14",
+        "states/edit-refund.iphone-14"
+      ]
+    }
+  },
+  "version": 1,
+  "visual": {
+    "add-expense.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "34afdb8ff289cca5cf8dc6dc5990feb5a6a87077471b635e33113ad062d914f8",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "add-expense.iphone-14",
+      "screens": [
+        "add-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/add-expense.iphone-14.png",
+      "screenshotSha256": "da2f14c5f7685a03df886e68862685386826bb2e6f0021ef4a884961d2d4306e"
+    },
+    "add-expense.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "c1ef5ed9077172704fe61976e05dd0549ab5acf58fceef9c87210957c8c883d9",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "add-expense.iphone-14",
+      "screens": [
+        "add-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/add-expense.iphone-14.png",
+      "screenshotSha256": "ebea957709bb3d33997fd7f755b66d3bfac56d351857a3f6ba285d78579f841e"
+    },
+    "add-expense.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "831810dbd8eb41b87b96ae030fddd0a25da863dbd2dfeaa0243867bcd3878407",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "add-expense.iphone-14",
+      "screens": [
+        "add-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/add-expense.iphone-14.png",
+      "screenshotSha256": "9bc52ac6a56bff23b824a9fe7b4d5864a61f282623c09563ba79360366ddc952"
+    },
+    "add-refund.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "de49ed09de8d06cd9027fed5c065f7c6428e023b3c34b474bebd0d96eb1cbc96",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "add-refund.iphone-14",
+      "screens": [
+        "add-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/add-refund.iphone-14.png",
+      "screenshotSha256": "deecffe498303af24c3b296730a9cafae3b8f8b577376eb4b8f7841e3e616e3b"
+    },
+    "add-refund.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "0f5aa4f4924f3a539c5781b86f92a46e1c2b597f9c0b1703082be6783f5f3608",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "add-refund.iphone-14",
+      "screens": [
+        "add-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/add-refund.iphone-14.png",
+      "screenshotSha256": "5dc41107da10293fd0a949561f729f8e1f9b55e4c0ab7de6a6f51468f7ad7e21"
+    },
+    "add-refund.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "107c9eed360363936bbb8c476421ff4252f1bf037b5346364d794993eab95c49",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "add-refund.iphone-14",
+      "screens": [
+        "add-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/add-refund.iphone-14.png",
+      "screenshotSha256": "23e211e79c64740e179d5f94eb3d0a4d1f38b175aebc36b17e54ee53a644c009"
+    },
+    "edit-expense.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "83df080a9baa570b45d9c9d0eec46df453ad719b81185d2f20521ae7cf08f52a",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "edit-expense.iphone-14",
+      "screens": [
+        "edit-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/edit-expense.iphone-14.png",
+      "screenshotSha256": "a7fe21256272817d24d1ceea0989ffb31677a7f01a9e268f9bddb9526a321e08"
+    },
+    "edit-expense.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "aa565c1aa56b2f5d2b13efd5f1202dde5131b96309472d63cfafee81fd10880b",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "edit-expense.iphone-14",
+      "screens": [
+        "edit-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/edit-expense.iphone-14.png",
+      "screenshotSha256": "03122466127fc60784a4dc7f58a9c50e5bcb6e2d80fc9a7532acdf7042781bf8"
+    },
+    "edit-expense.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "1f4af4a5e580a9197ef85edc7bacfbeebbabba6dfb25eb08f6375e43924afd69",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/edit-expense.iphone-14.html": "18ebe7a581a30081ebd4bc3069d8e3e26d299e322a55929add2859d7e4215abc",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "edit-expense.iphone-14",
+      "screens": [
+        "edit-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/edit-expense.iphone-14.png",
+      "screenshotSha256": "8262722290204aa39f19680cb91e5b20e3f3c441114cf879cb522a4b7375064f"
+    },
+    "monthly-summary.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "2fd19e990f090ed681592d302f827212f7f264c0aac34febb22721e435feeac4",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/monthly-summary.iphone-14.html": "518c40ae4df075312e11e2f7bbcb22b9f3100651bb2a6e0000ab4691adc38d14",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "monthly-summary.iphone-14",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/monthly-summary.iphone-14.png",
+      "screenshotSha256": "d655c15f30fa7663133b8801cb4bf5c97dcf45850614ba76c8cef5ba9e25d9c5"
+    },
+    "monthly-summary.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "d6ba85b3385b6462bd8a8d0aeb64dbc2bfb27f0278de69983f3200962b2368f2",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/monthly-summary.iphone-14.html": "518c40ae4df075312e11e2f7bbcb22b9f3100651bb2a6e0000ab4691adc38d14",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "monthly-summary.iphone-14",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/monthly-summary.iphone-14.png",
+      "screenshotSha256": "1ffcc25eca59a5f972327a977686b07f093b8e404d9162a2410895cf8cd54653"
+    },
+    "monthly-summary.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "c4ccd08ae0303db333b93c810363f8df2041cdd5c1840f18e3f2d79ae498e254",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/monthly-summary.iphone-14.html": "518c40ae4df075312e11e2f7bbcb22b9f3100651bb2a6e0000ab4691adc38d14",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "monthly-summary.iphone-14",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/monthly-summary.iphone-14.png",
+      "screenshotSha256": "d33acb40b36f389632dc28addd5adc984f93c50f273ece6b63af909a50f35db6"
+    },
+    "states/category-detail.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "9ddf3a3bb5a794e91405c8a0aaff2fa949ca82b58ff755f594bc9f05fd6ed1da",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/category-detail.iphone-14",
+      "screens": [
+        "states/category-detail.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/category-detail.iphone-14.png",
+      "screenshotSha256": "f0d033cf28e3e87699cc85fe73390dcbf3a25ce78594c1a36877417073558a3a"
+    },
+    "states/category-detail.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "0cb853059083bb63d74ce503755356edbdf1e3d7ee9c53c8f1bffa74bac88c75",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/category-detail.iphone-14",
+      "screens": [
+        "states/category-detail.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/category-detail.iphone-14.png",
+      "screenshotSha256": "2e388a9d0fdf146bb084ca6c070339abbbaec2927f25ef0280d2f19d2785af1a"
+    },
+    "states/category-detail.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "9f376daa40afb3b6a518635dc775f8cd4ef64d7a5c96b8610bc4109c1220b1d9",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "781a21e1b159ac42fa5ce7c90e256cbc84b707239ff1d57b7c9e637ef4f95680"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/category-detail.iphone-14",
+      "screens": [
+        "states/category-detail.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/category-detail.iphone-14.png",
+      "screenshotSha256": "4ae6e6b937eb1d1b6310bd5731a09016e7d7e93807fdeb7f5843dd4101def491"
+    },
+    "states/delete-confirmation.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "7d4d629402dd6d9fe7c8132867d1e7782b690f7c6b81b81b68823885dbb86866",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/delete-confirmation.iphone-14",
+      "screens": [
+        "states/delete-confirmation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/delete-confirmation.iphone-14.png",
+      "screenshotSha256": "cf84d83ff7c43bd533e54840ee005154cae95fe02a665ee0b4254169c7e5efce"
+    },
+    "states/delete-confirmation.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "42ebb5c3a5c4c3b88b83b2fde5340cb5601548d898515ede708d9ab606ab445f",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/delete-confirmation.iphone-14",
+      "screens": [
+        "states/delete-confirmation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/delete-confirmation.iphone-14.png",
+      "screenshotSha256": "0e2023df9c5a6444d3cc18ad1029ff99986c4b496d00fd0194b175568e0dabbd"
+    },
+    "states/delete-confirmation.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "e974157535be4874ae7cd8b2a9599eaef473f7f912387febbba7d9309ee079c6",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "99124d4dd580b1c73eb7d00fe83ff6b326423918119a321386f00714db13a1e5"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/delete-confirmation.iphone-14",
+      "screens": [
+        "states/delete-confirmation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/delete-confirmation.iphone-14.png",
+      "screenshotSha256": "29ca14c5a221a5fd4b4c4dd3a8cc09044473f6b70ad27e183c7e58a6b9c25dcb"
+    },
+    "states/deleted.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "d7f021cd24b73bdd933660963fd74dbb3d0c4206afa49b5be84df63a32225c0e",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/deleted.iphone-14.html": "a2b6aa41d5914c15ee8ff225cfe6309c540768b97f1de46890674c0f785a6214"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/deleted.iphone-14",
+      "screens": [
+        "states/deleted.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/deleted.iphone-14.png",
+      "screenshotSha256": "89384dff03a7758085c3bcb1d3cfe77b2a10e7ce2c89608a833904796a65bdfd"
+    },
+    "states/deleted.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "05587653fdd5cfa846238b6c509ebf0b647753c51e23871c54946a494a01cde1",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/deleted.iphone-14.html": "a2b6aa41d5914c15ee8ff225cfe6309c540768b97f1de46890674c0f785a6214"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/deleted.iphone-14",
+      "screens": [
+        "states/deleted.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/deleted.iphone-14.png",
+      "screenshotSha256": "f3897611098257b4db4e83cf4b9130ff64cedb5514929cb4b53ece13b96f78b4"
+    },
+    "states/deleted.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "33192a487cbbd3ef56f0e09b0133d21bbc778b5dcdbe6895b21828724cf49fbf",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/deleted.iphone-14.html": "a2b6aa41d5914c15ee8ff225cfe6309c540768b97f1de46890674c0f785a6214"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/deleted.iphone-14",
+      "screens": [
+        "states/deleted.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/deleted.iphone-14.png",
+      "screenshotSha256": "42e4e51c6d30d8a096495fa897864d27d7afab0b22b56d82af77a3203f492010"
+    },
+    "states/dense.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "eb25e14ace7c95f8a627fc435c399dd46fe5da800eea9cd153242519d449cffa",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/dense.iphone-14",
+      "screens": [
+        "states/dense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/dense.iphone-14.png",
+      "screenshotSha256": "b343f5ea9a4d2d768385fa4fcd0f620ea12882750bba7eef0842b29adeea4612"
+    },
+    "states/dense.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "034a8036f60352806a0ed72a0ebcba6857968e468135f2fe91b63dd1b93014be",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/dense.iphone-14",
+      "screens": [
+        "states/dense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/dense.iphone-14.png",
+      "screenshotSha256": "044124c81fefa7db28ae0ae34ddb6685e038fe1a46c35ea0750424957382db5e"
+    },
+    "states/dense.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "58d5dc01402e943b1a371f32fcd7d7a2a6ef56b906323c72ba65ab01a189244b",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "dcec18d2c79ba071d3dee2aac36aaebc6b5e1ec4dad77394ebcaa5bd57a31f46"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/dense.iphone-14",
+      "screens": [
+        "states/dense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/dense.iphone-14.png",
+      "screenshotSha256": "cef705dc42557de4895621e1a6c6af46394be52ff4f0917dde755b6d1c5c24d5"
+    },
+    "states/edit-refund.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "5d0c88180bafe4bb3e2d3eebe0cfdf1adadaa5d4d45ce6c753b2e61ed42edc56",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/edit-refund.iphone-14",
+      "screens": [
+        "states/edit-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/edit-refund.iphone-14.png",
+      "screenshotSha256": "6e89cfae2861a7350345193a6dd15d1348266863015eeff67054da098a28dabd"
+    },
+    "states/edit-refund.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "bcdf677862d1365bae5ce69056970351720c089ac0f5e9ee1d1fd4fd3f4340e3",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/edit-refund.iphone-14",
+      "screens": [
+        "states/edit-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/edit-refund.iphone-14.png",
+      "screenshotSha256": "1a5e0aa08ed3f38db9a9f52b910b955e1df69354301f3dbc5ca00291afdc7730"
+    },
+    "states/edit-refund.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "d6d846063c3cdb88973d9b71d81027c18ad1a7bfa2ee5f2828cd768e955619e7",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "f2def5ea08ede1f663052907567356db89c2f7305f1dcd781b1a9ea5c86b15e5"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/edit-refund.iphone-14",
+      "screens": [
+        "states/edit-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/edit-refund.iphone-14.png",
+      "screenshotSha256": "8f5fb5b065f33f17025b58f8379d0294cfc6fe1d628c6510af4f7c0d4ff92abd"
+    },
+    "states/empty.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "4f2e821412598aeb3bf418afc00a9a515fba4696b2fd0e8a657431f01c447d8a",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/empty.iphone-14",
+      "screens": [
+        "states/empty.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/empty.iphone-14.png",
+      "screenshotSha256": "fc2f9aba9bb6e2c7ac49a256b439f4d2ccf19f2f797806779a0358fcdf2570d1"
+    },
+    "states/empty.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "97b8b9b4e6067b2ffab839bc5270a6c92c6815235ad236675f6b3bde2e8fbbcb",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/empty.iphone-14",
+      "screens": [
+        "states/empty.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/empty.iphone-14.png",
+      "screenshotSha256": "1e0d69e06ae8c1eea96ab4bac2b26bad281c399aee20a55b070d892b75f7095d"
+    },
+    "states/empty.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "792ce514611751a49e48b65dd8715d2687618f2a158abc8140519984b3a0b3ef",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/empty.iphone-14",
+      "screens": [
+        "states/empty.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/empty.iphone-14.png",
+      "screenshotSha256": "b937db7506a184b8af89d31bc0bfc2c61476ddad37c9b7e48cb3f9386d99e4c5"
+    },
+    "states/expense-menu.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "18b1d67efc47a0f52f74694c9d0e02270c06bd72c5f122d9eb10d48fbadd1791",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/expense-menu.iphone-14.html": "7564c4d389c522cb79277fdea2c9464ebcb8d77a429e84824db532970b42842e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/expense-menu.iphone-14",
+      "screens": [
+        "states/expense-menu.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/expense-menu.iphone-14.png",
+      "screenshotSha256": "8f35a078ee674d85a39de6dad2dd7d9d044250f50fd29959bee5f06bb82b56c0"
+    },
+    "states/expense-menu.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "75e21ac1ac4fe2cf2a8ef29b50f8142cb2548d195ecdac46a63539efb6167015",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/expense-menu.iphone-14.html": "7564c4d389c522cb79277fdea2c9464ebcb8d77a429e84824db532970b42842e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/expense-menu.iphone-14",
+      "screens": [
+        "states/expense-menu.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/expense-menu.iphone-14.png",
+      "screenshotSha256": "3ad2780e968b7c70e825218de57f6d775f6f13c510e6466a64cd8b31e1954a5f"
+    },
+    "states/expense-menu.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "ef0f6c13febb8e94f1ce9f831394a177697059aaeefd9d3639a3f1c0d3e3569f",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/expense-menu.iphone-14.html": "7564c4d389c522cb79277fdea2c9464ebcb8d77a429e84824db532970b42842e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/expense-menu.iphone-14",
+      "screens": [
+        "states/expense-menu.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/expense-menu.iphone-14.png",
+      "screenshotSha256": "c3e7effd160bb606caf58e98d3c606d89ca059c29398fabe88c4e33a63e17571"
+    },
+    "states/long-content.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "8316c34cbd91f74c8f4c8dc56abed226b6ae7afc69146951c6d0d8bc60f6bce9",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/long-content.iphone-14",
+      "screens": [
+        "states/long-content.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/long-content.iphone-14.png",
+      "screenshotSha256": "faf80a9c5a688a44cadcf94fb2cc51c6e14c2ddd15e5ec47b5c3ec0d959f6d38"
+    },
+    "states/long-content.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "013e1061f5874eb7971eb8a2bfee8dd83c201f03dce84ff9a98a4feac4b79450",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/long-content.iphone-14",
+      "screens": [
+        "states/long-content.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/long-content.iphone-14.png",
+      "screenshotSha256": "f790a2e80c4c7fa5d49f8fceb7e01f1234d8392d95b8f34299dac5f7a4e49dbb"
+    },
+    "states/long-content.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "1bbd7aa41b05d491a578e89c94c8f55aff413be9341a9fe34e7be6c6dac324ee",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/long-content.iphone-14.html": "7cc227c32684a4777f327dc29603762416cceb9893dbc8aaeb0f1a7b9720f7eb"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/long-content.iphone-14",
+      "screens": [
+        "states/long-content.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/long-content.iphone-14.png",
+      "screenshotSha256": "529490ff74d64fda73814a51109dd1d92466d7a3331f5bd7c4ef757b8bdc544e"
+    },
+    "states/one-item.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "efb49f1a3a0e95bb85f4cb9e191b9537ae19260709334d03763cf08efadf3356",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/one-item.iphone-14.html": "454a205aa16d7719e6a8adfe4b496ac6c56560c7e7271e2b7ab05d7396bb3b69"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/one-item.iphone-14",
+      "screens": [
+        "states/one-item.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/one-item.iphone-14.png",
+      "screenshotSha256": "59a73895c444fee956357e27c808f3c33cb454b265e57a4988684cfb9ed05666"
+    },
+    "states/one-item.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "ad6e4959d720fd3d3b10990b05806dd14b2137253a6aa1a9b73c7f5382b93219",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/one-item.iphone-14.html": "454a205aa16d7719e6a8adfe4b496ac6c56560c7e7271e2b7ab05d7396bb3b69"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/one-item.iphone-14",
+      "screens": [
+        "states/one-item.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/one-item.iphone-14.png",
+      "screenshotSha256": "2b228b54059b68be151438a68cac562073da065d7152a9a8a769467c0bffcd09"
+    },
+    "states/one-item.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "b1f97c7e70bd694327b00ebb32f0771fc3a459bc4d4d772ec09476151396b37c",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/one-item.iphone-14.html": "454a205aa16d7719e6a8adfe4b496ac6c56560c7e7271e2b7ab05d7396bb3b69"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/one-item.iphone-14",
+      "screens": [
+        "states/one-item.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/one-item.iphone-14.png",
+      "screenshotSha256": "71e2873f728f628ca80c3f5166f1f8ec19b2614e0650c5295f7158ec6b964bf3"
+    },
+    "states/validation.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "fab9fcab6bea115a9c3e930c50bb8dbdcb2ccd6764c4ef9f5349eb8fdb7be1ab",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/validation.iphone-14",
+      "screens": [
+        "states/validation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/validation.iphone-14.png",
+      "screenshotSha256": "b324028002eaa9e27af4b06e1b9ae3efabc305d317035acef324a376834f5a85"
+    },
+    "states/validation.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "08a670e3be0b7c1abd3670194733318b112dcfcde98e2dad8239c6e6d9e040f4",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/validation.iphone-14",
+      "screens": [
+        "states/validation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/validation.iphone-14.png",
+      "screenshotSha256": "abac528472342f3e0feac24ad531c83389922088810c599536c82f5d451205ce"
+    },
+    "states/validation.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "f03f8e81f46fc4600a89b5a17f3dab0dd98445a8454a1007763e6c20753f1c71",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "states/validation.iphone-14",
+      "screens": [
+        "states/validation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/validation.iphone-14.png",
+      "screenshotSha256": "af2c4ced93b54bfd85d53b68c63cde71afb073b5abbe70c258f7b6701c7c9c26"
+    },
+    "today.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "75e64864b7bf0ff4b4bfc378dc9a0c0dc33e02c74b74aee5b63548ca1cad26e9",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "today.iphone-14",
+      "screens": [
+        "today.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/today.iphone-14.png",
+      "screenshotSha256": "525d0ba08f72e0f1ddc0ae5c1f824aa034b3d085f2d2bb09222c51c32a08e788"
+    },
+    "today.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "c16182c623d74cfa857284e7eef03b40a916c2756dff82495ab860228d67bfef",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "today.iphone-14",
+      "screens": [
+        "today.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/today.iphone-14.png",
+      "screenshotSha256": "2f6713f06e9540a87c9a480222161f0a520e247fea91b712917d4f5dc4ba5a26"
+    },
+    "today.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "819dd0a384d30f421ef150c6d6801bbbe024d466323850c81a871d242955e77b",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "9a40058b713f486a19e772bbfeec82c08d4ace3bda1df9f45272a69b40cacf5e"
+      },
+      "proof": "Re-rendered all 45 delivery targets after adding source-only natural-language interaction annotations. SHA-256 comparison confirms every PNG is byte-identical to the previously reviewed delivery set. Re-inspection of Today at 375×667, the expense menu at 390×844, and the deleted/Undo state at 412×915 confirms unchanged hierarchy, legibility, shell placement, and progressive destructive flow.",
+      "screen": "today.iphone-14",
+      "screens": [
+        "today.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/today.iphone-14.png",
+      "screenshotSha256": "3acdad43d1a82dccf2dedbd14260d457efd950625ab7fbef00ae92e6b60f40aa"
+    }
+  }
+}

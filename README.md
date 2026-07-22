@@ -58,14 +58,14 @@ custom folder. `init` creates no HTML screens and is idempotent: when a valid
 config already exists it prints the full effective config and changes nothing.
 Pass `--force` to replace only init-owned config, CSS, and guidance files.
 
-Try it against the bundled example project (a recipe app, "GoodPlate"):
+Try it against the bundled example project (a budgeting app, "Ledgerly"):
 
 ```sh
 # 1. Browse the screens in the phone-sized viewer
 npx mocklens serve --config example/mocklens.config.json
 #    → open http://localhost:4173
 
-# 2. Edit a screen, e.g. example/screens/home.html
+# 2. Edit a screen, e.g. example/screens/today.iphone-14.html
 
 # 3. Screenshots + validation in one run
 npx mocklens check --config example/mocklens.config.json
@@ -73,14 +73,45 @@ npx mocklens check --config example/mocklens.config.json
 # 4. Inspect: terminal report, example/.mocklens/report.json,
 #    and example/.mocklens/screenshots/<device>/*.png
 
-# 5. Fix whatever the report points at
-# 6. Re-run check until it prints PASS (exit 0)
+# 5. Review and record any missing UX or visual checkpoints
+# 6. Re-run the full check until it prints DELIVERY READINESS — PASS (exit 0)
 ```
 
 `--config` paths resolve **relative to the config file's location**, so the
 commands above work from the repo root: screens come from `example/screens/`,
 output lands in `example/.mocklens/`. Inside `example/` you can drop the flag —
 `mocklens.config.json` is discovered from the cwd.
+
+## Task-first design workflow
+
+Use the project loop taught by [`skills/mocklens-design`](skills/mocklens-design):
+
+**Intent → Model → Cover → Establish system → Compose → Stress → Check → Task-review → Visual-review → Deliver**
+
+Start by identifying users, jobs, entities, relationships, mutable data, and
+the complete create/view/edit/delete-or-archive/correction/confirmation/recovery
+paths. Convert that reasoning into `mocklens.ux.json` before generating
+screens. For each user-managed collection, either cover empty, one-item,
+typical, dense, long-content, missing-optional, and nested/grouped states, or
+record a concrete reason that a state is not applicable. Treat loading, error,
+offline, permission, disabled, destructive confirmation, success, and recovery
+the same way.
+
+Establish shared tokens and components on one representative reference screen,
+then design the hardest credible content state before polishing the typical
+state. Above the fold, give space to task data and task entry points before
+greetings, hero artwork, promotional copy, generic headlines, or decorative
+summaries. Every large region should support a decision or advance a task.
+
+Independent screen families can progress asynchronously. Keep one owner for
+`shared.css`, assign all states of a family to one owner when possible, and
+rejoin for cross-family task, action, consistency, and visual review. The
+integration gate is always a full, unfiltered `mocklens check`.
+
+The stopping condition is explicit: delivery is ready only when that full check
+reports current sanity, UX proof, visual proof, and `DELIVERY READINESS — PASS`
+for every required screen/device. A focused pass or attractive screenshot is
+not sufficient.
 
 ## Concepts
 
@@ -216,29 +247,29 @@ The version 1 schema is:
 ```json
 {
   "version": 1,
-  "goal": "Ship a recipe flow that makes the next action obvious.",
+  "goal": "Help a budget owner record spending and correct mistakes quickly.",
   "delivery": {
-    "screens": ["home", "detail", "states/empty"],
+    "screens": ["today", "add-expense", "states/empty"],
     "devices": ["iphone-14", "pixel-7"]
   },
   "requirements": [
     {
-      "id": "discoverable-create-action",
+      "id": "discoverable-expense-actions",
       "kind": "screen",
-      "description": "The home screen exposes a clearly labeled create entry point.",
-      "screens": ["home"]
+      "description": "Daily spending exposes create, edit, and delete entry points.",
+      "screens": ["today"]
     },
     {
       "id": "empty-to-created-flow",
       "kind": "flow",
-      "description": "The empty state explains recovery and leads into the created detail state.",
-      "screens": ["states/empty", "detail"]
+      "description": "The empty state starts expense creation and the form supports correction.",
+      "screens": ["states/empty", "add-expense"]
     },
     {
-      "id": "dense-content-hierarchy",
+      "id": "task-first-hierarchy",
       "kind": "screen-family",
-      "description": "Primary data and actions precede low-value decoration across dense screens.",
-      "screens": ["home", "detail"]
+      "description": "Primary spending data and actions precede low-value decoration.",
+      "screens": ["today", "add-expense"]
     }
   ]
 }
@@ -248,12 +279,23 @@ Requirement IDs use stable lowercase kebab-case. `kind` is `screen`,
 `screen-family`, or `flow`. Delivery screens, requirement screens, and delivery
 devices must exist. Mocklens rejects malformed JSON, duplicate IDs, unsafe
 paths, and unknown screens/devices before touching checkpoint state.
+Use the exact name from `mocklens list`: generated variants include their
+device suffix (for example `today.iphone-14`). Confirm `mocklens --help` lists
+both checkpoint commands before relying on readiness enforcement; older
+sanity-only releases cannot evaluate the manifest.
 
 After reviewing a requirement, record concrete evidence rather than a verdict:
 
+When an interaction cannot be understood from a static render, add a
+plain-language `data-mocklens-action` attribute to the actionable element. Name
+the trigger and result, plus the accessible non-gesture path for gestures such
+as swipe, long press, double tap, or drag. There is no required grammar: the
+attribute documents intent. Checkpoint proof should quote or paraphrase that
+behavior and name the screens that demonstrate material outcomes.
+
 ```sh
-mocklens checkpoint ux discoverable-create-action \
-  --proof "The labeled Add recipe button is visible in the first viewport above recent recipes."
+mocklens checkpoint ux discoverable-expense-actions \
+  --proof "Expense rows declare that tap opens editing, swipe left reveals Delete, and long press opens the actions menu; the menu, confirmation, and deleted screens demonstrate removal and Undo."
 ```
 
 The command adds or replaces that requirement in
@@ -263,11 +305,11 @@ inspect every resulting viewport PNG, then record the complete screen/device
 batch:
 
 ```sh
-mocklens check --screen home --screen detail --device iphone-14
+mocklens check --screen today --screen add-expense --device iphone-14
 mocklens checkpoint visual \
-  --screen home --screen detail \
+  --screen today --screen add-expense \
   --device iphone-14 \
-  --proof "Primary actions, hierarchy, and long labels were inspected in both viewport PNGs."
+  --proof "Both viewport PNGs keep task data and controls first, with consistent compact spacing."
 ```
 
 Visual checkpointing is all-or-nothing. Every requested combination must have
@@ -282,6 +324,12 @@ proof also records the viewport PNG hash. Consequently, relevant HTML, shared
 CSS, requirement, device, or screenshot changes make proof stale while an
 unrelated screen edit and an identical regenerated screenshot do not. Stale
 reasons identify inputs such as `screens/shared.css changed`.
+
+Recover from stale proof by re-running the focused check named in the report,
+inspecting the current referenced screens or PNGs together, and replacing the
+checkpoint with new concrete evidence. Do not mechanically replay old proof:
+staleness means the reviewed artifact changed. Editing an unrelated screen
+does not require lockstep re-review of independent families.
 
 When a UX manifest is present, `mocklens check` enforces current UX and visual
 proof in addition to mechanical sanity. A full check covers every delivery
@@ -306,12 +354,12 @@ record independent evidence without silently losing one another's entries.
 ## Agent design-loop skill
 
 The repo includes [`skills/mocklens-design`](skills/mocklens-design), a reusable
-skill that teaches the complete Mocklens loop:
+skill that teaches the complete task-first, stress-first Mocklens loop:
 
-**Frame → Inventory → Create → Compose → Sanity-check → Refine → Visually verify → Deliver**
+**Intent → Model → Cover → Establish system → Compose → Stress → Check → Task-review → Visual-review → Deliver**
 
-It treats `check` stdout as the authoritative iteration report and requires
-visual inspection of the final screenshots as the delivery gate.
+It requires complete action and state coverage, concrete UX evidence, visual
+inspection of the complete requested set, and a full delivery-readiness pass.
 
 ## What `validate` checks
 
@@ -354,7 +402,7 @@ html, body { overflow-x: hidden; }
 
 With the root clamp, `document-overflow` stays silent while the (suppressed)
 element finding documents the intentional bleed. See
-`example/screens/home.html` for a peeking carousel and
+`fixtures/screens/carousel-peek.html` for a peeking carousel and
 `fixtures/screens/decorative-intentional.html` for the blob pattern.
 
 Deliberate external resources (e.g. a font CDN you're mocking against) can be
@@ -467,7 +515,7 @@ src/        the tool (types, config, screens, browser, screenshot, validate,
             report, viewer, cli — plain TypeScript, strict, ESM)
 fixtures/   the main test project plus focused overlay-coverage fixtures
 fixture_results/ checked-in CLI transcripts generated from named fixture tests
-example/    the GoodPlate demo project (all screens pass)
+example/    the Ledgerly budgeting dogfood project (all readiness gates pass)
 tests/      vitest end-to-end suite driving the real CLI
 skills/     the repo-local Mocklens design-loop skill
 ```

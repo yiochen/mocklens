@@ -48,6 +48,12 @@ describe('init command', () => {
       screensDir: string;
     };
     expect(config.screensDir).toBe('screens');
+    const guidance = fs.readFileSync(path.join(cwd, 'screens', 'README.md'), 'utf8');
+    expect(guidance).toContain('Intent → Model → Cover');
+    expect(guidance).toContain('hardest credible content state');
+    expect(guidance).toContain('data-mocklens-action');
+    expect(guidance).toContain('mocklens checkpoint ux');
+    expect(guidance).toContain('DELIVERY READINESS — PASS');
 
     const list = runCli(cwd, ['list']);
     expect(list.status).toBe(0);

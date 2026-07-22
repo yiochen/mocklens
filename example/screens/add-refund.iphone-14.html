@@ -1,0 +1,15 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="mocklens:form-factor" content="phone"><meta name="mocklens:primary-device" content="iphone-14"><meta name="mocklens:target-devices" content="iphone-se,iphone-14,pixel-7"><meta name="mocklens:viewport" content="390x844"><title>Ledgerly — Add refund</title><link rel="stylesheet" href="./shared.css"></head>
+<body><main class="screen stack form-screen">
+  <header class="taskbar"><button class="icon-button" aria-label="Close">×</button><h1>Add refund</h1><span class="spacer"></span></header>
+  <div class="form-intro"><p class="support">Record money returned to reduce category spending.</p></div>
+  <form class="form-card credit-form">
+    <div class="field"><label>Transaction type</label><div class="type-switch" role="group" aria-label="Transaction type"><button class="type-option" type="button">Expense</button><button class="type-option active credit" type="button">Refund</button></div></div>
+    <div class="field"><label for="refund-amount">Amount</label><input id="refund-amount" value="$14.99" inputmode="decimal"><span class="help">Enter a positive USD amount; Ledgerly records it as −$14.99.</span></div>
+    <div class="field"><label for="refund-merchant">Merchant</label><input id="refund-merchant" value="Corner Market"></div>
+    <div class="field"><label for="refund-category">Category</label><select id="refund-category"><option selected>Groceries</option><option>Dining</option><option>Transit</option></select></div>
+    <div class="field-row"><div class="field"><label for="refund-date">Date</label><input id="refund-date" value="Jul 21, 2026"></div><div class="field"><label for="refund-time">Time</label><input id="refund-time" value="6:17 PM"></div></div>
+    <div class="field"><label for="refund-note">Note <span class="help">optional</span></label><textarea id="refund-note">Linked to original purchase</textarea></div>
+    <div class="credit-note">Refunds subtract from daily and category spending after you save.</div>
+    <div class="form-actions"><button class="button" type="button">Save refund</button></div>
+  </form>
+</main></body></html>
