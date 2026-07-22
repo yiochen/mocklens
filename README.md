@@ -163,9 +163,9 @@ Exit codes:
 
 | Code | Meaning |
 | --- | --- |
-| 0 | Success (`validate`/`check`: no unsuppressed error findings) |
-| 1 | Validation found unsuppressed **error** findings |
-| 2 | Usage error, malformed/missing config, missing screens dir, IO failures |
+| 0 | Requested sanity checks pass and, for `check` with UX tracking, all requested proof is current |
+| 1 | Unsuppressed sanity errors or required UX/visual proof is missing or stale |
+| 2 | Usage error, malformed configuration/manifest/ledger, unknown target, or IO failure |
 
 Expected errors print a single clear line (never a stack trace).
 
@@ -283,10 +283,21 @@ CSS, requirement, device, or screenshot changes make proof stale while an
 unrelated screen edit and an identical regenerated screenshot do not. Stale
 reasons identify inputs such as `screens/shared.css changed`.
 
-When a UX manifest is present, `mocklens check` prints a separate checkpoint
-summary with `CURRENT`, `MISSING`, or `STALE` for every requirement and delivery
-screen/device combination, plus specific stale reasons. This is evidence
-reporting only: it does not alter `check` exit semantics or `report.json`.
+When a UX manifest is present, `mocklens check` enforces current UX and visual
+proof in addition to mechanical sanity. A full check covers every delivery
+screen, delivery device, requirement, and required screen/device visual pair;
+only that unfiltered run can print project-level `DELIVERY READINESS — PASS`.
+A filtered check evaluates intersecting requirements and selected delivery
+screen/device pairs, prints `UX proof scope: FILTERED`, and explicitly says that
+project delivery readiness was not evaluated.
+
+Missing work includes the requirement kind, description, targets, and exact
+`mocklens checkpoint` command to run after review. Stale work includes recorded
+and current hashes, actionable causes, and replacement guidance. Mocklens
+verifies evidence presence and freshness; it never claims to judge the truth or
+quality of a subjective UX assertion. `validate` remains sanity-only, and a
+project without `mocklens.ux.json` retains the existing sanity-only `check`
+output and exit behavior.
 
 Checkpoint writes take an exclusive bounded lock, reload the latest ledger,
 write a temporary file, and atomically rename it. Parallel agents can therefore
@@ -351,7 +362,7 @@ allowed per host via `allowedExternalHosts` — prefer bundling locally.
 
 ## Reports
 
-Terminal output from `check` is the complete agent-facing sanity report. It
+Terminal output from `check` is the complete agent-facing delivery report. It
 includes PASS/FAIL, FULL/FILTERED coverage, unique screen/device/combination
 counts, requested filters, every rule checked, source and screenshot paths,
 findings with both overlay and victim geometry where relevant, suggestions,
@@ -374,11 +385,28 @@ document-overflow (iphone-14 390×844)
 SANITY CHECK FAIL: 1 unique screens × 1 devices = 1 combinations; 2 errors, 0 warnings, 0 suppressed.
 ```
 
-`<outDir>/report.json` is the machine-readable form (2-space indent,
-deterministic key order, no timestamps — diffs are stable within `version: 2`):
+With UX tracking, the terminal then renders separate verdicts and the actual
+next unmet gates:
 
 ```
-{ version: 2, tool: "mocklens", scope, screens: ScreenReport[], summary }
+MOCKLENS SANITY CHECK — PASS
+UX PROOF — FAIL
+VISUAL PROOF — FAIL
+DELIVERY READINESS — FAIL
+```
+
+When no gates remain, a full check prints:
+
+```
+DELIVERY READINESS — PASS
+All required delivery screens and devices have current sanity, UX, and visual proof.
+```
+
+`<outDir>/report.json` is the machine-readable form (2-space indent,
+deterministic key order, no timestamps — diffs are stable within `version: 3`):
+
+```
+{ version: 3, tool: "mocklens", scope, screens: ScreenReport[], readiness, summary }
 scope        = { command, coverage, config, requested, configured, covered }
 ScreenReport = { name, source, screenshot, device, viewport: {width,height}, ok, findings: Finding[],
                  counts: { error, warning, suppressed } }
@@ -387,7 +415,15 @@ Finding      = { type, severity: "error"|"warning", suppressed, message, suggest
                  coveredElement?: ElementInfo, overlap?: {width,height,area,scrollX,scrollY},
                  detail?: string }
 summary      = { uniqueScreens, devices, combinations, errors, warnings, suppressed, ok }
+readiness    = { evaluated, uxTrackingConfigured, proofScope, coverage, counts, requirements,
+                 visual, remainingProject, sanityOk, uxProofOk, visualProofOk, ready }
 ```
+
+Each readiness requirement records its ID, kind, description, status, proof,
+recorded/current input hashes, screen/device targets, and stale reasons. Each
+visual entry records the required screen/device pair, the same proof and hash
+state, and recorded/current screenshot hashes. Terminal and JSON are built from
+the same readiness object, so their counts and verdicts agree.
 
 Findings are sorted (type, then selector); rect/viewport numbers are rounded to
 0.1px. `screenshots/manifest.json` lists every PNG:

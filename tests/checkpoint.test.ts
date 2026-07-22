@@ -7,8 +7,10 @@ import { spawn } from 'node:child_process';
 import crypto from 'node:crypto';
 import { loadConfig, MocklensError } from '../src/config.js';
 import { discoverScreens } from '../src/screens.js';
+import type { Report } from '../src/types.js';
 import {
   buildVisualInputs,
+  buildReadinessReport,
   checkpointUx,
   checkpointVisual,
   loadCheckpointLedger,
@@ -16,6 +18,7 @@ import {
   uxCheckpointStatus,
   visualCheckpointStatus,
   renderCheckpointSummary,
+  renderReadinessReport,
 } from '../src/checkpoint.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -102,6 +105,30 @@ describe('UX manifest validation', () => {
 });
 
 describe('UX checkpoints and staleness', () => {
+  it('builds actionable full and filtered readiness reports', () => {
+    const cwd = project();
+    writeManifest(cwd);
+    const { config, screens, manifest } = context(cwd);
+    const full = buildReadinessReport(config, manifest, screens, screens, config.devices, 'FULL', true);
+    expect(full.counts.ux).toEqual({ current: 0, missing: 2, stale: 0, total: 2 });
+    expect(full.counts.visual).toEqual({ current: 0, missing: 2, stale: 0, total: 2 });
+    expect(full.ready).toBe(false);
+    const output = renderReadinessReport(full);
+    expect(output).toContain('UX PROOF — FAIL');
+    expect(output).toContain('VISUAL PROOF — FAIL');
+    expect(output).toContain('DELIVERY READINESS — FAIL');
+    expect(output).toContain('MISSING clear-primary-action [screen]');
+    expect(output).toContain('mocklens checkpoint ux clear-primary-action --proof');
+    expect(output).toContain('mocklens checkpoint visual --screen home --device phone --proof');
+    expect(output).toContain('does not judge the truth or quality');
+
+    const home = screens.filter((screen) => screen.name === 'home');
+    const filtered = buildReadinessReport(config, manifest, screens, home, config.devices, 'FILTERED', true);
+    expect(renderReadinessReport(filtered)).toContain('Project delivery readiness was not evaluated.');
+    expect(filtered.ready).toBe(false);
+    expect(filtered.remainingProject).toEqual({ ux: 2, visual: 2 });
+  });
+
   it('records and replaces deterministic, human-readable proof', () => {
     const cwd = project();
     writeManifest(cwd);
@@ -282,4 +309,77 @@ describe('expected errors', () => {
       expect(error).toBeInstanceOf(MocklensError);
     }
   });
+});
+
+describe('check readiness end to end', () => {
+  it('enforces missing, current, filtered, and stale proof with schema v3 agreement', async () => {
+    const cwd = project();
+    writeManifest(cwd);
+    fs.appendFileSync(path.join(cwd, 'screens', 'home.html'), '<script src="behavior.js"></script>\n');
+    fs.writeFileSync(path.join(cwd, 'screens', 'behavior.js'), '');
+
+    const missingUx = await cli(cwd, ['check']);
+    expect(missingUx.code, missingUx.stderr).toBe(1);
+    expect(missingUx.stdout).toContain('MOCKLENS SANITY CHECK — PASS');
+    expect(missingUx.stdout).toContain('UX PROOF — FAIL');
+    expect(missingUx.stdout).toContain('VISUAL PROOF — FAIL');
+
+    expect((await cli(cwd, ['checkpoint', 'ux', 'clear-primary-action', '--proof', 'Primary action reviewed'])).code).toBe(0);
+    expect((await cli(cwd, ['checkpoint', 'ux', 'detail-flow', '--proof', 'Flow reviewed'])).code).toBe(0);
+    const missingVisual = await cli(cwd, ['check']);
+    expect(missingVisual.code, missingVisual.stderr).toBe(1);
+    expect(missingVisual.stdout).toContain('UX PROOF — PASS');
+    expect(missingVisual.stdout).toContain('VISUAL PROOF — FAIL');
+
+    const visual = await cli(cwd, [
+      'checkpoint', 'visual', '--screen', 'home', '--screen', 'detail', '--device', 'phone', '--proof', 'Viewport PNGs reviewed',
+    ]);
+    expect(visual.code, visual.stderr).toBe(0);
+    const ready = await cli(cwd, ['check']);
+    expect(ready.code, ready.stderr).toBe(0);
+    expect(ready.stdout).toContain('DELIVERY READINESS — PASS');
+    expect(ready.stdout).toContain('All required delivery screens and devices have current sanity, UX, and visual proof.');
+    let report = JSON.parse(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')) as Report;
+    expect(report.version).toBe(3);
+    expect(report.readiness.ready).toBe(true);
+    expect(report.readiness.coverage).toEqual({
+      configured: { screens: 2, devices: 1, combinations: 2 },
+      evaluated: { screens: 2, devices: 1, combinations: 2 },
+    });
+    expect(report.readiness.counts.ux).toEqual({ current: 2, missing: 0, stale: 0, total: 2 });
+    expect(report.readiness.counts.visual).toEqual({ current: 2, missing: 0, stale: 0, total: 2 });
+
+    fs.writeFileSync(path.join(cwd, 'screens', 'behavior.js'), 'throw new Error("mechanical failure");\n');
+    const mechanicalFailure = await cli(cwd, ['check']);
+    expect(mechanicalFailure.code, mechanicalFailure.stderr).toBe(1);
+    expect(mechanicalFailure.stdout).toContain('MOCKLENS SANITY CHECK — FAIL');
+    expect(mechanicalFailure.stdout).toContain('UX PROOF — PASS');
+    expect(mechanicalFailure.stdout).toContain('VISUAL PROOF — PASS');
+    expect(mechanicalFailure.stdout).toContain('DELIVERY READINESS — FAIL');
+    fs.writeFileSync(path.join(cwd, 'screens', 'behavior.js'), '');
+    expect((await cli(cwd, ['check'])).code).toBe(0);
+
+    const filtered = await cli(cwd, ['check', '--screen', 'home', '--device', 'phone']);
+    expect(filtered.code, filtered.stderr).toBe(0);
+    expect(filtered.stdout).toContain('UX proof scope: FILTERED');
+    expect(filtered.stdout).toContain('Project delivery readiness was not evaluated.');
+    expect(filtered.stdout).not.toContain('DELIVERY READINESS — PASS');
+    report = JSON.parse(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')) as Report;
+    expect(report.readiness.ready).toBe(false);
+    expect(report.readiness.visual).toHaveLength(1);
+
+    fs.appendFileSync(path.join(cwd, 'screens', 'shared.css'), '\n/* changed */\n');
+    const stale = await cli(cwd, ['check']);
+    expect(stale.code, stale.stderr).toBe(1);
+    expect(stale.stdout).toContain('STALE clear-primary-action [screen]');
+    expect(stale.stdout).toContain('recorded hash:');
+    expect(stale.stdout).toContain('current hash:');
+    expect(stale.stdout).toContain('cause: stylesheet screens/shared.css changed');
+    report = JSON.parse(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')) as Report;
+    expect(report.readiness.counts.ux.stale).toBe(2);
+    expect(report.readiness.counts.visual.stale).toBe(2);
+    const firstReport = fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8');
+    expect((await cli(cwd, ['check'])).code).toBe(1);
+    expect(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')).toBe(firstReport);
+  }, 120_000);
 });

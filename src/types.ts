@@ -66,8 +66,68 @@ export interface ScreenReport {
   counts: { error: number; warning: number; suppressed: number };
 }
 
+export type ProofStatus = 'current' | 'missing' | 'stale';
+
+export interface ProofCounts {
+  current: number;
+  missing: number;
+  stale: number;
+  total: number;
+}
+
+export interface StaleReason {
+  kind: 'screen' | 'stylesheet' | 'requirement' | 'device' | 'screenshot' | 'input';
+  target: string;
+  change: 'added' | 'removed' | 'changed' | 'mismatch';
+}
+
+export interface UxReadinessItem {
+  id: string;
+  kind: 'screen' | 'screen-family' | 'flow';
+  description: string;
+  status: ProofStatus;
+  proof: string | null;
+  recordedHash: string | null;
+  currentHash: string;
+  targets: { screens: string[]; devices: string[] };
+  staleReasons: StaleReason[];
+}
+
+export interface VisualReadinessItem {
+  screen: string;
+  device: string;
+  status: ProofStatus;
+  proof: string | null;
+  recordedHash: string | null;
+  currentHash: string;
+  screenshot: {
+    path: string | null;
+    recordedHash: string | null;
+    currentHash: string | null;
+  };
+  staleReasons: StaleReason[];
+}
+
+export interface ReadinessReport {
+  evaluated: boolean;
+  uxTrackingConfigured: boolean;
+  proofScope: 'FULL' | 'FILTERED';
+  coverage: {
+    configured: { screens: number; devices: number; combinations: number };
+    evaluated: { screens: number; devices: number; combinations: number };
+  };
+  counts: { ux: ProofCounts; visual: ProofCounts };
+  requirements: UxReadinessItem[];
+  visual: VisualReadinessItem[];
+  remainingProject: { ux: number; visual: number } | null;
+  sanityOk: boolean;
+  uxProofOk: boolean;
+  visualProofOk: boolean;
+  ready: boolean;
+}
+
 export interface Report {
-  version: 2;
+  version: 3;
   tool: 'mocklens';
   scope: {
     command: 'validate' | 'check';
@@ -78,6 +138,7 @@ export interface Report {
     covered: { uniqueScreens: number; devices: number; combinations: number };
   };
   screens: ScreenReport[];
+  readiness: ReadinessReport;
   summary: {
     uniqueScreens: number;
     devices: number;

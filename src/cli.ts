@@ -15,9 +15,10 @@ import type { Device } from './types.js';
 import {
   checkpointUx,
   checkpointVisual,
+  buildReadinessReport,
   loadUxManifest,
   recordSanityState,
-  renderCheckpointSummary,
+  renderReadinessReport,
 } from './checkpoint.js';
 
 const USAGE = `mocklens — static mobile UI mockup tool
@@ -266,7 +267,7 @@ async function main(argv: string[]): Promise<number> {
     case 'check': {
       const discovered = discoverScreens(config.screensDir);
       validateScreenDevices(discovered, config.devices.map((device) => device.name));
-      const uxManifest = loadUxManifest(config, discovered);
+      const uxManifest = args.command === 'check' ? loadUxManifest(config, discovered) : null;
       if (discovered.length === 0) {
         throw new MocklensError(`no screens found in ${config.screensDir}`);
       }
@@ -294,13 +295,27 @@ async function main(argv: string[]): Promise<number> {
             requestedDevices: args.deviceNames,
             screenshotPaths,
           });
+          if (args.command === 'check' && uxManifest !== null) {
+            report.readiness = buildReadinessReport(
+              config,
+              uxManifest,
+              discovered,
+              screens,
+              devices,
+              report.scope.coverage,
+              report.summary.ok,
+            );
+          }
           const reportFile = writeReport(config, report);
           recordSanityState(config, report, discovered, config.devices);
           console.log(renderReport(report));
           if (args.command === 'check' && uxManifest !== null) {
-            console.log(`\n${renderCheckpointSummary(config, uxManifest, discovered)}`);
+            console.log(`\n${renderReadinessReport(report.readiness)}`);
           }
           console.log(`\nreport written to ${path.relative(cwd, reportFile)}`);
+          if (args.command === 'check' && uxManifest !== null) {
+            return report.readiness.sanityOk && report.readiness.uxProofOk && report.readiness.visualProofOk ? 0 : 1;
+          }
           return report.summary.ok ? 0 : 1;
         }
         return 0;

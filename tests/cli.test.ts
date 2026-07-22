@@ -237,9 +237,29 @@ describe('valid screens pass', () => {
 
 describe('machine-readable output is structurally stable', () => {
   it('report.json has the exact documented shape', () => {
-    expect(Object.keys(report).sort()).toEqual(['scope', 'screens', 'summary', 'tool', 'version']);
-    expect(report.version).toBe(2);
+    expect(Object.keys(report).sort()).toEqual(['readiness', 'scope', 'screens', 'summary', 'tool', 'version']);
+    expect(report.version).toBe(3);
     expect(report.tool).toBe('mocklens');
+    expect(report.readiness).toEqual({
+      evaluated: false,
+      uxTrackingConfigured: false,
+      proofScope: 'FULL',
+      coverage: {
+        configured: { screens: 0, devices: 0, combinations: 0 },
+        evaluated: { screens: 0, devices: 0, combinations: 0 },
+      },
+      counts: {
+        ux: { current: 0, missing: 0, stale: 0, total: 0 },
+        visual: { current: 0, missing: 0, stale: 0, total: 0 },
+      },
+      requirements: [],
+      visual: [],
+      remainingProject: null,
+      sanityOk: false,
+      uxProofOk: true,
+      visualProofOk: true,
+      ready: false,
+    });
     expect(Object.keys(report.summary).sort()).toEqual(['combinations', 'devices', 'errors', 'ok', 'suppressed', 'uniqueScreens', 'warnings']);
     expect(report.summary.combinations).toBe(42);
     expect(report.summary.uniqueScreens).toBe(14);
