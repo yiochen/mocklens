@@ -12,7 +12,15 @@ Core entities are a $2,500 July budget, six category allocations totaling $2,500
 
 The form amount is a positive USD magnitude greater than zero. `Expense` applies a positive sign to spending; `Refund` applies a negative sign. Refund screens state the resulting signed value before save. Lists label refunds and render their glyphs and values in credit green; coral never means refund. This rule allows a user to change type during correction without manually entering a minus sign.
 
-Rows open correction via a consistent chevron. Edit screens use Back as their sole dismissal and overflow for removal. Create and validation screens use Close as their sole dismissal. Sheets use one contextual keep/close action. Delete remains a neutral-surface text action in overflow and receives strong coral fill only at final confirmation.
+Rows open correction via a consistent chevron. Their natural-language
+`data-mocklens-action` annotations document that tap opens the prefilled
+editor, swipe left reveals Delete, and long press opens the actions menu; tap
+then More actions is the accessible non-gesture path. Category rows document
+their drill-in behavior the same way. Edit screens use Back as their sole
+dismissal and overflow for removal. Create and validation screens use Close as
+their sole dismissal. Sheets use one contextual keep/close action. Delete
+remains a neutral-surface text action in overflow and receives strong coral
+fill only at final confirmation.
 
 ## Reconciled arithmetic
 

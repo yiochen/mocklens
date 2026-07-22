@@ -200,7 +200,8 @@ This folder contains static mobile UI mockups. Each HTML file is an independent 
 - Name variants \`<screen>.<device>.html\`; use \`mocklens new-screen <name> --device <device>\` instead of copying boilerplate.
 - Use exact names from \`mocklens list\` in the UX manifest; generated names include the device suffix.
 - Keep the generated \`mocklens:*\` metadata in the document head accurate. Device names must exist in \`mocklens.config.json\`.
-- Review each UX requirement across its referenced screens, then record specific \`mocklens checkpoint ux\` evidence.
+- Add a natural-language \`data-mocklens-action\` attribute when an actionable element's trigger or result is not obvious in a static render. Describe the behavior and any accessible non-gesture path; no formal grammar is required.
+- Review each UX requirement across its referenced screens, then record specific \`mocklens checkpoint ux\` evidence that cites relevant action annotations and outcome screens.
 - Inspect every delivery screenshot together, then record \`mocklens checkpoint visual\` evidence.
 - Deliver only when a full unfiltered \`mocklens check\` prints \`DELIVERY READINESS — PASS\`.
 - If overflow is intentional, add \`data-mocklens-ignore="short reason"\` to the element.

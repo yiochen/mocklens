@@ -286,9 +286,16 @@ sanity-only releases cannot evaluate the manifest.
 
 After reviewing a requirement, record concrete evidence rather than a verdict:
 
+When an interaction cannot be understood from a static render, add a
+plain-language `data-mocklens-action` attribute to the actionable element. Name
+the trigger and result, plus the accessible non-gesture path for gestures such
+as swipe, long press, double tap, or drag. There is no required grammar: the
+attribute documents intent. Checkpoint proof should quote or paraphrase that
+behavior and name the screens that demonstrate material outcomes.
+
 ```sh
 mocklens checkpoint ux discoverable-expense-actions \
-  --proof "Today shows Add expense above the list and Edit/Delete on each expense row."
+  --proof "Expense rows declare that tap opens editing, swipe left reveals Delete, and long press opens the actions menu; the menu, confirmation, and deleted screens demonstrate removal and Undo."
 ```
 
 The command adds or replaces that requirement in

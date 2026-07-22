@@ -8,4 +8,4 @@
 - `states/validation`: retained invalid input, inline correction guidance, and disabled completion.
 - `states/expense-menu`, `delete-confirmation`, and `deleted`: progressively disclosed delete and immediate Undo.
 
-All screens are independent static HTML with shared local CSS. There are no scripts, external assets, or network requests.
+All screens are independent static HTML with shared local CSS. There are no scripts, external assets, or network requests. Actionable elements use plain-language `data-mocklens-action` annotations to document triggers and outcomes that a static render cannot show; the annotations are intent documentation, not working JavaScript.

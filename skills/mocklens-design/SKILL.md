@@ -65,6 +65,13 @@ Decide whether it belongs as the screen primary action, the row's primary
 behavior, a detail action, an overflow-menu action, a gesture shortcut, or the
 final destructive confirmation.
 
+Document behavior that a static render cannot communicate. Add a natural-language
+`data-mocklens-action` attribute to an actionable element when its trigger,
+gesture, or result is not obvious from the rendered state. Describe what the
+user does and what happens; for a gesture shortcut, also name the accessible
+non-gesture path. Treat the attribute as intent documentation, not executable
+behavior or a substitute for an outcome screen.
+
 Do not build routing, backend services, production state management, or application logic. Use independent HTML files for screens and visual states.
 
 ## 3. Cover
@@ -151,6 +158,20 @@ For a static mock, prove a hidden path with a representative menu-open,
 detail, or swipe-revealed state. Do not expose every action on every item merely
 to make checkpoint evidence easy to write.
 
+Keep interaction annotations plain and product-specific; do not invent a
+schema or encode implementation details:
+
+```html
+<a class="row" href="#"
+  data-mocklens-action="Tap opens the prefilled editor. Swipe left reveals Delete. Long press opens the actions menu. Tapping the row and then More actions provides the same operations without a gesture.">
+  ...
+</a>
+```
+
+Annotate tap, double tap, long press, swipe left or right, drag, and similar
+behaviors only when the product supports them. Do not list speculative gestures
+merely to make the mock appear complete.
+
 Use local assets so the mock works offline. Prefer separate files for visible states. Use small scripts only when necessary to render a static state without errors.
 
 ## 5. Compose with a value budget
@@ -222,15 +243,19 @@ For each UX requirement:
 1. Inspect all referenced screens together.
 2. Verify task entry points, edit/correction/recovery paths, canonical completion, state coverage, semantic validity, stress resilience, and value hierarchy.
 3. Cross-check the variant-operation matrix: every normal type shown has a compatible create/capture and edit/correction path, or an explicit external/read-only explanation and recovery path.
-4. Verify action prominence matches frequency and risk, repeated rows remain scannable, dismissal controls are not redundant, and shell/navigation invariants hold across the family.
-5. Recalculate every displayed count, total, balance, remainder, percentage, and status from its visible inputs; correct both the value and dependent copy when they disagree.
-6. Record concrete evidence that names visible controls, screens, states, or decisions:
+4. Inspect relevant `data-mocklens-action` text and verify that each declared trigger, result, and accessible alternative agrees with the visible affordance and referenced outcome screens.
+5. Verify action prominence matches frequency and risk, repeated rows remain scannable, dismissal controls are not redundant, and shell/navigation invariants hold across the family.
+6. Recalculate every displayed count, total, balance, remainder, percentage, and status from its visible inputs; correct both the value and dependent copy when they disagree.
+7. Record concrete evidence that names the annotated element and behavior together with the screens that demonstrate material outcomes:
 
 ```sh
 mocklens checkpoint ux <requirement-id> --proof "<specific evidence>"
 ```
 
-Never use vague proof such as “looks good” or “UX reviewed.” If review causes an edit, rerun the relevant `mocklens check`, re-inspect the affected screens, and replace the stale checkpoint.
+Never use vague proof such as “looks good,” “UX reviewed,” or “the action is
+annotated.” Quote or accurately paraphrase the declared interaction and name
+the outcome screen. If review causes an edit, rerun the relevant `mocklens
+check`, re-inspect the affected screens, and replace the stale checkpoint.
 
 ## 9. Visual-review and visual checkpoints
 

@@ -29,6 +29,12 @@
       "screens": ["add-expense.iphone-14", "add-refund.iphone-14", "edit-expense.iphone-14", "states/edit-refund.iphone-14", "states/long-content.iphone-14", "states/category-detail.iphone-14"]
     },
     {
+      "id": "documented-interaction-behavior",
+      "kind": "flow",
+      "description": "Actionable transaction and category rows use natural-language data-mocklens-action annotations to describe tap and supported gesture behavior, resulting states, and accessible non-gesture paths; edit, menu, confirmation, deletion, and Undo screens demonstrate material outcomes.",
+      "screens": ["today.iphone-14", "states/dense.iphone-14", "states/long-content.iphone-14", "monthly-summary.iphone-14", "states/category-detail.iphone-14", "edit-expense.iphone-14", "states/edit-refund.iphone-14", "states/expense-menu.iphone-14", "states/delete-confirmation.iphone-14", "states/deleted.iphone-14"]
+    },
+    {
       "id": "daily-capture-canonical",
       "kind": "flow",
       "description": "Today exposes one frequent Add expense action; the valid expense form is recognizable, has one Close dismissal and one active Save expense completion action.",
