@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "goal": "Reject unknown screens.",
+  "delivery": { "screens": ["home"], "devices": ["phone"] },
+  "requirements": [
+    { "id": "missing-screen", "kind": "screen", "description": "Evidence.", "screens": ["missing"] }
+  ]
+}

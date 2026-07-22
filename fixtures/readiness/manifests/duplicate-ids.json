@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "goal": "Reject duplicate IDs.",
+  "delivery": { "screens": ["home"], "devices": ["phone"] },
+  "requirements": [
+    { "id": "same-id", "kind": "screen", "description": "Evidence.", "screens": ["home"] },
+    { "id": "same-id", "kind": "screen", "description": "Evidence.", "screens": ["home"] }
+  ]
+}

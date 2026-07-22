@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "screenshots": [
+    {
+      "screen": "home",
+      "device": "phone",
+      "fullPage": false,
+      "path": "phone/home.png"
+    }
+  ]
+}

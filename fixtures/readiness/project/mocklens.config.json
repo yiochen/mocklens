@@ -1,0 +1,11 @@
+{
+  "screensDir": "screens",
+  "outDir": ".mocklens",
+  "devices": [
+    {
+      "name": "phone",
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

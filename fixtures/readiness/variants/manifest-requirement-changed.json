@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "goal": "Ship a clear flow.",
+  "delivery": {
+    "screens": ["home", "detail"],
+    "devices": ["phone"]
+  },
+  "requirements": [
+    {
+      "id": "clear-primary-action",
+      "kind": "screen",
+      "description": "A changed requirement.",
+      "screens": ["home"]
+    },
+    {
+      "id": "detail-flow",
+      "kind": "flow",
+      "description": "The flow connects home and detail.",
+      "screens": ["home", "detail"]
+    }
+  ]
+}

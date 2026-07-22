@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "results": {
+    "home@phone": {
+      "screen": "home",
+      "device": "phone",
+      "inputHash": "__INPUT_HASH__",
+      "ok": true
+    }
+  }
+}

@@ -466,6 +466,7 @@ with `path` relative to the screenshots dir (`iphone-14/home.png`,
 src/        the tool (types, config, screens, browser, screenshot, validate,
             report, viewer, cli — plain TypeScript, strict, ESM)
 fixtures/   the main test project plus focused overlay-coverage fixtures
+fixture_results/ checked-in CLI transcripts generated from named fixture tests
 example/    the GoodPlate demo project (all screens pass)
 tests/      vitest end-to-end suite driving the real CLI
 skills/     the repo-local Mocklens design-loop skill

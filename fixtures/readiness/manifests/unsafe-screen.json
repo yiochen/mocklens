@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "goal": "Reject unsafe screens.",
+  "delivery": { "screens": ["home"], "devices": ["phone"] },
+  "requirements": [
+    { "id": "unsafe", "kind": "screen", "description": "Evidence.", "screens": ["../home"] }
+  ]
+}
