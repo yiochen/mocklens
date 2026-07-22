@@ -3,9 +3,21 @@
   "outDir": ".mocklens",
   "fullPage": false,
   "devices": [
-    { "name": "iphone-se", "width": 375, "height": 667 },
-    { "name": "iphone-14", "width": 390, "height": 844 },
-    { "name": "pixel-7", "width": 412, "height": 915 }
+    {
+      "name": "iphone-se",
+      "width": 375,
+      "height": 667
+    },
+    {
+      "name": "iphone-14",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "pixel-7",
+      "width": 412,
+      "height": 915
+    }
   ],
   "allowedExternalHosts": []
 }

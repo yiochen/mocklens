@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="mocklens:form-factor" content="phone"><meta name="mocklens:primary-device" content="iphone-14"><meta name="mocklens:target-devices" content="iphone-se,iphone-14,pixel-7"><meta name="mocklens:viewport" content="390x844">
+<title>Ledgerly — Add expense</title><link rel="stylesheet" href="./shared.css">
+</head>
+<body><main class="screen stack">
+  <header class="topbar"><span class="brand">Ledgerly</span><button class="icon-button" aria-label="Close">×</button></header>
+  <section><p class="eyebrow">Daily spending</p><h1>Add expense</h1><p class="supporting">Required fields are marked. You can correct every value before saving.</p></section>
+  <div class="notice"><strong>Check the amount</strong>Enter a value greater than $0.00. Your draft is still here.</div>
+  <form class="form-card">
+    <div class="field error"><label for="amount">Amount *</label><input id="amount" value="-$1,234,567.890"><span class="field-error">Use a positive amount with no more than two decimal places.</span></div>
+    <div class="field"><label for="merchant">Merchant or description *</label><input id="merchant" value="Cooperativa de alimentación del vecindario central"></div>
+    <div class="field"><label for="category">Category *</label><select id="category"><option>Groceries and household supplies</option></select></div>
+    <div class="field"><label for="date">Date and time *</label><input id="date" value="July 21, 2026 · 6:42 PM"></div>
+    <div class="field"><label for="note">Note (optional)</label><textarea id="note">Reimbursable staples for the community dinner; receipt includes multiple tax rates.</textarea><span class="field-help">94 of 140 characters</span></div>
+    <div class="form-actions"><button class="button secondary" type="button">Cancel</button><button class="button" type="button" disabled>Save expense</button></div>
+  </form>
+</main></body></html>

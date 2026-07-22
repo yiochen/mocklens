@@ -1,0 +1,569 @@
+{
+  "ux": {
+    "collection-state-coverage": {
+      "inputHash": "5de31ee2b1e7e9331338363f109e845d928a55f468c41f3974c1e93f5136867f",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:collection-state-coverage": "d4580cace855f6556bbc5d04e773b414bf795ff913b7e4692dfc157ec6760e83",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8",
+        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after the staleness drill: Empty and One Item expose Add expense; Today shows four items; Dense shows 25; Long Content wraps long names and marks missing notes; Edit and Delete remain visible.",
+      "screens": [
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "today.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14"
+      ]
+    },
+    "daily-creation-and-correction": {
+      "inputHash": "517452663bffe3202539d16c87246d466110a18221b59f57db36b3bdf58d688a",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:daily-creation-and-correction": "bc2229e05a5c09f4e3d42672128f3ffa88f66a12d2a943a21750c6937b56495f",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after restore: Today and Empty place Add expense first; the form shows all fields, retained invalid input, correction guidance, Cancel, and disabled Save expense.",
+      "screens": [
+        "today.iphone-14",
+        "add-expense.iphone-14",
+        "states/empty.iphone-14"
+      ]
+    },
+    "mutable-expense-actions": {
+      "inputHash": "4237e60103291cd34f424536ec2ba739f505f76a556302184cfac0f14b854a3f",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:mutable-expense-actions": "435a1938fd5fd823362b83f051d8ca1cf247b0de96c09189be93a9ce757ed1ea",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10",
+        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after restore: expense rows show Edit and Delete; confirmation names Corner Market and $24.86; the completed state reports the change and offers Undo delete.",
+      "screens": [
+        "today.iphone-14",
+        "states/long-content.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "nested-monthly-summary": {
+      "inputHash": "48addff88f5dd00726f92c6e9cffccd6b15dcb6dcffb1daf822f8aef6e714e29",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:nested-monthly-summary": "631be1fd10c37f47240c37e9c6dd05433ae7baa3ca2f3330cb21df2a032197b7",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed after restore: Monthly Summary groups Housing, Food, and Transit with nested entries, a negative credit, long merchant text, and category drill-in controls.",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ]
+    },
+    "stress-resilient-layout": {
+      "inputHash": "15b90f15f68f174868aa118202fb0554d9e1dc14f88e5cb7ef9fdbe12640098b",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:stress-resilient-layout": "f4aabbd471a877ed02dc81dddcbc5b5ff6f926ec91144fc5215277703a6e88dc",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+      },
+      "proof": "Re-reviewed on all three devices: the 25-item list, multi-line localized names, $1,234,567.89 and -$9,876.54 values, nested summary, and invalid form retain readable layout and controls.",
+      "screens": [
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "monthly-summary.iphone-14",
+        "add-expense.iphone-14"
+      ]
+    },
+    "task-first-value-budget": {
+      "inputHash": "9ae2695f5c69f824ad1c17db8e1eed670292417cc4f76be1ab3608cdc3cc65fa",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:task-first-value-budget": "64f81bf2c29ad9664d9857a2052362c622aa008b1971b88051e343bdc4a076f2",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10",
+        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8",
+        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed after restore: all nine first viewports lead with totals, collection state, form fields, destructive consequences, or recovery actions and contain no low-value hero or promotional filler.",
+      "screens": [
+        "today.iphone-14",
+        "add-expense.iphone-14",
+        "monthly-summary.iphone-14",
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    }
+  },
+  "version": 1,
+  "visual": {
+    "add-expense.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "f52bd3ab4a58b3e33b6c60434bed35b5a379a2d2798928df7457414a2747dcab",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "add-expense.iphone-14",
+      "screens": [
+        "add-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/add-expense.iphone-14.png",
+      "screenshotSha256": "e90d6c50f2cf21822d8b0428326446f3b3abb02376a499d0c8c8ae6fab084657"
+    },
+    "add-expense.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "5f7a0e458dc6aefe158f0d84bd4dac7860d7b837eccbc906c84d2998caeb0566",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "add-expense.iphone-14",
+      "screens": [
+        "add-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/add-expense.iphone-14.png",
+      "screenshotSha256": "ddc2bb2a3191c5808dfea391e75d1ce94331ebc0a0e649e4041e13214e4e580e"
+    },
+    "add-expense.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "ab678abab3d844cdc809404084668f85a1677862b7302dbae6285b9b264ebad4",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "add-expense.iphone-14",
+      "screens": [
+        "add-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/add-expense.iphone-14.png",
+      "screenshotSha256": "73ff8b79a7b381e59233f4421ee0266b66d14d1bfd622ef15f3d5803f84a36fc"
+    },
+    "monthly-summary.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "beb710197b12ac60d8de20a1836e4fdb9ec794941d99010faf1041a52f37828f",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "monthly-summary.iphone-14",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/monthly-summary.iphone-14.png",
+      "screenshotSha256": "00079cdc9bcaba01ad016602726b88522b3186fb5129a7b4418cf4d3f456f441"
+    },
+    "monthly-summary.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "180ac241e68720dc48123894279c8036f5d097076c45d416b845a600cf39b53f",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "monthly-summary.iphone-14",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/monthly-summary.iphone-14.png",
+      "screenshotSha256": "d7d826865dc7c1cdd84581ee4c96f4434f9dfabe2fa6230a6264bd6eb4c355e4"
+    },
+    "monthly-summary.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "9b6ef0d99364fe3898b9a47c06f366e95be6443b1da95e0ffb5a818ca32831d1",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "monthly-summary.iphone-14",
+      "screens": [
+        "monthly-summary.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/monthly-summary.iphone-14.png",
+      "screenshotSha256": "5951974bbe141037786247d7460aa9290ec11bdbef682f9d307a582a82290ebd"
+    },
+    "states/delete-confirmation.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "d13391e4cd0e19e01137655dca71c42ab1d2576db5b3dc879722a202bad87ba5",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/delete-confirmation.iphone-14",
+      "screens": [
+        "states/delete-confirmation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/delete-confirmation.iphone-14.png",
+      "screenshotSha256": "2f640c896662690620456af54a8a548a91ce8d24c309d36de1e74241e6813654"
+    },
+    "states/delete-confirmation.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "a90fb05f71361ecb4477ff97d2231055379a2c4c32b2a864df8d431bde490cbf",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/delete-confirmation.iphone-14",
+      "screens": [
+        "states/delete-confirmation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/delete-confirmation.iphone-14.png",
+      "screenshotSha256": "0282ca1c0ddc56feefc49f98aec04d5c1866ab81b5bedc2451e09231e4387f41"
+    },
+    "states/delete-confirmation.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "967a81308248397b555607f08882a04e38e44b3b7cd8083063c01a03366b139b",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/delete-confirmation.iphone-14",
+      "screens": [
+        "states/delete-confirmation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/delete-confirmation.iphone-14.png",
+      "screenshotSha256": "65298d354f1b23515341bec0fc9efba2fe2ec8ae3821992c63edbb9dd03fa7f6"
+    },
+    "states/deleted.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "807c184419586173bff6313bac4120ee94204cbb9d8c521c010de1d98529f644",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/deleted.iphone-14",
+      "screens": [
+        "states/deleted.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/deleted.iphone-14.png",
+      "screenshotSha256": "8e1e0bdb40f1b47780d1a9d91833a3e0c82b942753247a1e99cb72fa4342758e"
+    },
+    "states/deleted.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "68979c3f13d6119c8860f0a88ef5259eb613a716f685d2d4329468d4deecc196",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/deleted.iphone-14",
+      "screens": [
+        "states/deleted.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/deleted.iphone-14.png",
+      "screenshotSha256": "646a5f8190d325b29f2adb9bb5d55d4af78f454b2d609ca61f1f900bf1763836"
+    },
+    "states/deleted.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "306ad6af85ad20dfdaff030de4949a8fa472bbfa7c5db86bb1397b3f752911dd",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/deleted.iphone-14",
+      "screens": [
+        "states/deleted.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/deleted.iphone-14.png",
+      "screenshotSha256": "6dfe8fda6efe79076af0f31b88ebd6148111634c3c04c6d854f68411bad74085"
+    },
+    "states/dense.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "71fbf7ab4e30745453804a0352e134d44ef90a7b1dc4e38cf368c305b3c2b13b",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/dense.iphone-14",
+      "screens": [
+        "states/dense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/dense.iphone-14.png",
+      "screenshotSha256": "fd456044c0021eb6a86d3a327165e3ee0b2314b68366af4a271f3c52325a0b8d"
+    },
+    "states/dense.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "ddae8fd3edff3f37d08b5ccacee58bb0619c3c13c1cfb25942805a40881a60d8",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/dense.iphone-14",
+      "screens": [
+        "states/dense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/dense.iphone-14.png",
+      "screenshotSha256": "a182aa4a859458a948c5d0004de3c9698c003c68732f549cdd3b421f8d4b87cc"
+    },
+    "states/dense.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "2009f0856531a499b1d3a63dc3545f2f4ac9581a1b0ec635520c4ed888cb8079",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/dense.iphone-14",
+      "screens": [
+        "states/dense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/dense.iphone-14.png",
+      "screenshotSha256": "dd521e0839c050b83fd292225e87e0dc8b22feb0a63829add4fbc24f2e911cbb"
+    },
+    "states/empty.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "cf2be1cd7d359c88d54fd6204bd28e847377da03dd2065b00d31a96716d7f814",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/empty.iphone-14",
+      "screens": [
+        "states/empty.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/empty.iphone-14.png",
+      "screenshotSha256": "622be562dca0150ecbdbf18a4c5deffce0596be05227598c506ec056f0c26e9f"
+    },
+    "states/empty.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "b4e33751c54cedd2727f2b5fbed196bae06186fad60a45cf3bfce89b7f1fb8e9",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/empty.iphone-14",
+      "screens": [
+        "states/empty.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/empty.iphone-14.png",
+      "screenshotSha256": "41dd3642f164b88168ca3ea6bb11abace2738e0e189f8e259dfdb6514b9a5bda"
+    },
+    "states/empty.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "954e705d4ff9fb2a178d81ea485a05809233abef35a582f18f41e155bcf0466c",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/empty.iphone-14",
+      "screens": [
+        "states/empty.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/empty.iphone-14.png",
+      "screenshotSha256": "6a85c61d16f5aab4579f62ea8e0bb4088c23db6400e4dd0f4ba64556f9b84c2c"
+    },
+    "states/long-content.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "9b27af6a4f0a0b6bb9b2ea3f840501cb176cf2f8d165be8bc46d050989a23f96",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/long-content.iphone-14",
+      "screens": [
+        "states/long-content.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/long-content.iphone-14.png",
+      "screenshotSha256": "049117f907a2a3a1298d690200f60d54a46906a7deccafbb80ab45130cecfea5"
+    },
+    "states/long-content.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "ba5811a9bad61a4c1ca5d30142270d6dad439f6e44082af849c8e19633d8bd29",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/long-content.iphone-14",
+      "screens": [
+        "states/long-content.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/long-content.iphone-14.png",
+      "screenshotSha256": "7c89b4653899b523b4569a6f465272998c38d98ea9a16758886c554d32fb381b"
+    },
+    "states/long-content.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "b605f6df6a43b91408287077a53cd0d83277d6faf8b7054288bb281e9ce5913c",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/long-content.iphone-14",
+      "screens": [
+        "states/long-content.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/long-content.iphone-14.png",
+      "screenshotSha256": "a15eb4d8ab8e23c9e4979fd2c68b6107a0ce171cb8ba96bb2edbb52ad0b24dd0"
+    },
+    "states/one-item.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "b812c98a216c4616a3bdd686f05481a59cf2e98c228e9fef0dd9d4e38c0d184d",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/one-item.iphone-14",
+      "screens": [
+        "states/one-item.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/one-item.iphone-14.png",
+      "screenshotSha256": "dfafe14910cda1744467666b2eaafad4fdda048a797379ab7ee0d33891ac6601"
+    },
+    "states/one-item.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "46015918791797bfe541e573ee292a0db5774e13564f746ec1f7682edc9071a8",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/one-item.iphone-14",
+      "screens": [
+        "states/one-item.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/one-item.iphone-14.png",
+      "screenshotSha256": "75c66df123462a5a2176c487d42ece2bbfc5bb782aa38ffcd12d48a4e66c0631"
+    },
+    "states/one-item.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "539fe32c05477797c1773b5f778900f21dbb40376349661c0894c651e001544b",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "states/one-item.iphone-14",
+      "screens": [
+        "states/one-item.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/one-item.iphone-14.png",
+      "screenshotSha256": "d8b16c622edd81a2804fd6f3995b4d64fb1ee7eca9dde1758a652d2c1ac7c1a3"
+    },
+    "today.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "161124f889e232d4c03e6578fda24e2bf0b3c0c0631d88a33574f8e9940bf57a",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "today.iphone-14",
+      "screens": [
+        "today.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/today.iphone-14.png",
+      "screenshotSha256": "5206c0227cd87ae0050864238ce1be97d9f01c91d8b5d0a39c9e33699e45a5db"
+    },
+    "today.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "c71b1a064c98437bdda7a7fad96cc9e13d468ed4fca7a8badc40adf85111e7bc",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "today.iphone-14",
+      "screens": [
+        "today.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/today.iphone-14.png",
+      "screenshotSha256": "085d7b83f6acf373c8fa1604f949da6c8527f0c571f7605bddbb3d1055d77f76"
+    },
+    "today.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "aa45f5251e3469befc126b322542ddb3e1d94818d1298022d396e04d37c0a22e",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
+        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+      },
+      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "screen": "today.iphone-14",
+      "screens": [
+        "today.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/today.iphone-14.png",
+      "screenshotSha256": "2654df0cb1d827c68f3baf6616281f7b54c0f2fa95af1f2726295bb237da280f"
+    }
+  }
+}

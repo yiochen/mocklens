@@ -1,119 +1,188 @@
 ---
 name: mocklens-design
-description: Design and iterate polished static UI mockups with the Mocklens CLI. Use when creating, redesigning, or reviewing product screens as plain HTML/CSS; turning a product brief into screen states; using mocklens init, new-screen, check, screenshots, or the local viewer; or preparing visually verified UI mockups for delivery.
+description: Design, redesign, stress-test, and review task-complete static product mockups with the Mocklens CLI. Use when turning a product brief into plain HTML/CSS screen families and edge states; creating a mocklens.ux.json manifest; using mocklens init, new-screen, check, screenshots, or checkpoints; coordinating parallel mockup work; or preparing UX- and visually-verified screens for delivery.
 ---
 
-# Mocklens design loop
+# Mocklens task-first design loop
 
-Use this loop from the start and repeat the middle steps as needed:
+Use this loop from the start:
 
-**Frame → Inventory → Create → Compose → Sanity-check → Refine → Visually verify → Deliver**
+**Intent → Model → Cover → Establish system → Compose → Stress → Check → Task-review → Visual-review → Deliver**
 
-The loop ends only when all delivery screens satisfy the brief, the final focused or full `mocklens check` passes, and the final screenshots have been visually inspected at every requested device. When `mocklens.ux.json` exists, every named UX requirement must also have concrete review evidence recorded with `mocklens checkpoint`. A passing check is necessary but not sufficient: it is a browser-rendered sanity check, not an aesthetic judgment.
+Define the stages before doing them:
 
-## 1. Frame the design
+- **Intent** identifies the users, jobs, decisions, devices, and genuine product ambiguities.
+- **Model** maps the entities, relationships, mutations, and complete task paths.
+- **Cover** converts that model into screen families, states, and source-controlled UX requirements.
+- **Establish system** uses one representative screen to set shared tokens, components, navigation, and density.
+- **Compose** makes task data and task entry points visible before decoration.
+- **Stress** designs the hardest credible content and state combinations before polishing the ideal state.
+- **Check** renders screens and fixes browser-detectable failures.
+- **Task-review** inspects each UX requirement across its referenced screens and records concrete evidence.
+- **Visual-review** compares the complete requested screen/device set and records current screenshot evidence.
+- **Deliver** reports the artifacts and readiness result only after every gate passes.
 
-Turn the request into a compact working brief before editing:
+The stopping condition is strict: a design is ready only when a full, unfiltered `mocklens check` reports current sanity, UX proof, visual proof, and `DELIVERY READINESS — PASS` for every required screen/device. A focused check, attractive screenshot, or sanity pass alone is not completion.
 
-- Identify the users, primary jobs, content, required screens and visual states.
-- Identify the primary device and any additional configured devices that must work.
-- Define concrete completion criteria for information hierarchy, interactions represented, visual character, and content realism.
-- List genuine product ambiguities. Make reversible design assumptions when they do not change scope; ask only when a choice materially changes the product.
+## 1. Intent
 
-For each distinct screen or state, plan one standalone HTML file. Represent loading, empty, error, confirmation, menu-open, or modal-open states as separate files when they matter. Do not build routing, persistence, a backend, or production application logic.
+Write a compact working brief before generating screens. Identify:
 
-## 2. Inventory the workspace
+- primary users and jobs;
+- decisions the UI must support;
+- primary and additional configured devices;
+- required visual character and realistic content;
+- genuine ambiguities that materially affect the product.
 
-Run commands from the project containing `mocklens.config.json` or pass `--config` explicitly.
+Make reversible assumptions when they do not change scope. Ask only when a choice materially changes the product.
+
+## 2. Model
+
+Map the core entities and their relationships. Mark every mutable entity and trace all applicable create, view, edit, delete or archive, correction, confirmation, and recovery paths. A static mock needs no persistence, but it must visibly represent how a user starts each task, changes a decision, handles failure, and corrects a mistake.
+
+Do not build routing, backend services, production state management, or application logic. Use independent HTML files for screens and visual states.
+
+## 3. Cover
+
+Run commands from the directory containing `mocklens.config.json`, or pass `--config` explicitly:
 
 ```sh
 mocklens init
 mocklens list
+mocklens --help
 ```
 
-`mocklens init` is idempotent. On a new workspace it creates only the complete config, shared stylesheet, screen directory, and screen README. On an initialized workspace it prints the effective config and changes nothing. Read its terminal output before deciding whether any config edit is needed.
+Confirm the help output includes both `checkpoint ux` and `checkpoint visual`.
+If it does not, use the current project CLI or upgrade Mocklens before relying
+on readiness gates; an older sanity-only CLI cannot enforce this loop.
 
-Use `mocklens list` to understand existing screens and devices. Reuse the configured device names and shared design tokens. Inspect existing HTML/CSS only when it is needed to preserve or intentionally change the visual system.
+For every user-managed collection, explicitly classify each state as required or not applicable, with a product-specific reason:
 
-If `mocklens.ux.json` exists beside the config, read its delivery goal, screen/device coverage, and named requirements before composing. Treat requirements as an evidence checklist, not an automated UX score.
+- empty;
+- one item;
+- typical;
+- dense or longer than one viewport;
+- long user-provided content;
+- missing optional content;
+- nested, grouped, or multiple sub-items when the model supports them.
 
-## 3. Create the screen set atomically
+Also decide whether the flow needs loading, error, offline, permission, disabled, validation, destructive confirmation, success, and recovery states. “When it matters” is not a decision: require the state or record why it is not applicable.
 
-Create all planned screens for the primary device in one command:
+Create `mocklens.ux.json` from this reasoning before screens. Put every delivery screen/device and every reviewable task, action, correction path, stress state, and value-hierarchy claim into a named requirement. Treat the manifest as an evidence contract, not an automated UX score.
+
+Create a separate file only for a materially distinct visual state; one screen
+may prove several compatible conditions. Preserve distinct task decisions and
+failure/recovery moments rather than multiplying screens mechanically.
+
+Batch-create the planned screens for the primary device:
 
 ```sh
-mocklens new-screen today add-expense monthly-summary --device iphone-14
+mocklens new-screen today add-expense monthly-summary states/empty states/dense --device iphone-14
 ```
 
-The command validates the full batch before writing and prints the created paths, viewport, form factor, and a focused `check` command. Use lowercase kebab-case names; nested names such as `states/empty` are allowed. Keep the generated `mocklens:*` metadata aligned with the filename and configured device.
+The batch validates atomically. Use lowercase kebab-case paths and keep generated `mocklens:*` metadata aligned. Create device-specific variants only for intentionally different markup; ordinary screens can be checked at multiple viewports.
+Use the exact names printed by `mocklens list` in the UX manifest and checkpoint
+commands. Generated names include their suffix, such as `today.iphone-14`.
 
-Create another device variant only when it represents intentionally different markup. A normal screen is checked against multiple viewports without duplicating its file.
+## 4. Establish the system
 
-## 4. Compose the mockups
+Choose one representative screen that contains primary data, navigation, and the primary action. Use it to establish shared tokens, components, responsive behavior, and density before expanding to other families. Put shared rules in `shared.css`; keep only genuinely local rules in each screen.
 
-Build the screens as static, screenshot-first HTML/CSS:
+Use local assets so the mock works offline. Prefer separate files for visible states. Use small scripts only when necessary to render a static state without errors.
 
-- Establish hierarchy with typography, spacing, grouping, contrast, and alignment before adding decoration.
-- Use realistic labels, dates, amounts, categories, empty states, and status text. Avoid placeholder prose that obscures layout quality.
-- Put shared tokens and reusable primitives in `shared.css`; keep genuinely screen-specific rules in the screen.
-- Use local assets so rendering works offline. Do not depend on CDN fonts, remote images, or network data.
-- Design controls as visible static states. Small scripts are acceptable only when necessary to render the intended state without errors; prefer separate state files.
-- Reserve layout space for fixed or sticky navigation and actions. Add `data-mocklens-ignore="reason"` only for intentional, reviewed exceptions.
+## 5. Compose with a value budget
 
-Work from the primary task and reading order outward: core content, key action, navigation, secondary information, then polish. Keep visual choices coherent across the screen set.
+For every large or above-fold region, answer:
 
-## 5. Run the browser sanity check
+- Which user decision does this support?
+- Which task does this advance?
+- Why does it deserve this amount of space?
+- What more useful content or action does it displace?
 
-After a coherent edit, run the focused command printed by `new-screen`, for example:
+Put primary task data and the primary action before low-value decoration, especially on compact devices. Default against greetings, static hero artwork, motivational or promotional copy, generic headlines, oversized logos, and decorative summaries unless the brief gives them a concrete product purpose.
+
+Make every applicable entity action discoverable. Represent edit, delete/archive, correction, confirmation, and recovery entry points visibly even though they do not need working persistence.
+
+## 6. Stress first
+
+Design the hardest credible state before polishing the typical state. Use realistic stress data such as:
+
+- 20–30 list items;
+- two- or three-line names;
+- large, negative, or unusually formatted values;
+- multiple tags, categories, or nested sub-items;
+- missing optional values;
+- long localized labels;
+- destructive, disabled, and validation states.
+
+Derive the typical state from the resilient dense and long-content system, not the reverse. Reserve space for fixed or sticky UI. Add `data-mocklens-ignore="specific reason"` only for an intentional, reviewed exception.
+
+## 7. Check browser evidence
+
+Run the focused command printed by `new-screen` after coherent edits, then run affected neighboring screens whenever shared CSS or components change:
 
 ```sh
-mocklens check --screen today.iphone-14 --screen add-expense.iphone-14 --screen monthly-summary.iphone-14 --device iphone-14
+mocklens check --screen today.iphone-14 --screen states/dense.iphone-14 --device iphone-14
 ```
 
-Use a full `mocklens check` before delivery when the edits could affect shared styles or multiple devices.
+Treat stdout as the complete agent-facing report. It covers overflow, clipped text, broken images, page errors, external requests, and fixed/sticky coverage; it does not judge hierarchy, usability, aesthetics, consistency, or fidelity.
 
-Treat stdout as the complete agent-facing report. It states PASS or FAIL, full or filtered coverage, configured and checked combinations, requested filters, source and screenshot paths, rules checked, finding selectors and geometry, explanations, and suggestions. `report.json` is a durable artifact for other tooling; do not read it merely to recover information already printed by `check`.
+For each finding, use its selector and geometry to fix the smallest underlying layout cause. Re-run the same check until it passes. Review warnings and keep suppressions narrow and specific.
 
-The check covers document and element overflow, clipped text, broken images, page errors, external requests, and fixed/sticky overlays covering meaningful content. It explicitly does not judge composition, hierarchy, consistency, aesthetics, usability, or fidelity to the brief.
+## 8. Task-review and UX checkpoints
 
-## 6. Refine from evidence
+For each UX requirement:
 
-For each unsuppressed finding:
-
-1. Locate the source path and selector from the report.
-2. Use the element, covered-element, viewport, scroll, and overlap geometry to identify the smallest underlying layout cause.
-3. Fix the layout rather than hiding document overflow or broadly suppressing findings.
-4. Re-run the same focused `check` until it passes.
-
-Warnings still deserve review even when they do not fail the command. If an exception is intentional, annotate the narrowest relevant element with a specific reason and confirm that the suppressed finding remains visible in output.
-
-Once the focused run passes, check affected neighboring screens and devices when shared CSS, components, or responsive behavior changed.
-
-## 7. Visually verify the final delivery
-
-Visual verification is a final-delivery gate, not a rote next step after every command.
-
-Open the final viewport screenshots printed by `mocklens check` and inspect every requested screen/device combination. Compare the set, not only individual screens. Verify:
-
-- the primary task and action are immediately clear;
-- hierarchy, spacing rhythm, alignment, typography, color, and density feel intentional;
-- content is realistic and no state feels unfinished;
-- shared components and navigation are consistent;
-- fixed/sticky elements do not visually crowd content even when no rule fires;
-- compact and large viewports remain balanced;
-- the result matches the brief and looks presentation-ready.
-
-If visual review exposes a problem, edit the source, re-run the relevant `mocklens check`, and inspect the regenerated screenshot. Repeat until the final screenshots are both visually satisfactory and sanity-check clean.
-
-After review, record specific evidence. UX proof explains where a named requirement is demonstrated; visual proof covers the complete inspected screen/device batch:
+1. Inspect all referenced screens together.
+2. Verify task entry points, edit/correction/recovery paths, state coverage, stress resilience, and value hierarchy.
+3. Record concrete evidence that names visible controls, screens, states, or decisions:
 
 ```sh
 mocklens checkpoint ux <requirement-id> --proof "<specific evidence>"
+```
+
+Never use vague proof such as “looks good” or “UX reviewed.” If review causes an edit, rerun the relevant `mocklens check`, re-inspect the affected screens, and replace the stale checkpoint.
+
+## 9. Visual-review and visual checkpoints
+
+Use visual review as a final-delivery gate. Open every requested viewport PNG and compare the complete set for:
+
+- hierarchy and first-viewport usefulness;
+- spacing, typography, density, and component consistency;
+- action discoverability;
+- dense and long-content resilience;
+- fixed/sticky crowding;
+- consistency between typical and edge states;
+- fidelity to the brief.
+
+After review, record proof for the exact current screenshots:
+
+```sh
 mocklens checkpoint visual --screen <name>... --device <name>... --proof "<specific evidence>"
 ```
 
-Visual checkpointing requires current passing sanity results and viewport PNGs from `mocklens check`. If relevant HTML, imported CSS, requirement definitions, device dimensions, or screenshots change later, treat the associated proof as stale and review again.
+Relevant HTML, imported stylesheet, requirement, device, or screenshot changes make proof stale. Re-run the affected check, re-review current outputs, and replace the checkpoint. An unrelated screen edit should not invalidate independent proof.
 
-## 8. Deliver
+## Parallel scheduling
 
-Report the completed screens, primary device, any important design decisions, the final check coverage and verdict, the screenshot paths, and recorded UX/visual checkpoints when requirements are present. Mention suppressed findings or known limitations explicitly. Do not claim completion while a requested screen/device remains unchecked, a final screenshot remains unreviewed, a named requirement lacks current evidence, or the brief is visibly unmet.
+Do not force all screens through the same step at once:
+
+1. Complete project-wide intent, model, coverage, and `mocklens.ux.json` first.
+2. Assign one owner to the representative reference screen and `shared.css`.
+3. Parallelize by independent screen family or user flow, not individual screenshots.
+4. Give one owner all typical, empty, dense, long, and nested states for a family when possible.
+5. Let independent families progress asynchronously through compose, stress, check, and task review.
+6. Rejoin for project-wide task, action, consistency, and visual comparisons.
+7. Use a final full `mocklens check` as the integration gate.
+
+Checkpoint writes are lock-protected, but shared CSS and cross-family UX decisions still need a single owner and an integration review.
+
+## 10. Deliver
+
+Run the full unfiltered command:
+
+```sh
+mocklens check
+```
+
+Deliver only when it exits 0 and prints `DELIVERY READINESS — PASS`. Report the completed screen families and devices, important product assumptions, check coverage, screenshot paths, UX/visual checkpoints, and any intentional suppressions or known limitations. Do not claim completion while evidence is missing or stale.
