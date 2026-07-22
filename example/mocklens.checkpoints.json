@@ -23,6 +23,46 @@
         "states/long-content.iphone-14"
       ]
     },
+    "daily-capture-canonical": {
+      "inputHash": "ae18c243819ee51ab033e3f5bf380bb0e3dc2d67e17d025f0b3a15dd68a45ed9",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:daily-capture-canonical": "768aae16ea53a11aa84c3afcb54f07689b8905160486825f9dbdc4c45a1193a4",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
+      },
+      "proof": "Today presents one filled Add expense action beside the reconciled USD 68.42 total; Add expense has one top Close dismissal, a recognizable type selector/category select, explicit USD guidance, retained details, and one active Save expense completion action visible even at 375×667.",
+      "screens": [
+        "today.iphone-14",
+        "add-expense.iphone-14"
+      ]
+    },
+    "daily-collection-coverage": {
+      "inputHash": "6741f35c32f704afa1f8f16ce511fb8d376b100dba2872648c9a07a84d46010d",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:daily-collection-coverage": "b4e6e512efc6dc1886ada5db2b7ecc11aa2ff2c85aa10eea62b0f12bbf91f3a3",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "9d713abd0bb2601228f3e3703419cfbb94be7cd4b849454e42049a45e723f087",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883",
+        "screens/states/one-item.iphone-14.html": "6b3a24e9f24b44725f0125048e01dc57639ea9279384f0648656ba5a0a75a3de",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
+      },
+      "proof": "The stable Today family shows 0 entries with one first-add CTA, 1 entry with singular copy and No note, 4 typical expenses, a 25-entry dense state totaling USD 456.32 with an explicit Scroll for all 25 cue, and a 3-transaction long state with wrapped names/notes and a labeled negative USD 14.99 refund.",
+      "screens": [
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "today.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14"
+      ]
+    },
     "daily-creation-and-correction": {
       "inputHash": "517452663bffe3202539d16c87246d466110a18221b59f57db36b3bdf58d688a",
       "inputs": {
@@ -40,6 +80,23 @@
         "today.iphone-14",
         "add-expense.iphone-14",
         "states/empty.iphone-14"
+      ]
+    },
+    "monthly-category-understanding": {
+      "inputHash": "653ffb18bba9e07270477ac5229f9518f8ab2f976b0bfe42548d8e79b4c4b13d",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:monthly-category-understanding": "2d4b511843679ddcfe991fac50a71572712467903c661ec2857c32e2b362c08a",
+        "screens/monthly-summary.iphone-14.html": "7c1d923d6c36f8f1cc0dfb82f7fd15b4fd877c269950aec40a98d843ca6e0602",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb"
+      },
+      "proof": "Month displays six category net totals and allocations; Groceries states 8 expenses + 1 refund, USD 361.06 net, USD 138.94 left, and 72.21%; its detail repeats those facts, identifies signed net ordering, shows row chevrons, and says Scroll for all 9 rather than claiming all contributors fit above the fold.",
+      "screens": [
+        "monthly-summary.iphone-14",
+        "states/category-detail.iphone-14"
       ]
     },
     "mutable-expense-actions": {
@@ -76,6 +133,143 @@
       "proof": "Re-reviewed after restore: Monthly Summary groups Housing, Food, and Transit with nested entries, a negative credit, long merchant text, and category drill-in controls.",
       "screens": [
         "monthly-summary.iphone-14"
+      ]
+    },
+    "safe-destructive-recovery": {
+      "inputHash": "874cc4b9fbc843a0d6622131fc533b7e0790e0976f0edca6c46ec4dd1a7a913c",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:safe-destructive-recovery": "ed7aa1f565d1996068d43561ca289df470ecec28e183c2d5684bc746b7938636",
+        "screens/edit-expense.iphone-14.html": "21fddeb66d8e737c8ef0a33dc1b14a07829a74c61f4d6a5b6a1a8ee953187a1a",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "ba9af953243e0ad6e668eee5d8a48249b2c0b3377b54978b997a3bb4cd7d93d5",
+        "screens/states/deleted.iphone-14.html": "9a2f935621926c3d7d719de9337118158d5a3860b78d362b0277904d98870a8a",
+        "screens/states/expense-menu.iphone-14.html": "b7192a0808f8797cbd3931ceda38dbaaaec18d752d909b338864c12b7c3f2ae0"
+      },
+      "proof": "Edit exposes one overflow; Expense menu shows a text-led Delete expense on a neutral surface plus one Close menu dismissal; final confirmation names Corner Market and USD 24.86 with the only coral filled action; Deleted recalculates USD 43.56, 56.44, and 867.02 and exposes Undo.",
+      "screens": [
+        "edit-expense.iphone-14",
+        "states/expense-menu.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "semantic-refund-color": {
+      "inputHash": "5c0a3ea89c21338f0d97546d25190db0df2ca1fa99c0bbd75f71fb7af27292e9",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:semantic-refund-color": "3095885d2c63e2b111dc74ddf8e93be2fc0da7abcb709a749c1d572f279ab43f",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb",
+        "screens/states/delete-confirmation.iphone-14.html": "ba9af953243e0ad6e668eee5d8a48249b2c0b3377b54978b997a3bb4cd7d93d5",
+        "screens/states/edit-refund.iphone-14.html": "e2557cd986280fcb202cc2e48eab44f40e55994024c7c5bce4e4081a2600ce66",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Add refund and Edit refund use credit-green selected states and borders; Long content and Groceries use the same credit green for RF glyphs and negative values; validation uses coral only for invalid fields, expense overflow stays neutral before confirmation, and coral fill appears only on Delete expense at commit.",
+      "screens": [
+        "add-refund.iphone-14",
+        "states/edit-refund.iphone-14",
+        "states/long-content.iphone-14",
+        "states/category-detail.iphone-14",
+        "states/validation.iphone-14",
+        "states/delete-confirmation.iphone-14"
+      ]
+    },
+    "semantic-value-integrity": {
+      "inputHash": "cee960d6f0c3ba4846ae2da03f78c2864bc79a56f4d4eba9f44f909342b5754e",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:semantic-value-integrity": "45b2edcddfe3d329c0b74392da43ee1264723f7c5760c77f22a666e52acaa96f",
+        "screens/monthly-summary.iphone-14.html": "7c1d923d6c36f8f1cc0dfb82f7fd15b4fd877c269950aec40a98d843ca6e0602",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb",
+        "screens/states/deleted.iphone-14.html": "9a2f935621926c3d7d719de9337118158d5a3860b78d362b0277904d98870a8a",
+        "screens/states/dense.iphone-14.html": "9d713abd0bb2601228f3e3703419cfbb94be7cd4b849454e42049a45e723f087",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883",
+        "screens/states/one-item.iphone-14.html": "6b3a24e9f24b44725f0125048e01dc57639ea9279384f0648656ba5a0a75a3de",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
+      },
+      "proof": "Node decimal recalculation confirms Today USD 68.42 and 31.58 left; post-delete USD 43.56, 56.44, and 867.02; Dense 25 rows = USD 456.32 and 356.32 over; Long 9,875.00 + 128.67 − 14.99 = 9,988.68; Groceries eight expenses 368.57 − 7.51 = 361.06; categories = 1,657.84 with 842.16 left at 66.31%.",
+      "screens": [
+        "today.iphone-14",
+        "monthly-summary.iphone-14",
+        "states/category-detail.iphone-14",
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "stable-task-first-shell": {
+      "inputHash": "2b5694562cc4b5a68407f22e22ecfbfea9aab510b4b6e56e23c1ef0262ebf958",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:stable-task-first-shell": "9d74c1847e5c50b266afc648be59213d7aa1385042c232d38d3bbb2ed29ecc5e",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/edit-expense.iphone-14.html": "21fddeb66d8e737c8ef0a33dc1b14a07829a74c61f4d6a5b6a1a8ee953187a1a",
+        "screens/monthly-summary.iphone-14.html": "7c1d923d6c36f8f1cc0dfb82f7fd15b4fd877c269950aec40a98d843ca6e0602",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "ba9af953243e0ad6e668eee5d8a48249b2c0b3377b54978b997a3bb4cd7d93d5",
+        "screens/states/deleted.iphone-14.html": "9a2f935621926c3d7d719de9337118158d5a3860b78d362b0277904d98870a8a",
+        "screens/states/dense.iphone-14.html": "9d713abd0bb2601228f3e3703419cfbb94be7cd4b849454e42049a45e723f087",
+        "screens/states/edit-refund.iphone-14.html": "e2557cd986280fcb202cc2e48eab44f40e55994024c7c5bce4e4081a2600ce66",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e",
+        "screens/states/expense-menu.iphone-14.html": "b7192a0808f8797cbd3931ceda38dbaaaec18d752d909b338864c12b7c3f2ae0",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883",
+        "screens/states/one-item.iphone-14.html": "6b3a24e9f24b44725f0125048e01dc57639ea9279384f0648656ba5a0a75a3de",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
+      },
+      "proof": "Today, Month, empty, one-item, dense, long-content, and deleted screens keep the 38px Ledgerly/month app bar, 38px Today–Month control in the same order, data-first summary, and budget metrics; Dense keeps those regions fixed while its list scrolls; create/edit screens share one centered taskbar and a single contextual dismissal.",
+      "screens": [
+        "today.iphone-14",
+        "monthly-summary.iphone-14",
+        "states/empty.iphone-14",
+        "states/one-item.iphone-14",
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "add-expense.iphone-14",
+        "add-refund.iphone-14",
+        "edit-expense.iphone-14",
+        "states/edit-refund.iphone-14",
+        "states/expense-menu.iphone-14",
+        "states/delete-confirmation.iphone-14",
+        "states/deleted.iphone-14"
+      ]
+    },
+    "stress-resilient-hierarchy": {
+      "inputHash": "22525246cdb094f7db2361489bc412f90667c9a906f56b6b2b2309b7442d046f",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:stress-resilient-hierarchy": "a749c38c9a7565582ad6b3857298c3d2de14cca011ee143473629e10d7d67925",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb",
+        "screens/states/delete-confirmation.iphone-14.html": "ba9af953243e0ad6e668eee5d8a48249b2c0b3377b54978b997a3bb4cd7d93d5",
+        "screens/states/dense.iphone-14.html": "9d713abd0bb2601228f3e3703419cfbb94be7cd4b849454e42049a45e723f087",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Across 375×667, 390×844, and 412×915, Dense preserves the full shell and confines 25 quiet chevron rows to an internal scrolling list; Long wraps multi-line merchants and notes without displacing signed amounts; category detail cues scrolling; validation guidance remains adjacent; confirmation actions remain unobscured.",
+      "screens": [
+        "states/dense.iphone-14",
+        "states/long-content.iphone-14",
+        "states/category-detail.iphone-14",
+        "states/validation.iphone-14",
+        "states/delete-confirmation.iphone-14"
       ]
     },
     "stress-resilient-layout": {
@@ -129,441 +323,775 @@
         "states/delete-confirmation.iphone-14",
         "states/deleted.iphone-14"
       ]
+    },
+    "transaction-variant-parity": {
+      "inputHash": "3c73a1396e9ec53e685106191dcc2c000698b600c4ad4ba6e7a73c6a74ca68b8",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:transaction-variant-parity": "be506ca6b3015ed27a14bf35452b187fdc278d2f35cee8d7d572c5b91e38b9f8",
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/edit-expense.iphone-14.html": "21fddeb66d8e737c8ef0a33dc1b14a07829a74c61f4d6a5b6a1a8ee953187a1a",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb",
+        "screens/states/edit-refund.iphone-14.html": "e2557cd986280fcb202cc2e48eab44f40e55994024c7c5bce4e4081a2600ce66",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883"
+      },
+      "proof": "Add expense and Add refund each show an explicit Expense/Refund selector, positive USD amount magnitude, merchant, category select, date, time, note, and active type-specific Save; Edit expense and Edit refund preserve those fields and allow type correction; refund forms preview negative USD 14.99 and 7.51, matching green signed refund rows in Long content and Groceries.",
+      "screens": [
+        "add-expense.iphone-14",
+        "add-refund.iphone-14",
+        "edit-expense.iphone-14",
+        "states/edit-refund.iphone-14",
+        "states/long-content.iphone-14",
+        "states/category-detail.iphone-14"
+      ]
+    },
+    "validation-and-correction": {
+      "inputHash": "5cfa627d2f4fbe494ce75ff395681706483b9b146a866f9e5123224f9967f8d9",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "requirement:validation-and-correction": "793d69a88ebef419e149f2f4e5e61ff3ef97bb3946f176d87247fb3b64536390",
+        "screens/edit-expense.iphone-14.html": "21fddeb66d8e737c8ef0a33dc1b14a07829a74c61f4d6a5b6a1a8ee953187a1a",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "e2557cd986280fcb202cc2e48eab44f40e55994024c7c5bce4e4081a2600ce66",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
+      },
+      "proof": "Today rows use consistent chevrons; Edit expense and Edit refund are prefilled and each has Back, one Save action, and overflow; Validation retains Green Leaf Deli and Lunch with Sam, marks USD 0.00 and category inline, states two corrections, disables Save, and uses only top Close to dismiss.",
+      "screens": [
+        "today.iphone-14",
+        "states/validation.iphone-14",
+        "edit-expense.iphone-14",
+        "states/edit-refund.iphone-14"
+      ]
     }
   },
   "version": 1,
   "visual": {
     "add-expense.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "f52bd3ab4a58b3e33b6c60434bed35b5a379a2d2798928df7457414a2747dcab",
+      "inputHash": "34afdb8ff289cca5cf8dc6dc5990feb5a6a87077471b635e33113ad062d914f8",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "add-expense.iphone-14",
       "screens": [
         "add-expense.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/add-expense.iphone-14.png",
-      "screenshotSha256": "e90d6c50f2cf21822d8b0428326446f3b3abb02376a499d0c8c8ae6fab084657"
+      "screenshotSha256": "da2f14c5f7685a03df886e68862685386826bb2e6f0021ef4a884961d2d4306e"
     },
     "add-expense.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "5f7a0e458dc6aefe158f0d84bd4dac7860d7b837eccbc906c84d2998caeb0566",
+      "inputHash": "c1ef5ed9077172704fe61976e05dd0549ab5acf58fceef9c87210957c8c883d9",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "add-expense.iphone-14",
       "screens": [
         "add-expense.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/add-expense.iphone-14.png",
-      "screenshotSha256": "ddc2bb2a3191c5808dfea391e75d1ce94331ebc0a0e649e4041e13214e4e580e"
+      "screenshotSha256": "ebea957709bb3d33997fd7f755b66d3bfac56d351857a3f6ba285d78579f841e"
     },
     "add-expense.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "ab678abab3d844cdc809404084668f85a1677862b7302dbae6285b9b264ebad4",
+      "inputHash": "831810dbd8eb41b87b96ae030fddd0a25da863dbd2dfeaa0243867bcd3878407",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/add-expense.iphone-14.html": "8990b846102ec7b235180ca857879d14f0d7985e06f63ae804a09c1774f326e0",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+        "screens/add-expense.iphone-14.html": "2491d54a29565b91ab0132891772e07713f3eacec5e10abea2c81cfe5949b08d",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "add-expense.iphone-14",
       "screens": [
         "add-expense.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/add-expense.iphone-14.png",
-      "screenshotSha256": "73ff8b79a7b381e59233f4421ee0266b66d14d1bfd622ef15f3d5803f84a36fc"
+      "screenshotSha256": "9bc52ac6a56bff23b824a9fe7b4d5864a61f282623c09563ba79360366ddc952"
+    },
+    "add-refund.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "de49ed09de8d06cd9027fed5c065f7c6428e023b3c34b474bebd0d96eb1cbc96",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "add-refund.iphone-14",
+      "screens": [
+        "add-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/add-refund.iphone-14.png",
+      "screenshotSha256": "deecffe498303af24c3b296730a9cafae3b8f8b577376eb4b8f7841e3e616e3b"
+    },
+    "add-refund.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "0f5aa4f4924f3a539c5781b86f92a46e1c2b597f9c0b1703082be6783f5f3608",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "add-refund.iphone-14",
+      "screens": [
+        "add-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/add-refund.iphone-14.png",
+      "screenshotSha256": "5dc41107da10293fd0a949561f729f8e1f9b55e4c0ab7de6a6f51468f7ad7e21"
+    },
+    "add-refund.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "107c9eed360363936bbb8c476421ff4252f1bf037b5346364d794993eab95c49",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/add-refund.iphone-14.html": "3451defe519b3f0f2a8648b66e7aeee4a22a31610c558c29d5d78e02859f06c8",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "add-refund.iphone-14",
+      "screens": [
+        "add-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/add-refund.iphone-14.png",
+      "screenshotSha256": "23e211e79c64740e179d5f94eb3d0a4d1f38b175aebc36b17e54ee53a644c009"
+    },
+    "edit-expense.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "7cfcb01708dc256398a97a49aed8ed128b8a90872c96ffcba0a1cb1f108618b3",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/edit-expense.iphone-14.html": "21fddeb66d8e737c8ef0a33dc1b14a07829a74c61f4d6a5b6a1a8ee953187a1a",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "edit-expense.iphone-14",
+      "screens": [
+        "edit-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/edit-expense.iphone-14.png",
+      "screenshotSha256": "a7fe21256272817d24d1ceea0989ffb31677a7f01a9e268f9bddb9526a321e08"
+    },
+    "edit-expense.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "82b5e5224f40aa03bcdfd8f81bf2d9f221ae40bba3746cd133e570c5f3a29e86",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/edit-expense.iphone-14.html": "21fddeb66d8e737c8ef0a33dc1b14a07829a74c61f4d6a5b6a1a8ee953187a1a",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "edit-expense.iphone-14",
+      "screens": [
+        "edit-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/edit-expense.iphone-14.png",
+      "screenshotSha256": "03122466127fc60784a4dc7f58a9c50e5bcb6e2d80fc9a7532acdf7042781bf8"
+    },
+    "edit-expense.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "598e46ed52627a0febf59bc754c096823dd695b33acfa52f90b8096c940d69ea",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/edit-expense.iphone-14.html": "21fddeb66d8e737c8ef0a33dc1b14a07829a74c61f4d6a5b6a1a8ee953187a1a",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "edit-expense.iphone-14",
+      "screens": [
+        "edit-expense.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/edit-expense.iphone-14.png",
+      "screenshotSha256": "8262722290204aa39f19680cb91e5b20e3f3c441114cf879cb522a4b7375064f"
     },
     "monthly-summary.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "beb710197b12ac60d8de20a1836e4fdb9ec794941d99010faf1041a52f37828f",
+      "inputHash": "e8f4e0f7aae8f70ca47d1ab131f7777ab3e20492c0680c03f84c702d43309b7d",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+        "screens/monthly-summary.iphone-14.html": "7c1d923d6c36f8f1cc0dfb82f7fd15b4fd877c269950aec40a98d843ca6e0602",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "monthly-summary.iphone-14",
       "screens": [
         "monthly-summary.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/monthly-summary.iphone-14.png",
-      "screenshotSha256": "00079cdc9bcaba01ad016602726b88522b3186fb5129a7b4418cf4d3f456f441"
+      "screenshotSha256": "d655c15f30fa7663133b8801cb4bf5c97dcf45850614ba76c8cef5ba9e25d9c5"
     },
     "monthly-summary.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "180ac241e68720dc48123894279c8036f5d097076c45d416b845a600cf39b53f",
+      "inputHash": "d9f409b2957001ac55c734086d6ebc1c166b66a1e0673584da5b161b831fb7a8",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+        "screens/monthly-summary.iphone-14.html": "7c1d923d6c36f8f1cc0dfb82f7fd15b4fd877c269950aec40a98d843ca6e0602",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "monthly-summary.iphone-14",
       "screens": [
         "monthly-summary.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/monthly-summary.iphone-14.png",
-      "screenshotSha256": "d7d826865dc7c1cdd84581ee4c96f4434f9dfabe2fa6230a6264bd6eb4c355e4"
+      "screenshotSha256": "1ffcc25eca59a5f972327a977686b07f093b8e404d9162a2410895cf8cd54653"
     },
     "monthly-summary.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "9b6ef0d99364fe3898b9a47c06f366e95be6443b1da95e0ffb5a818ca32831d1",
+      "inputHash": "410289713ededd7d5533c94ee3a4483b4bfd923a94e2f8a862526073e4e53767",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/monthly-summary.iphone-14.html": "e961d39877373b0172d8ff55246f707c36a559e5bd52089bc2e3ed5903422c40",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e"
+        "screens/monthly-summary.iphone-14.html": "7c1d923d6c36f8f1cc0dfb82f7fd15b4fd877c269950aec40a98d843ca6e0602",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "monthly-summary.iphone-14",
       "screens": [
         "monthly-summary.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/monthly-summary.iphone-14.png",
-      "screenshotSha256": "5951974bbe141037786247d7460aa9290ec11bdbef682f9d307a582a82290ebd"
+      "screenshotSha256": "d33acb40b36f389632dc28addd5adc984f93c50f273ece6b63af909a50f35db6"
+    },
+    "states/category-detail.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "182c98fc534bb5a34cb613a48c8523b25621ca0b34817436565be1ebcb06d2eb",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/category-detail.iphone-14",
+      "screens": [
+        "states/category-detail.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/category-detail.iphone-14.png",
+      "screenshotSha256": "f0d033cf28e3e87699cc85fe73390dcbf3a25ce78594c1a36877417073558a3a"
+    },
+    "states/category-detail.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "95c47e196f12606d046c743732c9bd8e694c8b1f9df83f131a93c8ec0c63008d",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/category-detail.iphone-14",
+      "screens": [
+        "states/category-detail.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/category-detail.iphone-14.png",
+      "screenshotSha256": "2e388a9d0fdf146bb084ca6c070339abbbaec2927f25ef0280d2f19d2785af1a"
+    },
+    "states/category-detail.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "63707db3346d825bfac43159573c5606e90bff3cec8221122dc86e728ef78f84",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/category-detail.iphone-14.html": "bf7967fb5f3bead69a3714b377f2c4f824c73574ee5f880cd95e68ea5e1c3dcb"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/category-detail.iphone-14",
+      "screens": [
+        "states/category-detail.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/category-detail.iphone-14.png",
+      "screenshotSha256": "4ae6e6b937eb1d1b6310bd5731a09016e7d7e93807fdeb7f5843dd4101def491"
     },
     "states/delete-confirmation.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "d13391e4cd0e19e01137655dca71c42ab1d2576db5b3dc879722a202bad87ba5",
+      "inputHash": "6d6dd8494411dd259a1cc137ddb97344b5dd7eafc6ed12b1ce5cdedafc009ffa",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "ba9af953243e0ad6e668eee5d8a48249b2c0b3377b54978b997a3bb4cd7d93d5"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/delete-confirmation.iphone-14",
       "screens": [
         "states/delete-confirmation.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/states/delete-confirmation.iphone-14.png",
-      "screenshotSha256": "2f640c896662690620456af54a8a548a91ce8d24c309d36de1e74241e6813654"
+      "screenshotSha256": "cf84d83ff7c43bd533e54840ee005154cae95fe02a665ee0b4254169c7e5efce"
     },
     "states/delete-confirmation.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "a90fb05f71361ecb4477ff97d2231055379a2c4c32b2a864df8d431bde490cbf",
+      "inputHash": "e8c7607cdeb491603578d6e96df9d396b2c28457b90b8d6fc56b37e0b3166299",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "ba9af953243e0ad6e668eee5d8a48249b2c0b3377b54978b997a3bb4cd7d93d5"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/delete-confirmation.iphone-14",
       "screens": [
         "states/delete-confirmation.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/states/delete-confirmation.iphone-14.png",
-      "screenshotSha256": "0282ca1c0ddc56feefc49f98aec04d5c1866ab81b5bedc2451e09231e4387f41"
+      "screenshotSha256": "0e2023df9c5a6444d3cc18ad1029ff99986c4b496d00fd0194b175568e0dabbd"
     },
     "states/delete-confirmation.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "967a81308248397b555607f08882a04e38e44b3b7cd8083063c01a03366b139b",
+      "inputHash": "5fd3cb59e82432e0bc819ea722eed73a4191c842f2f2617b4a3a8b369b18db3c",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/delete-confirmation.iphone-14.html": "3a4cce370b1390cf84384d727e8eaa830334e828ad2d6bc7cb175ebadfa9af10"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/delete-confirmation.iphone-14.html": "ba9af953243e0ad6e668eee5d8a48249b2c0b3377b54978b997a3bb4cd7d93d5"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/delete-confirmation.iphone-14",
       "screens": [
         "states/delete-confirmation.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/states/delete-confirmation.iphone-14.png",
-      "screenshotSha256": "65298d354f1b23515341bec0fc9efba2fe2ec8ae3821992c63edbb9dd03fa7f6"
+      "screenshotSha256": "29ca14c5a221a5fd4b4c4dd3a8cc09044473f6b70ad27e183c7e58a6b9c25dcb"
     },
     "states/deleted.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "807c184419586173bff6313bac4120ee94204cbb9d8c521c010de1d98529f644",
+      "inputHash": "998031c4b3dc87528d6fb3f3be0a511a78f2643a55223c022f1cd7cbad7b5163",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/deleted.iphone-14.html": "9a2f935621926c3d7d719de9337118158d5a3860b78d362b0277904d98870a8a"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/deleted.iphone-14",
       "screens": [
         "states/deleted.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/states/deleted.iphone-14.png",
-      "screenshotSha256": "8e1e0bdb40f1b47780d1a9d91833a3e0c82b942753247a1e99cb72fa4342758e"
+      "screenshotSha256": "89384dff03a7758085c3bcb1d3cfe77b2a10e7ce2c89608a833904796a65bdfd"
     },
     "states/deleted.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "68979c3f13d6119c8860f0a88ef5259eb613a716f685d2d4329468d4deecc196",
+      "inputHash": "e1fe4ca233bd88ad894ba1bc8d6433b8e287da67b88363932a5467c701586ca5",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/deleted.iphone-14.html": "9a2f935621926c3d7d719de9337118158d5a3860b78d362b0277904d98870a8a"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/deleted.iphone-14",
       "screens": [
         "states/deleted.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/states/deleted.iphone-14.png",
-      "screenshotSha256": "646a5f8190d325b29f2adb9bb5d55d4af78f454b2d609ca61f1f900bf1763836"
+      "screenshotSha256": "f3897611098257b4db4e83cf4b9130ff64cedb5514929cb4b53ece13b96f78b4"
     },
     "states/deleted.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "306ad6af85ad20dfdaff030de4949a8fa472bbfa7c5db86bb1397b3f752911dd",
+      "inputHash": "5c3e43142df33094713abb3979937efb61f00b6168b4752d3376fcedbe150937",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/deleted.iphone-14.html": "6c45b61399b063644ac34829b554fe3b839803223ff66b3866a525523fcedfa5"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/deleted.iphone-14.html": "9a2f935621926c3d7d719de9337118158d5a3860b78d362b0277904d98870a8a"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/deleted.iphone-14",
       "screens": [
         "states/deleted.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/states/deleted.iphone-14.png",
-      "screenshotSha256": "6dfe8fda6efe79076af0f31b88ebd6148111634c3c04c6d854f68411bad74085"
+      "screenshotSha256": "42e4e51c6d30d8a096495fa897864d27d7afab0b22b56d82af77a3203f492010"
     },
     "states/dense.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "71fbf7ab4e30745453804a0352e134d44ef90a7b1dc4e38cf368c305b3c2b13b",
+      "inputHash": "2da60bbab99092f807a5ea02f2a7fddd8f503808afd57a4165a5936f2660d80a",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "9d713abd0bb2601228f3e3703419cfbb94be7cd4b849454e42049a45e723f087"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/dense.iphone-14",
       "screens": [
         "states/dense.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/states/dense.iphone-14.png",
-      "screenshotSha256": "fd456044c0021eb6a86d3a327165e3ee0b2314b68366af4a271f3c52325a0b8d"
+      "screenshotSha256": "b343f5ea9a4d2d768385fa4fcd0f620ea12882750bba7eef0842b29adeea4612"
     },
     "states/dense.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "ddae8fd3edff3f37d08b5ccacee58bb0619c3c13c1cfb25942805a40881a60d8",
+      "inputHash": "cd7c392985be236ef668e9bf05b6fdc660a9e914b84d84b300138ffedd0c7f6f",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "9d713abd0bb2601228f3e3703419cfbb94be7cd4b849454e42049a45e723f087"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/dense.iphone-14",
       "screens": [
         "states/dense.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/states/dense.iphone-14.png",
-      "screenshotSha256": "a182aa4a859458a948c5d0004de3c9698c003c68732f549cdd3b421f8d4b87cc"
+      "screenshotSha256": "044124c81fefa7db28ae0ae34ddb6685e038fe1a46c35ea0750424957382db5e"
     },
     "states/dense.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "2009f0856531a499b1d3a63dc3545f2f4ac9581a1b0ec635520c4ed888cb8079",
+      "inputHash": "42030acf6b5bf4c9dda0d0150e42f0ece0c79f58ae750c3d4c480655a4653087",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/dense.iphone-14.html": "1133bcf28f2dd1aeb02af85d798f241a433cffdf48f0e1b6d770ace4045dd9fe"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/dense.iphone-14.html": "9d713abd0bb2601228f3e3703419cfbb94be7cd4b849454e42049a45e723f087"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/dense.iphone-14",
       "screens": [
         "states/dense.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/states/dense.iphone-14.png",
-      "screenshotSha256": "dd521e0839c050b83fd292225e87e0dc8b22feb0a63829add4fbc24f2e911cbb"
+      "screenshotSha256": "cef705dc42557de4895621e1a6c6af46394be52ff4f0917dde755b6d1c5c24d5"
+    },
+    "states/edit-refund.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "a3aeed68a0ffdfd0f61c37f15662a4cccb249c7bfccb57e2e0c9758834ec6aa7",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "e2557cd986280fcb202cc2e48eab44f40e55994024c7c5bce4e4081a2600ce66"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/edit-refund.iphone-14",
+      "screens": [
+        "states/edit-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/edit-refund.iphone-14.png",
+      "screenshotSha256": "6e89cfae2861a7350345193a6dd15d1348266863015eeff67054da098a28dabd"
+    },
+    "states/edit-refund.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "92e6082d9049779d7765d59dd7cb973982f702aa69ef14ef855e05dcfcea77b3",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "e2557cd986280fcb202cc2e48eab44f40e55994024c7c5bce4e4081a2600ce66"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/edit-refund.iphone-14",
+      "screens": [
+        "states/edit-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/edit-refund.iphone-14.png",
+      "screenshotSha256": "1a5e0aa08ed3f38db9a9f52b910b955e1df69354301f3dbc5ca00291afdc7730"
+    },
+    "states/edit-refund.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "ef7ec89fd738f89b35f1904618798301924e5869ee906bc072fa039cd52838a5",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/edit-refund.iphone-14.html": "e2557cd986280fcb202cc2e48eab44f40e55994024c7c5bce4e4081a2600ce66"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/edit-refund.iphone-14",
+      "screens": [
+        "states/edit-refund.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/edit-refund.iphone-14.png",
+      "screenshotSha256": "8f5fb5b065f33f17025b58f8379d0294cfc6fe1d628c6510af4f7c0d4ff92abd"
     },
     "states/empty.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "cf2be1cd7d359c88d54fd6204bd28e847377da03dd2065b00d31a96716d7f814",
+      "inputHash": "4f2e821412598aeb3bf418afc00a9a515fba4696b2fd0e8a657431f01c447d8a",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/empty.iphone-14",
       "screens": [
         "states/empty.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/states/empty.iphone-14.png",
-      "screenshotSha256": "622be562dca0150ecbdbf18a4c5deffce0596be05227598c506ec056f0c26e9f"
+      "screenshotSha256": "fc2f9aba9bb6e2c7ac49a256b439f4d2ccf19f2f797806779a0358fcdf2570d1"
     },
     "states/empty.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "b4e33751c54cedd2727f2b5fbed196bae06186fad60a45cf3bfce89b7f1fb8e9",
+      "inputHash": "97b8b9b4e6067b2ffab839bc5270a6c92c6815235ad236675f6b3bde2e8fbbcb",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/empty.iphone-14",
       "screens": [
         "states/empty.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/states/empty.iphone-14.png",
-      "screenshotSha256": "41dd3642f164b88168ca3ea6bb11abace2738e0e189f8e259dfdb6514b9a5bda"
+      "screenshotSha256": "1e0d69e06ae8c1eea96ab4bac2b26bad281c399aee20a55b070d892b75f7095d"
     },
     "states/empty.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "954e705d4ff9fb2a178d81ea485a05809233abef35a582f18f41e155bcf0466c",
+      "inputHash": "792ce514611751a49e48b65dd8715d2687618f2a158abc8140519984b3a0b3ef",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/empty.iphone-14.html": "b521f3044cc12ee8fc5cdf68fbb71ebaf7f1dee667f8da87e3ee748917b0b68c"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/empty.iphone-14.html": "bf07be5e47427f0f6e52ef8963dc01ef6b9ded37b454d40b9f388b5c43bdff2e"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/empty.iphone-14",
       "screens": [
         "states/empty.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/states/empty.iphone-14.png",
-      "screenshotSha256": "6a85c61d16f5aab4579f62ea8e0bb4088c23db6400e4dd0f4ba64556f9b84c2c"
+      "screenshotSha256": "b937db7506a184b8af89d31bc0bfc2c61476ddad37c9b7e48cb3f9386d99e4c5"
+    },
+    "states/expense-menu.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "1f5db388465434eaca1110754dc4527a2a1706ccedd0614e5c41843ffc4b1879",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/expense-menu.iphone-14.html": "b7192a0808f8797cbd3931ceda38dbaaaec18d752d909b338864c12b7c3f2ae0"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/expense-menu.iphone-14",
+      "screens": [
+        "states/expense-menu.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/expense-menu.iphone-14.png",
+      "screenshotSha256": "8f35a078ee674d85a39de6dad2dd7d9d044250f50fd29959bee5f06bb82b56c0"
+    },
+    "states/expense-menu.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "2ad489ec5a6139345d67c68bb9146aeb117cd1b892263623bbccd87b43addb58",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/expense-menu.iphone-14.html": "b7192a0808f8797cbd3931ceda38dbaaaec18d752d909b338864c12b7c3f2ae0"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/expense-menu.iphone-14",
+      "screens": [
+        "states/expense-menu.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/expense-menu.iphone-14.png",
+      "screenshotSha256": "3ad2780e968b7c70e825218de57f6d775f6f13c510e6466a64cd8b31e1954a5f"
+    },
+    "states/expense-menu.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "4ad67bc83639e7b4631d39acc266e802b620e191cfd8b00f0df066ee04bc0c5c",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/expense-menu.iphone-14.html": "b7192a0808f8797cbd3931ceda38dbaaaec18d752d909b338864c12b7c3f2ae0"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/expense-menu.iphone-14",
+      "screens": [
+        "states/expense-menu.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/expense-menu.iphone-14.png",
+      "screenshotSha256": "c3e7effd160bb606caf58e98d3c606d89ca059c29398fabe88c4e33a63e17571"
     },
     "states/long-content.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "9b27af6a4f0a0b6bb9b2ea3f840501cb176cf2f8d165be8bc46d050989a23f96",
+      "inputHash": "c5a1c8a9f68635588edbee065d40aebc7c60aeb97aed3b90042b0920def12c5e",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/long-content.iphone-14",
       "screens": [
         "states/long-content.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/states/long-content.iphone-14.png",
-      "screenshotSha256": "049117f907a2a3a1298d690200f60d54a46906a7deccafbb80ab45130cecfea5"
+      "screenshotSha256": "faf80a9c5a688a44cadcf94fb2cc51c6e14c2ddd15e5ec47b5c3ec0d959f6d38"
     },
     "states/long-content.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "ba5811a9bad61a4c1ca5d30142270d6dad439f6e44082af849c8e19633d8bd29",
+      "inputHash": "a181a4f79df1d31021793467cc2e2b321f892ee3c82f123e7c8c315d06afce8c",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/long-content.iphone-14",
       "screens": [
         "states/long-content.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/states/long-content.iphone-14.png",
-      "screenshotSha256": "7c89b4653899b523b4569a6f465272998c38d98ea9a16758886c554d32fb381b"
+      "screenshotSha256": "f790a2e80c4c7fa5d49f8fceb7e01f1234d8392d95b8f34299dac5f7a4e49dbb"
     },
     "states/long-content.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "b605f6df6a43b91408287077a53cd0d83277d6faf8b7054288bb281e9ce5913c",
+      "inputHash": "aaf474b9c13bdb39f9fc32205a562dfc67797b54f1893239a8b9106db34fb0ae",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/long-content.iphone-14.html": "2bc16ca9938ae766768715308c81fdbd6893e904e44aed78ef0b97cd4e7917e8"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/long-content.iphone-14.html": "028894ce7c1f3a126e9f3599227b89b6dfeab39b1a44b09f3a9d984e4b8e6883"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/long-content.iphone-14",
       "screens": [
         "states/long-content.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/states/long-content.iphone-14.png",
-      "screenshotSha256": "a15eb4d8ab8e23c9e4979fd2c68b6107a0ce171cb8ba96bb2edbb52ad0b24dd0"
+      "screenshotSha256": "529490ff74d64fda73814a51109dd1d92466d7a3331f5bd7c4ef757b8bdc544e"
     },
     "states/one-item.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "b812c98a216c4616a3bdd686f05481a59cf2e98c228e9fef0dd9d4e38c0d184d",
+      "inputHash": "d5178e304e15eedda8043bc7d5cc281048a812f72cbdc5917107cb1385cf2bb7",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/one-item.iphone-14.html": "6b3a24e9f24b44725f0125048e01dc57639ea9279384f0648656ba5a0a75a3de"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/one-item.iphone-14",
       "screens": [
         "states/one-item.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/states/one-item.iphone-14.png",
-      "screenshotSha256": "dfafe14910cda1744467666b2eaafad4fdda048a797379ab7ee0d33891ac6601"
+      "screenshotSha256": "59a73895c444fee956357e27c808f3c33cb454b265e57a4988684cfb9ed05666"
     },
     "states/one-item.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "46015918791797bfe541e573ee292a0db5774e13564f746ec1f7682edc9071a8",
+      "inputHash": "8355a72c00bacb7325e4397821fd3bbc5443ba51546868c1fd7535f88879d862",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/one-item.iphone-14.html": "6b3a24e9f24b44725f0125048e01dc57639ea9279384f0648656ba5a0a75a3de"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/one-item.iphone-14",
       "screens": [
         "states/one-item.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/states/one-item.iphone-14.png",
-      "screenshotSha256": "75c66df123462a5a2176c487d42ece2bbfc5bb782aa38ffcd12d48a4e66c0631"
+      "screenshotSha256": "2b228b54059b68be151438a68cac562073da065d7152a9a8a769467c0bffcd09"
     },
     "states/one-item.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "539fe32c05477797c1773b5f778900f21dbb40376349661c0894c651e001544b",
+      "inputHash": "d760ada0083b213a3cbc798c274cf8c58613cb36326550f3a197d7cc10f8e77a",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/states/one-item.iphone-14.html": "ca7c7a09f499ebad7b70897b93deede82a1a9463f02197f23033f8cf6a0a0ec8"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/one-item.iphone-14.html": "6b3a24e9f24b44725f0125048e01dc57639ea9279384f0648656ba5a0a75a3de"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "states/one-item.iphone-14",
       "screens": [
         "states/one-item.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/states/one-item.iphone-14.png",
-      "screenshotSha256": "d8b16c622edd81a2804fd6f3995b4d64fb1ee7eca9dde1758a652d2c1ac7c1a3"
+      "screenshotSha256": "71e2873f728f628ca80c3f5166f1f8ec19b2614e0650c5295f7158ec6b964bf3"
+    },
+    "states/validation.iphone-14@iphone-14": {
+      "device": "iphone-14",
+      "inputHash": "fab9fcab6bea115a9c3e930c50bb8dbdcb2ccd6764c4ef9f5349eb8fdb7be1ab",
+      "inputs": {
+        "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/validation.iphone-14",
+      "screens": [
+        "states/validation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-14/states/validation.iphone-14.png",
+      "screenshotSha256": "b324028002eaa9e27af4b06e1b9ae3efabc305d317035acef324a376834f5a85"
+    },
+    "states/validation.iphone-14@iphone-se": {
+      "device": "iphone-se",
+      "inputHash": "08a670e3be0b7c1abd3670194733318b112dcfcde98e2dad8239c6e6d9e040f4",
+      "inputs": {
+        "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/validation.iphone-14",
+      "screens": [
+        "states/validation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/iphone-se/states/validation.iphone-14.png",
+      "screenshotSha256": "abac528472342f3e0feac24ad531c83389922088810c599536c82f5d451205ce"
+    },
+    "states/validation.iphone-14@pixel-7": {
+      "device": "pixel-7",
+      "inputHash": "f03f8e81f46fc4600a89b5a17f3dab0dd98445a8454a1007763e6c20753f1c71",
+      "inputs": {
+        "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/states/validation.iphone-14.html": "4e2a665601d8e3a192effd18dde8adaf9c3788e8f353db1d1f2ab85529b83446"
+      },
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
+      "screen": "states/validation.iphone-14",
+      "screens": [
+        "states/validation.iphone-14"
+      ],
+      "screenshot": ".mocklens/screenshots/pixel-7/states/validation.iphone-14.png",
+      "screenshotSha256": "af2c4ced93b54bfd85d53b68c63cde71afb073b5abbe70c258f7b6701c7c9c26"
     },
     "today.iphone-14@iphone-14": {
       "device": "iphone-14",
-      "inputHash": "161124f889e232d4c03e6578fda24e2bf0b3c0c0631d88a33574f8e9940bf57a",
+      "inputHash": "acb375fda70d7f56bb5162a5f660a56df5d1205d92c8360e35e7c4f0aac2fd1e",
       "inputs": {
         "device:iphone-14": "fdb6115a716163bb5774b3005fdc27a8432309c33b39ec1b1d881e4fe5aada17",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "today.iphone-14",
       "screens": [
         "today.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-14/today.iphone-14.png",
-      "screenshotSha256": "5206c0227cd87ae0050864238ce1be97d9f01c91d8b5d0a39c9e33699e45a5db"
+      "screenshotSha256": "525d0ba08f72e0f1ddc0ae5c1f824aa034b3d085f2d2bb09222c51c32a08e788"
     },
     "today.iphone-14@iphone-se": {
       "device": "iphone-se",
-      "inputHash": "c71b1a064c98437bdda7a7fad96cc9e13d468ed4fca7a8badc40adf85111e7bc",
+      "inputHash": "965ff502517265a2abc2c81f92fecd7ae18a87f4c847fb63071dc98f88fd7962",
       "inputs": {
         "device:iphone-se": "6fee5e7176d7be33cf08bcae3b70536696e43d4aeb0effe6447bfa00c96a9402",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "today.iphone-14",
       "screens": [
         "today.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/iphone-se/today.iphone-14.png",
-      "screenshotSha256": "085d7b83f6acf373c8fa1604f949da6c8527f0c571f7605bddbb3d1055d77f76"
+      "screenshotSha256": "2f6713f06e9540a87c9a480222161f0a520e247fea91b712917d4f5dc4ba5a26"
     },
     "today.iphone-14@pixel-7": {
       "device": "pixel-7",
-      "inputHash": "aa45f5251e3469befc126b322542ddb3e1d94818d1298022d396e04d37c0a22e",
+      "inputHash": "02370d52f288c6277b8ed16cd16e01df619ab733a5d9a74be2ea9ae909fb7a45",
       "inputs": {
         "device:pixel-7": "65748074fb652709c36aa88c65cf7d6c225da61e9d1008e8b8de43873c73dcf9",
-        "screens/shared.css": "bda83b42697c14ebfbf93c7a395f3faef64f55e659b0854371f327b67a78b51e",
-        "screens/today.iphone-14.html": "ed4f6fc8e73e1ea42916e622a1913f577bde75113b6f83285aaaad4745a91856"
+        "screens/shared.css": "d25cbf6602e37be60f58ea48103083d5be1d8b92b39cc1f4bb7e65faed974d62",
+        "screens/today.iphone-14.html": "ffb9c4b7062d3f8d9884f3d6863bf83cc035fdbfd38c7c0d8b7b7a528e175d8a"
       },
-      "proof": "Re-reviewed the restored 27-PNG set after the staleness drill: task hierarchy, type, spacing, actions, dense and long wrapping, destructive states, recovery, and cross-device consistency remain presentation-ready.",
+      "proof": "Reviewed all 45 current viewport PNGs after the final full render: the warm ledger shell, typography, spacing, cards, numeric alignment, and disclosure language remain consistent across 375×667, 390×844, and 412×915; both expense/refund create and edit completions are visible or predictably reachable; refund selection, RF glyphs, and signed values use credit green while coral is reserved for validation and final deletion; Dense keeps app bar, tabs, metrics, count, cue, and internal scrolling; long text wraps without displacing amounts; category detail honestly cues scrolling to all nine; menu, confirmation, disabled, and Undo states are unobscured with one dominant action.",
       "screen": "today.iphone-14",
       "screens": [
         "today.iphone-14"
       ],
       "screenshot": ".mocklens/screenshots/pixel-7/today.iphone-14.png",
-      "screenshotSha256": "2654df0cb1d827c68f3baf6616281f7b54c0f2fa95af1f2726295bb237da280f"
+      "screenshotSha256": "3acdad43d1a82dccf2dedbd14260d457efd950625ab7fbef00ae92e6b60f40aa"
     }
   }
 }

@@ -1,15 +1,21 @@
 {
   "version": 1,
-  "goal": "Help a budget owner record daily spending, understand the month, and correct mistakes without decorative content displacing the work.",
+  "goal": "Help one household budget owner capture expenses and refunds, review signed daily activity, understand reconciled monthly category totals, and safely correct or undo mistakes on a phone.",
   "delivery": {
     "screens": [
       "today.iphone-14",
       "add-expense.iphone-14",
+      "add-refund.iphone-14",
+      "edit-expense.iphone-14",
+      "states/edit-refund.iphone-14",
       "monthly-summary.iphone-14",
+      "states/category-detail.iphone-14",
       "states/empty.iphone-14",
       "states/one-item.iphone-14",
       "states/dense.iphone-14",
       "states/long-content.iphone-14",
+      "states/expense-menu.iphone-14",
+      "states/validation.iphone-14",
       "states/delete-confirmation.iphone-14",
       "states/deleted.iphone-14"
     ],
@@ -17,50 +23,64 @@
   },
   "requirements": [
     {
-      "id": "daily-creation-and-correction",
+      "id": "transaction-variant-parity",
       "kind": "flow",
-      "description": "Daily spending exposes a first-viewport Add expense entry point, while the form makes amount, merchant, category, date, note, validation, cancellation, and correction visible.",
-      "screens": ["today.iphone-14", "add-expense.iphone-14", "states/empty.iphone-14"]
+      "description": "Expense and refund variants both have explicit create and prefilled correction states; forms use a positive entered magnitude and explain Ledgerly's signed aggregation rule.",
+      "screens": ["add-expense.iphone-14", "add-refund.iphone-14", "edit-expense.iphone-14", "states/edit-refund.iphone-14", "states/long-content.iphone-14", "states/category-detail.iphone-14"]
     },
     {
-      "id": "mutable-expense-actions",
+      "id": "daily-capture-canonical",
       "kind": "flow",
-      "description": "Expense rows expose edit and delete actions and the deletion path includes specific confirmation plus an undo recovery state.",
-      "screens": ["today.iphone-14", "states/long-content.iphone-14", "states/delete-confirmation.iphone-14", "states/deleted.iphone-14"]
+      "description": "Today exposes one frequent Add expense action; the valid expense form is recognizable, has one Close dismissal and one active Save expense completion action.",
+      "screens": ["today.iphone-14", "add-expense.iphone-14"]
     },
     {
-      "id": "collection-state-coverage",
+      "id": "validation-and-correction",
+      "kind": "flow",
+      "description": "The invalid transaction form retains entered content, explains both errors inline, disables completion, and offers only the top Close dismissal; rows visibly disclose editable expense and refund correction paths.",
+      "screens": ["today.iphone-14", "states/validation.iphone-14", "edit-expense.iphone-14", "states/edit-refund.iphone-14"]
+    },
+    {
+      "id": "safe-destructive-recovery",
+      "kind": "flow",
+      "description": "Edit overflow reveals a text-led neutral-surface delete action, strong destructive fill appears only on the named final confirmation, and the result recalculates totals with immediate Undo.",
+      "screens": ["edit-expense.iphone-14", "states/expense-menu.iphone-14", "states/delete-confirmation.iphone-14", "states/deleted.iphone-14"]
+    },
+    {
+      "id": "daily-collection-coverage",
       "kind": "screen-family",
-      "description": "The expense collection covers empty, one-item, typical, 25-item dense, long-content, and missing-optional-content states with consistent actions.",
+      "description": "The transaction collection covers empty, one item with missing optional note, typical, a 25-item dense state with a visible total and scroll cue, and long content including a clearly labeled refund without shifting the shell.",
       "screens": ["states/empty.iphone-14", "states/one-item.iphone-14", "today.iphone-14", "states/dense.iphone-14", "states/long-content.iphone-14"]
     },
     {
-      "id": "nested-monthly-summary",
-      "kind": "screen",
-      "description": "The monthly summary groups spending by category and exposes multiple nested expenses, unusually formatted values, and drill-in controls.",
-      "screens": ["monthly-summary.iphone-14"]
+      "id": "monthly-category-understanding",
+      "kind": "screen-family",
+      "description": "The month view shows six category net totals and exact budget arithmetic; Groceries identifies eight expenses plus one refund, shows their signed net total, and provides an honest scroll cue to all nine contributors.",
+      "screens": ["monthly-summary.iphone-14", "states/category-detail.iphone-14"]
     },
     {
-      "id": "stress-resilient-layout",
+      "id": "semantic-value-integrity",
       "kind": "screen-family",
-      "description": "Dense and long states retain readable hierarchy, wrap long labels, preserve large and negative values, and keep task controls discoverable on compact devices.",
-      "screens": ["states/dense.iphone-14", "states/long-content.iphone-14", "monthly-summary.iphone-14", "add-expense.iphone-14"]
+      "description": "Every displayed daily total, count, category net total, remainder, percentage, refund adjustment, and post-delete balance follows the documented USD sign and budget contracts.",
+      "screens": ["today.iphone-14", "monthly-summary.iphone-14", "states/category-detail.iphone-14", "states/empty.iphone-14", "states/one-item.iphone-14", "states/dense.iphone-14", "states/long-content.iphone-14", "states/deleted.iphone-14"]
     },
     {
-      "id": "task-first-value-budget",
+      "id": "stress-resilient-hierarchy",
       "kind": "screen-family",
-      "description": "Primary task data and actions occupy the first viewport before any low-value decoration across the complete delivery set.",
-      "screens": [
-        "today.iphone-14",
-        "add-expense.iphone-14",
-        "monthly-summary.iphone-14",
-        "states/empty.iphone-14",
-        "states/one-item.iphone-14",
-        "states/dense.iphone-14",
-        "states/long-content.iphone-14",
-        "states/delete-confirmation.iphone-14",
-        "states/deleted.iphone-14"
-      ]
+      "description": "Dense, long-content, nested, validation, and destructive states remain readable across every delivery device, use honest reachability cues, and avoid repeated secondary-action noise.",
+      "screens": ["states/dense.iphone-14", "states/long-content.iphone-14", "states/category-detail.iphone-14", "states/validation.iphone-14", "states/delete-confirmation.iphone-14"]
+    },
+    {
+      "id": "stable-task-first-shell",
+      "kind": "screen-family",
+      "description": "Every collection state keeps the same Ledgerly/month header, Today–Month order, selected treatment, data-first start, and recurring budget metrics; forms and sheets use one compact task shell and one contextual dismissal.",
+      "screens": ["today.iphone-14", "monthly-summary.iphone-14", "states/empty.iphone-14", "states/one-item.iphone-14", "states/dense.iphone-14", "states/long-content.iphone-14", "add-expense.iphone-14", "add-refund.iphone-14", "edit-expense.iphone-14", "states/edit-refund.iphone-14", "states/expense-menu.iphone-14", "states/delete-confirmation.iphone-14", "states/deleted.iphone-14"]
+    },
+    {
+      "id": "semantic-refund-color",
+      "kind": "screen-family",
+      "description": "Refund controls, labels, glyphs, and negative values consistently use the credit-green semantic treatment; coral is reserved for validation and destructive risk.",
+      "screens": ["add-refund.iphone-14", "states/edit-refund.iphone-14", "states/long-content.iphone-14", "states/category-detail.iphone-14", "states/validation.iphone-14", "states/delete-confirmation.iphone-14"]
     }
   ]
 }

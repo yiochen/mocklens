@@ -1,98 +1,55 @@
-# Ledgerly — task-first Mocklens dogfood
+# Ledgerly dogfood mockup
 
-Ledgerly is a static budgeting mockup used to exercise the full Mocklens design
-loop. It contains no backend, persistence, routing, or production interaction
-logic. Every screen is plain HTML/CSS and renders offline.
+Ledgerly is a task-first phone budgeting mockup for one household budget owner. It supports a complete signed-transaction loop: add an expense or refund, scan today, understand the month, correct either variant, delete with confirmation, and undo an expense deletion.
 
-## Intent and model
+## Intent
 
-The primary user is a budget owner who needs to record daily spending, decide
-where the month is going, and correct mistakes quickly. The core entities are a
-month, daily expense collections, individual mutable expenses, categories, and
-category plans. Expenses belong to one day and one category; category totals
-roll up into the month.
+The owner decides whether money is leaving or returning, what category it affects, whether a transaction is correct, how much of the daily guide and monthly budget remains, and which categories drive net spending. Delivery targets `iphone-se`, `iphone-14`, and `pixel-7`. The visual character is compact and ledger-like: warm paper, crisp white data surfaces, forest-green actions, restrained lime accents, credit-green refunds, and coral used only for errors or point-of-commit risk.
 
-Applicable expense actions are create, view, edit, delete, confirm deletion,
-correct invalid input, and undo deletion. The mock assumes one currency and one
-budget owner because multi-currency conversion and sharing would materially
-expand the product.
+## Model and semantic contract
 
-## Coverage
+Core entities are a $2,500 July budget, six category allocations totaling $2,500, daily transaction collections, and two user-managed transaction variants: expenses and refunds. Both variants have merchant, category, local date/time, optional note, create, row-disclosed edit/correction, overflow removal, confirmation, and recovery paths.
 
-| Screen | State or task proved |
+The form amount is a positive USD magnitude greater than zero. `Expense` applies a positive sign to spending; `Refund` applies a negative sign. Refund screens state the resulting signed value before save. Lists label refunds and render their glyphs and values in credit green; coral never means refund. This rule allows a user to change type during correction without manually entering a minus sign.
+
+Rows open correction via a consistent chevron. Edit screens use Back as their sole dismissal and overflow for removal. Create and validation screens use Close as their sole dismissal. Sheets use one contextual keep/close action. Delete remains a neutral-surface text action in overflow and receives strong coral fill only at final confirmation.
+
+## Reconciled arithmetic
+
+All values were recalculated from the displayed signed inputs with Node decimal sums:
+
+- Today: $24.86 + $20.00 + $8.56 + $15.00 = $68.42; the $100 guide leaves $31.58.
+- Post-delete: $68.42 − $24.86 = $43.56; the guide leaves $56.44; monthly remaining increases from $842.16 to $867.02.
+- Dense: 25 displayed expenses sum to $456.32; the $100 guide is exceeded by $356.32.
+- Long content: $9,875.00 + $128.67 − $14.99 = $9,988.68; that is $9,888.68 over the $100 guide and $7,488.68 over $2,500.
+- Groceries: eight expenses totaling $368.57 plus one −$7.51 refund = $361.06; $138.94 remains of $500 and 72.21% is spent.
+- July categories: $905.88 + $361.06 + $223.80 + $79.50 + $54.60 + $33.00 = $1,657.84; $842.16 remains of $2,500 and 66.31% is spent.
+- Empty and one-item are alternate same-day snapshots with $910.58 remaining before today; a single $4.25 expense leaves $906.33.
+
+## Coverage decisions
+
+| State | Decision |
 | --- | --- |
-| `today.iphone-14` | Typical daily collection, first-viewport create action, edit/delete entry points. |
-| `add-expense.iphone-14` | Creation form, retained invalid draft, correction guidance, disabled submit, cancel. |
-| `monthly-summary.iphone-14` | Category grouping with nested expenses, large totals, negative adjustment, drill-in. |
-| `states/empty.iphone-14` | Empty collection, first expense, and no-spend decision. |
-| `states/one-item.iphone-14` | One-item collection with mutable actions. |
-| `states/dense.iphone-14` | 25-item collection longer than one viewport. |
-| `states/long-content.iphone-14` | Multi-line names, long localized labels, large/negative values, missing optional notes. |
-| `states/delete-confirmation.iphone-14` | Destructive confirmation with the exact item, amount, consequence, and cancel path. |
-| `states/deleted.iphone-14` | Successful deletion plus immediate undo recovery. |
+| Empty | Required; one dominant first-add action and zero daily total. |
+| One item | Required; singular copy and visible missing optional note. |
+| Typical | Required; four realistic expenses and recurring budget metrics. |
+| Dense | Required; 25 valid rows, recurring metrics, count, and an honest scroll cue rather than an above-fold completeness claim. |
+| Long content | Required; long merchant/note text, large values, and a labeled signed refund. |
+| Nested | Required; Groceries states eight expenses plus one refund and cues scrolling to all nine contributors. |
+| Canonical expense/refund forms | Required separately; valid prefilled states with one active Save action. |
+| Expense/refund correction | Required separately; prefilled edit states allow changing type and saving. |
+| Validation/disabled | Required separately; retained input, inline errors, disabled Save. |
+| Destructive/recovery | Required; quiet menu delete, explicit confirmation, recalculated result, Undo. |
+| Loading/offline/permission/server error | Not applicable; the scoped static local workflow has no remote dependency or account access. |
 
-Loading, remote error, and offline states are not applicable because this
-mocked capture flow has no remote data. Permission is not applicable because
-manual expense entry uses no protected device capability. The invalid form is
-the relevant error/disabled state; the one-item and deleted screens represent
-successful creation and destructive recovery. These decisions are explicit so
-the state inventory cannot silently omit them.
+## Shell contract
 
-## Value budget and stress order
+Every collection screen keeps a 38px Ledgerly/month app bar, a 38px `Today`–`Month` control in that order, a data-first summary, recurring budget metrics, and then collection content. Dense rows compact internally but do not remove shell navigation or decision metrics. Full-screen forms deliberately replace the collection shell with the same 42px centered taskbar; sheets preserve a dimmed edit context.
 
-Each first viewport starts with the current total, collection state, form,
-decision, or recovery action. There are no greetings, hero images, promotional
-headlines, oversized logos, or decorative summaries. The 25-item and long-copy
-screens established wrapping, density, values, and row actions before the
-typical four-item screen was finalized.
-
-One reference owner should establish `today.iphone-14.html` and `shared.css`.
-Independent owners can then take the daily collection family, create/correct
-flow, and monthly summary family asynchronously. Each family keeps all of its
-states together and rejoins for cross-screen task, action, consistency, and
-visual review.
-
-## Reproduce the dogfood run
-
-The checked-in workspace was produced with this sequence from `example/` after
-building the repository:
+Run from this directory with the repository CLI so UX and visual gates are available:
 
 ```sh
-node ../dist/cli.js init
-# Create mocklens.ux.json from the intent/model/coverage reasoning above.
-node ../dist/cli.js new-screen today add-expense monthly-summary \
-  states/empty states/one-item states/dense states/long-content \
-  states/delete-confirmation states/deleted --device iphone-14
-
-# Establish today + shared.css, compose the screen families, then stress them.
-node ../dist/cli.js check
-node ../dist/cli.js checkpoint ux <requirement-id> --proof "<specific evidence>"
-node ../dist/cli.js checkpoint visual \
-  --screen <all-nine-screen-names> \
-  --device iphone-se --device iphone-14 --device pixel-7 \
-  --proof "<specific evidence from all 27 inspected viewport PNGs>"
 node ../dist/cli.js check
 ```
 
-The full run covers 9 screens × 3 devices = 27 combinations with no sanity
-findings. `mocklens.ux.json` and `mocklens.checkpoints.json` are source
-controlled so the final command can verify all six UX requirements and all 27
-visual targets.
-
-The dogfood staleness drill changes a referenced screen and `shared.css`, runs
-the full check to observe stale UX/visual proof, restores and re-reviews the
-screens, and returns to `DELIVERY READINESS — PASS`. A temporary non-delivery
-screen is also edited to confirm independent screen-family work does not stale
-delivery proof. No CLI friction was found beyond the expected need to install
-the lockfile dependencies before building a fresh checkout.
-
-## Inspect the result
-
-```sh
-node ../dist/cli.js serve
-node ../dist/cli.js check
-```
-
-The viewer opens at `http://localhost:4173`. Generated screenshots and reports
-live under `example/.mocklens/` and remain ignored; the manifest and checkpoint
-ledger are the durable review contract.
+Current viewport screenshots, hashes, and the machine-readable report are under `.mocklens/`.

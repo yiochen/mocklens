@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="mocklens:form-factor" content="phone"><meta name="mocklens:primary-device" content="iphone-14"><meta name="mocklens:target-devices" content="iphone-se,iphone-14,pixel-7"><meta name="mocklens:viewport" content="390x844"><title>Ledgerly — Expense validation</title><link rel="stylesheet" href="../shared.css"></head>
+<body><main class="screen stack form-screen">
+  <header class="taskbar"><button class="icon-button" aria-label="Close">×</button><h1>Add expense</h1><span class="spacer"></span></header>
+  <div class="form-intro"><p class="support">Correct the 2 highlighted fields to continue.</p></div>
+  <form class="form-card">
+    <div class="field"><label>Transaction type</label><div class="type-switch" role="group" aria-label="Transaction type"><button class="type-option active" type="button">Expense</button><button class="type-option" type="button">Refund</button></div></div>
+    <div class="field error"><label for="amount">Amount</label><input id="amount" value="$0.00" aria-invalid="true"><span class="error-copy">Enter an amount greater than $0.00.</span></div>
+    <div class="field"><label for="merchant">Merchant</label><input id="merchant" value="Green Leaf Deli"></div>
+    <div class="field error"><label for="category">Category</label><select id="category" aria-invalid="true"><option selected>Select a category</option></select><span class="error-copy">Choose a category.</span></div>
+    <div class="field-row"><div class="field"><label for="date">Date</label><input id="date" value="Jul 21, 2026"></div><div class="field"><label for="time">Time</label><input id="time" value="12:36 PM"></div></div>
+    <div class="field"><label for="note">Note <span class="help">optional</span></label><textarea id="note">Lunch with Sam</textarea></div>
+    <div class="form-actions"><button class="button" type="button" disabled>Save expense</button></div>
+  </form>
+</main></body></html>

@@ -1,5 +1,5 @@
 interface:
   display_name: "Mocklens Task-First Design"
-  short_description: "Design and stress-test complete static UX"
+  short_description: "Design complete, low-noise static UX"
   brand_color: "#256D5A"
-  default_prompt: "Use $mocklens-design to model, stress-test, and verify a task-complete static product mockup."
+  default_prompt: "Use $mocklens-design to model, compose, stress-test, and verify a task-complete interface with clear interaction hierarchy."
