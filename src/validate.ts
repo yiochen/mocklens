@@ -701,7 +701,7 @@ export async function runValidation(
     }
   }
   return {
-    version: 2,
+    version: 3,
     tool: 'mocklens',
     scope: {
       command: options.command,
@@ -720,6 +720,26 @@ export async function runValidation(
       },
     },
     screens: reports,
+    readiness: {
+      evaluated: false,
+      uxTrackingConfigured: fs.existsSync(path.join(config.baseDir, 'mocklens.ux.json')),
+      proofScope: options.requestedScreens.length === 0 && options.requestedDevices.length === 0 ? 'FULL' : 'FILTERED',
+      coverage: {
+        configured: { screens: 0, devices: 0, combinations: 0 },
+        evaluated: { screens: 0, devices: 0, combinations: 0 },
+      },
+      counts: {
+        ux: { current: 0, missing: 0, stale: 0, total: 0 },
+        visual: { current: 0, missing: 0, stale: 0, total: 0 },
+      },
+      requirements: [],
+      visual: [],
+      remainingProject: null,
+      sanityOk: reports.every((r) => r.ok),
+      uxProofOk: true,
+      visualProofOk: true,
+      ready: false,
+    },
     summary: {
       uniqueScreens: screens.length,
       devices: devices.length,

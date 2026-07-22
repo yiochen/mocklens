@@ -1,0 +1,57 @@
+Mocklens checked-in CLI fixture result
+Test file: tests/checkpoint.test.ts
+Test case: check readiness end to end > enforces missing, current, filtered, and stale proof with schema v3 agreement
+Fixture input: fixtures/readiness/
+Command: mocklens check
+Expected exit: 1
+
+--- stdout ---
+wrote .mocklens/screenshots/phone/detail.png
+wrote .mocklens/screenshots/phone/home.png
+wrote .mocklens/screenshots/phone/unrelated.png
+wrote .mocklens/screenshots/manifest.json
+MOCKLENS SANITY CHECK — FAIL
+Coverage: FULL
+Config: mocklens.config.json
+Configured: 3 unique screens × 1 devices = 3 combinations
+Checked: 3 unique screens × 1 devices = 3 combinations
+Rules checked (9): document-overflow, element-overflow-left, element-overflow-right, clipped-text, broken-image, page-error, external-request, fixed-bottom-cover, fixed-overlay-cover
+Scope: Sanity check only: this does not judge composition, hierarchy, consistency, aesthetics, usability, or fidelity to the brief.
+
+detail (phone 390×844)
+  source: screens/detail.html
+  screenshot: .mocklens/screenshots/phone/detail.png
+  ok — no findings
+
+home (phone 390×844)
+  source: screens/home.html
+  screenshot: .mocklens/screenshots/phone/home.png
+  ERROR page-error — uncaught exception: mechanical failure
+    detail: Uncaught Error: mechanical failure
+    at <anonymous> (file://<fixture-project>/screens/behavior.js:0:6)
+    suggestion: Fix or remove the failing script — a static mock should render without JavaScript errors.
+
+unrelated (phone 390×844)
+  source: screens/unrelated.html
+  screenshot: .mocklens/screenshots/phone/unrelated.png
+  ok — no findings
+
+SANITY CHECK FAIL: 3 unique screens × 1 devices = 3 combinations; 1 errors, 0 warnings, 0 suppressed.
+Sanity check only: this does not judge composition, hierarchy, consistency, aesthetics, usability, or fidelity to the brief.
+
+Mocklens verifies proof presence and freshness; it does not judge the truth or quality of subjective UX claims.
+
+UX PROOF — PASS
+UX proof scope: FULL
+Current: 2; missing: 0; stale: 0; total: 2.
+
+VISUAL PROOF — PASS
+Delivery coverage: 2 screens × 1 devices = 2 visual targets (project: 2 × 1 = 2).
+Current: 2; missing: 0; stale: 0; total: 2.
+
+DELIVERY READINESS — FAIL
+
+report written to .mocklens/report.json
+
+--- stderr ---
+(empty)

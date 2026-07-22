@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "screenshots": {
+    "home@phone": {
+      "screen": "home",
+      "device": "phone",
+      "path": "phone/home.png",
+      "inputHash": "__INPUT_HASH__",
+      "screenshotSha256": "__SCREENSHOT_HASH__"
+    }
+  }
+}

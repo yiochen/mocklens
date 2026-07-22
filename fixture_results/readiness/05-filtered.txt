@@ -1,0 +1,46 @@
+Mocklens checked-in CLI fixture result
+Test file: tests/checkpoint.test.ts
+Test case: check readiness end to end > enforces missing, current, filtered, and stale proof with schema v3 agreement
+Fixture input: fixtures/readiness/
+Command: mocklens check --screen home --device phone
+Expected exit: 0
+
+--- stdout ---
+wrote .mocklens/screenshots/phone/home.png
+wrote .mocklens/screenshots/manifest.json
+MOCKLENS SANITY CHECK — PASS
+Coverage: FILTERED
+Config: mocklens.config.json
+Configured: 3 unique screens × 1 devices = 3 combinations
+Checked: 1 unique screens × 1 devices = 1 combinations
+Requested screens: home
+Requested devices: phone
+Rules checked (9): document-overflow, element-overflow-left, element-overflow-right, clipped-text, broken-image, page-error, external-request, fixed-bottom-cover, fixed-overlay-cover
+Scope: Sanity check only: this does not judge composition, hierarchy, consistency, aesthetics, usability, or fidelity to the brief.
+
+home (phone 390×844)
+  source: screens/home.html
+  screenshot: .mocklens/screenshots/phone/home.png
+  ok — no findings
+
+SANITY CHECK PASS: 1 unique screens × 1 devices = 1 combinations; 0 errors, 0 warnings, 0 suppressed.
+Sanity check only: this does not judge composition, hierarchy, consistency, aesthetics, usability, or fidelity to the brief.
+
+Mocklens verifies proof presence and freshness; it does not judge the truth or quality of subjective UX claims.
+
+UX PROOF — PASS
+UX proof scope: FILTERED
+Current: 2; missing: 0; stale: 0; total: 2.
+
+VISUAL PROOF — PASS
+Delivery coverage: 1 screens × 1 devices = 1 visual targets (project: 2 × 1 = 2).
+Current: 1; missing: 0; stale: 0; total: 1.
+
+DELIVERY READINESS — NOT EVALUATED
+Project delivery readiness was not evaluated.
+Remaining project proof: 0 UX requirements; 0 visual targets.
+
+report written to .mocklens/report.json
+
+--- stderr ---
+(empty)

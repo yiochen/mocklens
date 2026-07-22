@@ -3,7 +3,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { MocklensError } from './config.js';
 import type { Screen } from './screens.js';
-import type { Config, Device, Report } from './types.js';
+import type {
+  Config,
+  Device,
+  ProofCounts,
+  ReadinessReport,
+  Report,
+  StaleReason,
+  UxReadinessItem,
+  VisualReadinessItem,
+} from './types.js';
 
 const UX_FILE = 'mocklens.ux.json';
 const LEDGER_FILE = 'mocklens.checkpoints.json';
@@ -513,6 +522,242 @@ export function visualCheckpointStatus(
   else if (sha256(fs.readFileSync(screenshotFile)) !== proof.screenshotSha256) reasons.push(`${proof.screenshot} changed`);
   if (reasons.length === 0 && proof.inputHash !== current.hash) reasons.push('input hash mismatch');
   return reasons.length === 0 && proof.inputHash === current.hash ? { status: 'current', reasons: [] } : { status: 'stale', reasons };
+}
+
+function proofCounts(statuses: Array<'current' | 'missing' | 'stale'>): ProofCounts {
+  return {
+    current: statuses.filter((status) => status === 'current').length,
+    missing: statuses.filter((status) => status === 'missing').length,
+    stale: statuses.filter((status) => status === 'stale').length,
+    total: statuses.length,
+  };
+}
+
+function currentScreenshot(config: Config, screen: string, device: string): { path: string; hash: string | null } {
+  const file = path.join(config.outDir, 'screenshots', device, `${screen}.png`);
+  return {
+    path: path.relative(config.baseDir, file).split(path.sep).join('/'),
+    hash: fs.existsSync(file) ? sha256(fs.readFileSync(file)) : null,
+  };
+}
+
+function structuredReasons(reasons: string[]): StaleReason[] {
+  return reasons.map((reason) => {
+    if (reason === 'input hash mismatch') return { kind: 'input', target: 'input hash', change: 'mismatch' };
+    const match = /^(.*) (added|removed|changed)$/.exec(reason);
+    const target = match?.[1] ?? reason;
+    const change = (match?.[2] ?? 'changed') as StaleReason['change'];
+    const kind: StaleReason['kind'] = target.startsWith('requirement ')
+      ? 'requirement'
+      : target.startsWith('device ')
+        ? 'device'
+        : target.endsWith('.css')
+          ? 'stylesheet'
+          : target.endsWith('.html')
+            ? 'screen'
+            : target.endsWith('.png')
+              ? 'screenshot'
+              : 'input';
+    return { kind, target, change };
+  });
+}
+
+function readinessItems(
+  config: Config,
+  manifest: UxManifest,
+  screens: Screen[],
+  selectedScreens: Set<string>,
+  selectedDevices: Set<string>,
+  ledger: CheckpointLedger,
+): { requirements: UxReadinessItem[]; visual: VisualReadinessItem[] } {
+  const requirements = manifest.requirements
+    .filter((requirement) => requirement.screens.some((screen) => selectedScreens.has(screen)))
+    .map((requirement): UxReadinessItem => {
+      const current = buildRequirementInputs(config, manifest, requirement, screens);
+      const recorded = ledger.ux[requirement.id];
+      const result = uxCheckpointStatus(config, manifest, requirement, screens, ledger);
+      return {
+        id: requirement.id,
+        kind: requirement.kind,
+        description: requirement.description,
+        status: result.status,
+        proof: recorded?.proof ?? null,
+        recordedHash: recorded?.inputHash ?? null,
+        currentHash: current.hash,
+        targets: {
+          screens: [...requirement.screens].sort(),
+          devices: [...manifest.delivery.devices].sort(),
+        },
+        staleReasons: structuredReasons(result.reasons),
+      };
+    })
+    .sort((a, b) => a.id.localeCompare(b.id));
+
+  const byScreen = screenMap(screens);
+  const byDevice = new Map(config.devices.map((device) => [device.name, device]));
+  const visual: VisualReadinessItem[] = [];
+  for (const screenName of [...manifest.delivery.screens].sort()) {
+    if (!selectedScreens.has(screenName)) continue;
+    for (const deviceName of [...manifest.delivery.devices].sort()) {
+      if (!selectedDevices.has(deviceName)) continue;
+      const screen = byScreen.get(screenName)!;
+      const device = byDevice.get(deviceName)!;
+      const current = buildVisualInputs(config, screen, device);
+      const recorded = ledger.visual[visualKey(screenName, deviceName)];
+      const result = visualCheckpointStatus(config, screen, device, ledger);
+      const screenshot = currentScreenshot(config, screenName, deviceName);
+      visual.push({
+        screen: screenName,
+        device: deviceName,
+        status: result.status,
+        proof: recorded?.proof ?? null,
+        recordedHash: recorded?.inputHash ?? null,
+        currentHash: current.hash,
+        screenshot: {
+          path: recorded?.screenshot ?? screenshot.path,
+          recordedHash: recorded?.screenshotSha256 ?? null,
+          currentHash: screenshot.hash,
+        },
+        staleReasons: structuredReasons(result.reasons),
+      });
+    }
+  }
+  return { requirements, visual };
+}
+
+/** Build the deterministic proof/readiness portion of report schema v3. */
+export function buildReadinessReport(
+  config: Config,
+  manifest: UxManifest,
+  screens: Screen[],
+  selectedScreens: Screen[],
+  selectedDevices: Device[],
+  proofScope: 'FULL' | 'FILTERED',
+  sanityOk: boolean,
+): ReadinessReport {
+  const ledger = loadCheckpointLedger(config);
+  const selected = readinessItems(
+    config,
+    manifest,
+    screens,
+    new Set(selectedScreens.map((screen) => screen.name)),
+    new Set(selectedDevices.map((device) => device.name)),
+    ledger,
+  );
+  const uxCounts = proofCounts(selected.requirements.map((item) => item.status));
+  const visualCounts = proofCounts(selected.visual.map((item) => item.status));
+  const uxProofOk = uxCounts.missing === 0 && uxCounts.stale === 0;
+  const visualProofOk = visualCounts.missing === 0 && visualCounts.stale === 0;
+  const evaluatedScreens = new Set(selected.visual.map((item) => item.screen)).size;
+  const evaluatedDevices = new Set(selected.visual.map((item) => item.device)).size;
+  let remainingProject: ReadinessReport['remainingProject'] = null;
+  if (proofScope === 'FILTERED') {
+    const project = readinessItems(
+      config,
+      manifest,
+      screens,
+      new Set(screens.map((screen) => screen.name)),
+      new Set(manifest.delivery.devices),
+      ledger,
+    );
+    remainingProject = {
+      ux: project.requirements.filter((item) => item.status !== 'current').length,
+      visual: project.visual.filter((item) => item.status !== 'current').length,
+    };
+  }
+  return {
+    evaluated: true,
+    uxTrackingConfigured: true,
+    proofScope,
+    coverage: {
+      configured: {
+        screens: manifest.delivery.screens.length,
+        devices: manifest.delivery.devices.length,
+        combinations: manifest.delivery.screens.length * manifest.delivery.devices.length,
+      },
+      evaluated: {
+        screens: evaluatedScreens,
+        devices: evaluatedDevices,
+        combinations: selected.visual.length,
+      },
+    },
+    counts: { ux: uxCounts, visual: visualCounts },
+    requirements: selected.requirements,
+    visual: selected.visual,
+    remainingProject,
+    sanityOk,
+    uxProofOk,
+    visualProofOk,
+    ready: proofScope === 'FULL' && sanityOk && uxProofOk && visualProofOk,
+  };
+}
+
+function uxCheckpointCommand(id: string): string {
+  return `mocklens checkpoint ux ${id} --proof "<specific evidence after review>"`;
+}
+
+function visualCheckpointCommand(screen: string, device: string): string {
+  return `mocklens checkpoint visual --screen ${screen} --device ${device} --proof "<specific evidence after review>"`;
+}
+
+/** Render all unmet proof gates; Mocklens verifies evidence, never subjective quality. */
+export function renderReadinessReport(readiness: ReadinessReport): string {
+  const lines = [
+    'Mocklens verifies proof presence and freshness; it does not judge the truth or quality of subjective UX claims.',
+    '',
+    `UX PROOF — ${readiness.uxProofOk ? 'PASS' : 'FAIL'}`,
+    `UX proof scope: ${readiness.proofScope}`,
+    `Current: ${readiness.counts.ux.current}; missing: ${readiness.counts.ux.missing}; stale: ${readiness.counts.ux.stale}; total: ${readiness.counts.ux.total}.`,
+  ];
+  for (const item of readiness.requirements.filter((candidate) => candidate.status !== 'current')) {
+    lines.push(`  ${item.status.toUpperCase()} ${item.id} [${item.kind}] — ${item.description}`);
+    lines.push(`    screens: ${item.targets.screens.join(', ')}`);
+    lines.push(`    devices: ${item.targets.devices.join(', ')}`);
+    if (item.status === 'stale') {
+      lines.push(`    recorded hash: ${item.recordedHash}`);
+      lines.push(`    current hash: ${item.currentHash}`);
+      for (const reason of item.staleReasons) lines.push(`    cause: ${reason.kind} ${reason.target} ${reason.change}`);
+      lines.push('    Re-review the affected targets and replace this checkpoint.');
+    }
+    lines.push(`    Run after review: ${uxCheckpointCommand(item.id)}`);
+  }
+  lines.push('');
+  lines.push(`VISUAL PROOF — ${readiness.visualProofOk ? 'PASS' : 'FAIL'}`);
+  lines.push(
+    `Delivery coverage: ${readiness.coverage.evaluated.screens} screens × ${readiness.coverage.evaluated.devices} devices = ${readiness.coverage.evaluated.combinations} visual targets ` +
+      `(project: ${readiness.coverage.configured.screens} × ${readiness.coverage.configured.devices} = ${readiness.coverage.configured.combinations}).`,
+  );
+  lines.push(`Current: ${readiness.counts.visual.current}; missing: ${readiness.counts.visual.missing}; stale: ${readiness.counts.visual.stale}; total: ${readiness.counts.visual.total}.`);
+  for (const item of readiness.visual.filter((candidate) => candidate.status !== 'current')) {
+    lines.push(`  ${item.status.toUpperCase()} ${visualKey(item.screen, item.device)}`);
+    lines.push(`    screen: ${item.screen}`);
+    lines.push(`    device: ${item.device}`);
+    if (item.status === 'stale') {
+      lines.push(`    recorded hash: ${item.recordedHash}`);
+      lines.push(`    current hash: ${item.currentHash}`);
+      if (item.screenshot.recordedHash !== item.screenshot.currentHash) {
+        lines.push(`    recorded screenshot hash: ${item.screenshot.recordedHash}`);
+        lines.push(`    current screenshot hash: ${item.screenshot.currentHash}`);
+      }
+      for (const reason of item.staleReasons) lines.push(`    cause: ${reason.kind} ${reason.target} ${reason.change}`);
+      lines.push('    Re-review the current screenshot and replace this checkpoint.');
+    }
+    lines.push(`    Run after review: ${visualCheckpointCommand(item.screen, item.device)}`);
+  }
+  lines.push('');
+  if (readiness.proofScope === 'FILTERED') {
+    lines.push('DELIVERY READINESS — NOT EVALUATED');
+    lines.push('Project delivery readiness was not evaluated.');
+    if (readiness.remainingProject !== null) {
+      lines.push(`Remaining project proof: ${readiness.remainingProject.ux} UX requirements; ${readiness.remainingProject.visual} visual targets.`);
+    }
+  } else {
+    lines.push(`DELIVERY READINESS — ${readiness.ready ? 'PASS' : 'FAIL'}`);
+    if (readiness.ready) {
+      lines.push('All required delivery screens and devices have current sanity, UX, and visual proof.');
+    }
+  }
+  return lines.join('\n');
 }
 
 /** Render proof freshness for check stdout without affecting check's report or exit status. */

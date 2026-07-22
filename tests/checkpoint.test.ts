@@ -7,8 +7,10 @@ import { spawn } from 'node:child_process';
 import crypto from 'node:crypto';
 import { loadConfig, MocklensError } from '../src/config.js';
 import { discoverScreens } from '../src/screens.js';
+import type { Report } from '../src/types.js';
 import {
   buildVisualInputs,
+  buildReadinessReport,
   checkpointUx,
   checkpointVisual,
   loadCheckpointLedger,
@@ -16,34 +18,45 @@ import {
   uxCheckpointStatus,
   visualCheckpointStatus,
   renderCheckpointSummary,
+  renderReadinessReport,
 } from '../src/checkpoint.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const CLI = path.join(ROOT, 'dist', 'cli.js');
+const READINESS_FIXTURES = path.join(ROOT, 'fixtures', 'readiness');
+const FIXTURE_RESULTS = path.join(ROOT, 'fixture_results', 'readiness');
+const READINESS_E2E_CASE =
+  'check readiness end to end > enforces missing, current, filtered, and stale proof with schema v3 agreement';
+
+interface CliResult {
+  code: number | null;
+  stdout: string;
+  stderr: string;
+}
 
 function project(): string {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'mocklens-checkpoint-'));
-  fs.mkdirSync(path.join(cwd, 'screens', 'theme'), { recursive: true });
-  fs.writeFileSync(
-    path.join(cwd, 'mocklens.config.json'),
-    `${JSON.stringify({ screensDir: 'screens', outDir: '.mocklens', devices: [{ name: 'phone', width: 390, height: 844 }] }, null, 2)}\n`,
-  );
-  fs.writeFileSync(path.join(cwd, 'screens', 'home.html'), '<link rel="stylesheet" href="shared.css"><main>Home</main>\n');
-  fs.writeFileSync(path.join(cwd, 'screens', 'detail.html'), '<link href="shared.css" rel="stylesheet"><main>Detail</main>\n');
-  fs.writeFileSync(path.join(cwd, 'screens', 'unrelated.html'), '<main>Other</main>\n');
-  fs.writeFileSync(path.join(cwd, 'screens', 'shared.css'), '@import "theme/tokens.css";\nmain { color: var(--ink); }\n');
-  fs.writeFileSync(path.join(cwd, 'screens', 'theme', 'tokens.css'), ':root { --ink: #111; }\n');
+  fs.cpSync(path.join(READINESS_FIXTURES, 'project'), cwd, { recursive: true });
   return cwd;
 }
 
-function writeManifest(cwd: string, requirements: unknown[] = [
-  { id: 'clear-primary-action', kind: 'screen', description: 'The primary action is discoverable.', screens: ['home'] },
-  { id: 'detail-flow', kind: 'flow', description: 'The flow connects home and detail.', screens: ['home', 'detail'] },
-]): void {
-  fs.writeFileSync(
-    path.join(cwd, 'mocklens.ux.json'),
-    `${JSON.stringify({ version: 1, goal: 'Ship a clear flow.', delivery: { screens: ['home', 'detail'], devices: ['phone'] }, requirements }, null, 2)}\n`,
-  );
+function copyFixture(cwd: string, source: string, target: string): void {
+  fs.copyFileSync(path.join(READINESS_FIXTURES, source), path.join(cwd, target));
+}
+
+function writeFixtureTemplate(
+  cwd: string,
+  source: string,
+  target: string,
+  replacements: Record<string, string>,
+): void {
+  let contents = fs.readFileSync(path.join(READINESS_FIXTURES, source), 'utf8');
+  for (const [placeholder, value] of Object.entries(replacements)) contents = contents.replaceAll(placeholder, value);
+  fs.writeFileSync(path.join(cwd, target), contents);
+}
+
+function writeManifest(cwd: string, name = 'valid.json'): void {
+  copyFixture(cwd, path.join('manifests', name), 'mocklens.ux.json');
 }
 
 function context(cwd: string) {
@@ -54,7 +67,7 @@ function context(cwd: string) {
   return { config, screens, manifest };
 }
 
-function cli(cwd: string, args: string[]): Promise<{ code: number | null; stdout: string; stderr: string }> {
+function cli(cwd: string, args: string[]): Promise<CliResult> {
   return new Promise((resolve) => {
     const child = spawn(process.execPath, [CLI, ...args], { cwd });
     let stdout = '';
@@ -63,6 +76,46 @@ function cli(cwd: string, args: string[]): Promise<{ code: number | null; stdout
     child.stderr.on('data', (chunk: Buffer) => { stderr += chunk.toString(); });
     child.on('close', (code) => resolve({ code, stdout, stderr }));
   });
+}
+
+function normalizeCliOutput(value: string, cwd: string): string {
+  const roots = [...new Set([cwd, fs.realpathSync(cwd)])].sort((a, b) => b.length - a.length);
+  let normalized = value;
+  for (const root of roots) {
+    normalized = normalized.replaceAll(root, '<fixture-project>');
+    normalized = normalized.replaceAll(root.split(path.sep).join('/'), '<fixture-project>');
+  }
+  return normalized;
+}
+
+function expectFixtureResult(
+  name: string,
+  cwd: string,
+  command: string,
+  expectedExit: number,
+  result: CliResult,
+): void {
+  const contents = [
+    'Mocklens checked-in CLI fixture result',
+    'Test file: tests/checkpoint.test.ts',
+    `Test case: ${READINESS_E2E_CASE}`,
+    'Fixture input: fixtures/readiness/',
+    `Command: ${command}`,
+    `Expected exit: ${expectedExit}`,
+    '',
+    '--- stdout ---',
+    normalizeCliOutput(result.stdout, cwd).trimEnd() || '(empty)',
+    '',
+    '--- stderr ---',
+    normalizeCliOutput(result.stderr, cwd).trimEnd() || '(empty)',
+    '',
+  ].join('\n');
+  const file = path.join(FIXTURE_RESULTS, name);
+  if (process.env.UPDATE_FIXTURE_RESULTS === '1') {
+    fs.mkdirSync(FIXTURE_RESULTS, { recursive: true });
+    fs.writeFileSync(file, contents);
+  }
+  expect(fs.readFileSync(file, 'utf8')).toBe(contents);
 }
 
 describe('UX manifest validation', () => {
@@ -76,32 +129,51 @@ describe('UX manifest validation', () => {
     const cwd = project();
     writeManifest(cwd);
     expect(context(cwd).manifest.requirements).toHaveLength(2);
-    fs.writeFileSync(path.join(cwd, 'mocklens.ux.json'), '{bad');
+    writeManifest(cwd, 'malformed.txt');
     expect(() => context(cwd)).toThrow(/invalid JSON/);
   });
 
   it('rejects duplicate IDs, unsafe paths, unknown screens, and unknown devices', () => {
     const cwd = project();
-    const base = { id: 'same-id', kind: 'screen', description: 'Evidence.', screens: ['home'] };
-    writeManifest(cwd, [base, base]);
+    writeManifest(cwd, 'duplicate-ids.json');
     expect(() => context(cwd)).toThrow(/duplicate UX requirement ID/);
 
-    writeManifest(cwd, [{ ...base, id: 'unsafe', screens: ['../home'] }]);
+    writeManifest(cwd, 'unsafe-screen.json');
     expect(() => context(cwd)).toThrow(/unsafe path/);
 
-    writeManifest(cwd, [{ ...base, id: 'missing-screen', screens: ['missing'] }]);
+    writeManifest(cwd, 'unknown-screen.json');
     expect(() => context(cwd)).toThrow(/unknown screen/);
 
-    writeManifest(cwd);
-    const file = path.join(cwd, 'mocklens.ux.json');
-    const raw = JSON.parse(fs.readFileSync(file, 'utf8')) as { delivery: { devices: string[] } };
-    raw.delivery.devices = ['tablet'];
-    fs.writeFileSync(file, JSON.stringify(raw));
+    writeManifest(cwd, 'unknown-device.json');
     expect(() => context(cwd)).toThrow(/unknown configured device/);
   });
 });
 
 describe('UX checkpoints and staleness', () => {
+  it('builds actionable full and filtered readiness reports', () => {
+    const cwd = project();
+    writeManifest(cwd);
+    const { config, screens, manifest } = context(cwd);
+    const full = buildReadinessReport(config, manifest, screens, screens, config.devices, 'FULL', true);
+    expect(full.counts.ux).toEqual({ current: 0, missing: 2, stale: 0, total: 2 });
+    expect(full.counts.visual).toEqual({ current: 0, missing: 2, stale: 0, total: 2 });
+    expect(full.ready).toBe(false);
+    const output = renderReadinessReport(full);
+    expect(output).toContain('UX PROOF — FAIL');
+    expect(output).toContain('VISUAL PROOF — FAIL');
+    expect(output).toContain('DELIVERY READINESS — FAIL');
+    expect(output).toContain('MISSING clear-primary-action [screen]');
+    expect(output).toContain('mocklens checkpoint ux clear-primary-action --proof');
+    expect(output).toContain('mocklens checkpoint visual --screen home --device phone --proof');
+    expect(output).toContain('does not judge the truth or quality');
+
+    const home = screens.filter((screen) => screen.name === 'home');
+    const filtered = buildReadinessReport(config, manifest, screens, home, config.devices, 'FILTERED', true);
+    expect(renderReadinessReport(filtered)).toContain('Project delivery readiness was not evaluated.');
+    expect(filtered.ready).toBe(false);
+    expect(filtered.remainingProject).toEqual({ ux: 2, visual: 2 });
+  });
+
   it('records and replaces deterministic, human-readable proof', () => {
     const cwd = project();
     writeManifest(cwd);
@@ -136,33 +208,27 @@ describe('UX checkpoints and staleness', () => {
     checkpointUx(config, manifest, screens, requirement.id, 'Evidence');
     expect(uxCheckpointStatus(config, manifest, requirement, screens).status).toBe('current');
 
-    fs.appendFileSync(path.join(cwd, 'screens', 'unrelated.html'), '<!-- edit -->');
+    copyFixture(cwd, path.join('variants', 'unrelated-edited.html'), path.join('screens', 'unrelated.html'));
     expect(uxCheckpointStatus(config, manifest, requirement, discoverScreens(config.screensDir)).status).toBe('current');
 
-    const home = path.join(cwd, 'screens', 'home.html');
-    const originalHome = fs.readFileSync(home, 'utf8');
-    fs.appendFileSync(home, '<!-- edit -->');
+    copyFixture(cwd, path.join('variants', 'home-edited.html'), path.join('screens', 'home.html'));
     let status = uxCheckpointStatus(config, manifest, requirement, discoverScreens(config.screensDir));
     expect(status.reasons).toContain('screens/home.html changed');
-    fs.writeFileSync(home, originalHome);
+    copyFixture(cwd, path.join('project', 'screens', 'home.html'), path.join('screens', 'home.html'));
 
-    fs.appendFileSync(path.join(cwd, 'screens', 'theme', 'tokens.css'), '\n/* edit */');
+    copyFixture(cwd, path.join('variants', 'tokens-edited.css'), path.join('screens', 'theme', 'tokens.css'));
     status = uxCheckpointStatus(config, manifest, requirement, discoverScreens(config.screensDir));
     expect(status).toEqual({ status: 'stale', reasons: ['screens/theme/tokens.css changed'] });
 
-    fs.writeFileSync(path.join(cwd, 'screens', 'theme', 'tokens.css'), ':root { --ink: #111; }\n');
+    copyFixture(cwd, path.join('project', 'screens', 'theme', 'tokens.css'), path.join('screens', 'theme', 'tokens.css'));
     ({ config, screens, manifest } = context(cwd));
-    const raw = JSON.parse(fs.readFileSync(path.join(cwd, 'mocklens.ux.json'), 'utf8')) as { requirements: Array<{ description: string }> };
-    raw.requirements[0]!.description = 'A changed requirement.';
-    fs.writeFileSync(path.join(cwd, 'mocklens.ux.json'), JSON.stringify(raw));
+    copyFixture(cwd, path.join('variants', 'manifest-requirement-changed.json'), 'mocklens.ux.json');
     ({ config, screens, manifest } = context(cwd));
     status = uxCheckpointStatus(config, manifest, manifest.requirements[0]!, screens);
     expect(status.reasons).toContain('requirement clear-primary-action changed');
 
     writeManifest(cwd);
-    const configRaw = JSON.parse(fs.readFileSync(path.join(cwd, 'mocklens.config.json'), 'utf8')) as { devices: Array<{ height: number }> };
-    configRaw.devices[0]!.height = 900;
-    fs.writeFileSync(path.join(cwd, 'mocklens.config.json'), JSON.stringify(configRaw));
+    copyFixture(cwd, path.join('variants', 'config-device-changed.json'), 'mocklens.config.json');
     ({ config, screens, manifest } = context(cwd));
     status = uxCheckpointStatus(config, manifest, manifest.requirements[0]!, screens);
     expect(status.reasons).toContain('device phone changed');
@@ -186,7 +252,7 @@ describe('UX checkpoints and staleness', () => {
     writeManifest(cwd);
     const { config, screens, manifest } = context(cwd);
     checkpointUx(config, manifest, screens, 'clear-primary-action', 'Original');
-    fs.writeFileSync(path.join(cwd, '.mocklens.checkpoints.json.999.interrupted.tmp'), '{partial');
+    copyFixture(cwd, path.join('ledger', 'interrupted.json'), '.mocklens.checkpoints.json.999.interrupted.tmp');
     expect(loadCheckpointLedger(config).ux['clear-primary-action']?.proof).toBe('Original');
   });
 
@@ -199,7 +265,7 @@ describe('UX checkpoints and staleness', () => {
     expect(summary).toContain('CURRENT clear-primary-action');
     expect(summary).toContain('MISSING detail-flow');
     expect(summary).toContain('MISSING home@phone');
-    fs.appendFileSync(path.join(cwd, 'screens', 'shared.css'), '\n/* changed */');
+    copyFixture(cwd, path.join('variants', 'shared-edited.css'), path.join('screens', 'shared.css'));
     summary = renderCheckpointSummary(config, manifest, discoverScreens(config.screensDir));
     expect(summary).toContain('STALE clear-primary-action');
     expect(summary).toContain('screens/shared.css changed');
@@ -215,28 +281,16 @@ describe('visual checkpoints', () => {
     const inputHash = buildVisualInputs(ctx.config, screen, device).hash;
     const screenshotDir = path.join(cwd, '.mocklens', 'screenshots', 'phone');
     fs.mkdirSync(screenshotDir, { recursive: true });
-    const screenshotBytes = Buffer.from('png bytes');
-    fs.writeFileSync(path.join(screenshotDir, 'home.png'), screenshotBytes);
-    fs.writeFileSync(path.join(cwd, '.mocklens', 'sanity-state.json'), JSON.stringify({
-      version: 1,
-      results: { 'home@phone': { screen: 'home', device: 'phone', inputHash, ok: true } },
-    }));
-    fs.writeFileSync(path.join(cwd, '.mocklens', 'screenshots', 'manifest.json'), JSON.stringify({
-      version: 1,
-      screenshots: [{ screen: 'home', device: 'phone', fullPage: false, path: 'phone/home.png' }],
-    }));
-    fs.writeFileSync(path.join(cwd, '.mocklens', 'screenshots', 'state.json'), JSON.stringify({
-      version: 1,
-      screenshots: {
-        'home@phone': {
-          screen: 'home',
-          device: 'phone',
-          path: 'phone/home.png',
-          inputHash,
-          screenshotSha256: crypto.createHash('sha256').update(screenshotBytes).digest('hex'),
-        },
-      },
-    }));
+    const screenshotBytes = fs.readFileSync(path.join(READINESS_FIXTURES, 'visual', 'screenshot.txt'));
+    copyFixture(cwd, path.join('visual', 'screenshot.txt'), path.join('.mocklens', 'screenshots', 'phone', 'home.png'));
+    writeFixtureTemplate(cwd, path.join('visual', 'sanity-state.json'), path.join('.mocklens', 'sanity-state.json'), {
+      __INPUT_HASH__: inputHash,
+    });
+    copyFixture(cwd, path.join('visual', 'manifest.json'), path.join('.mocklens', 'screenshots', 'manifest.json'));
+    writeFixtureTemplate(cwd, path.join('visual', 'state.json'), path.join('.mocklens', 'screenshots', 'state.json'), {
+      __INPUT_HASH__: inputHash,
+      __SCREENSHOT_HASH__: crypto.createHash('sha256').update(screenshotBytes).digest('hex'),
+    });
     return ctx;
   }
 
@@ -254,9 +308,15 @@ describe('visual checkpoints', () => {
     const screen = screens.find((item) => item.name === 'home')!;
     expect(checkpointVisual(config, [screen], config.devices, 'Viewport is balanced.')).toContain('RECORDED');
     expect(visualCheckpointStatus(config, screen, config.devices[0]!).status).toBe('current');
-    fs.writeFileSync(path.join(cwd, '.mocklens', 'screenshots', 'phone', 'home.png'), Buffer.from('png bytes'));
+    fs.copyFileSync(
+      path.join(READINESS_FIXTURES, 'visual', 'screenshot.txt'),
+      path.join(cwd, '.mocklens', 'screenshots', 'phone', 'home.png'),
+    );
     expect(visualCheckpointStatus(config, screen, config.devices[0]!).status).toBe('current');
-    fs.writeFileSync(path.join(cwd, '.mocklens', 'screenshots', 'phone', 'home.png'), Buffer.from('new png bytes'));
+    fs.copyFileSync(
+      path.join(READINESS_FIXTURES, 'visual', 'screenshot-changed.txt'),
+      path.join(cwd, '.mocklens', 'screenshots', 'phone', 'home.png'),
+    );
     expect(visualCheckpointStatus(config, screen, config.devices[0]!).reasons).toContain('.mocklens/screenshots/phone/home.png changed');
   });
 
@@ -265,7 +325,7 @@ describe('visual checkpoints', () => {
     const { config, screens } = writeVisualArtifacts(cwd);
     const screen = screens.find((item) => item.name === 'home')!;
     expect(() => checkpointVisual(config, [screen], config.devices, ' ')).toThrow(/non-empty/);
-    fs.appendFileSync(path.join(cwd, 'screens', 'home.html'), '<!-- stale -->');
+    copyFixture(cwd, path.join('variants', 'home-edited.html'), path.join('screens', 'home.html'));
     expect(() => checkpointVisual(config, [screen], config.devices, 'Evidence')).toThrow(/sanity result is stale/);
     expect(fs.existsSync(path.join(cwd, 'mocklens.checkpoints.json'))).toBe(false);
   });
@@ -274,7 +334,7 @@ describe('visual checkpoints', () => {
 describe('expected errors', () => {
   it('uses MocklensError for validation failures', () => {
     const cwd = project();
-    fs.writeFileSync(path.join(cwd, 'mocklens.ux.json'), '{}');
+    writeManifest(cwd, 'empty-object.json');
     try {
       context(cwd);
       throw new Error('expected failure');
@@ -282,4 +342,87 @@ describe('expected errors', () => {
       expect(error).toBeInstanceOf(MocklensError);
     }
   });
+});
+
+describe('check readiness end to end', () => {
+  it('enforces missing, current, filtered, and stale proof with schema v3 agreement', async () => {
+    const cwd = project();
+    writeManifest(cwd);
+
+    const missingUx = await cli(cwd, ['check']);
+    expectFixtureResult('01-missing-ux-and-visual.txt', cwd, 'mocklens check', 1, missingUx);
+    expect(missingUx.code, missingUx.stderr).toBe(1);
+    expect(missingUx.stdout).toContain('MOCKLENS SANITY CHECK — PASS');
+    expect(missingUx.stdout).toContain('UX PROOF — FAIL');
+    expect(missingUx.stdout).toContain('VISUAL PROOF — FAIL');
+
+    expect((await cli(cwd, ['checkpoint', 'ux', 'clear-primary-action', '--proof', 'Primary action reviewed'])).code).toBe(0);
+    expect((await cli(cwd, ['checkpoint', 'ux', 'detail-flow', '--proof', 'Flow reviewed'])).code).toBe(0);
+    const missingVisual = await cli(cwd, ['check']);
+    expectFixtureResult('02-missing-visual.txt', cwd, 'mocklens check', 1, missingVisual);
+    expect(missingVisual.code, missingVisual.stderr).toBe(1);
+    expect(missingVisual.stdout).toContain('UX PROOF — PASS');
+    expect(missingVisual.stdout).toContain('VISUAL PROOF — FAIL');
+
+    const visual = await cli(cwd, [
+      'checkpoint', 'visual', '--screen', 'home', '--screen', 'detail', '--device', 'phone', '--proof', 'Viewport PNGs reviewed',
+    ]);
+    expect(visual.code, visual.stderr).toBe(0);
+    const ready = await cli(cwd, ['check']);
+    expectFixtureResult('03-ready.txt', cwd, 'mocklens check', 0, ready);
+    expect(ready.code, ready.stderr).toBe(0);
+    expect(ready.stdout).toContain('DELIVERY READINESS — PASS');
+    expect(ready.stdout).toContain('All required delivery screens and devices have current sanity, UX, and visual proof.');
+    let report = JSON.parse(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')) as Report;
+    expect(report.version).toBe(3);
+    expect(report.readiness.ready).toBe(true);
+    expect(report.readiness.coverage).toEqual({
+      configured: { screens: 2, devices: 1, combinations: 2 },
+      evaluated: { screens: 2, devices: 1, combinations: 2 },
+    });
+    expect(report.readiness.counts.ux).toEqual({ current: 2, missing: 0, stale: 0, total: 2 });
+    expect(report.readiness.counts.visual).toEqual({ current: 2, missing: 0, stale: 0, total: 2 });
+
+    copyFixture(cwd, path.join('variants', 'behavior-error.js'), path.join('screens', 'behavior.js'));
+    const mechanicalFailure = await cli(cwd, ['check']);
+    expectFixtureResult('04-mechanical-failure.txt', cwd, 'mocklens check', 1, mechanicalFailure);
+    expect(mechanicalFailure.code, mechanicalFailure.stderr).toBe(1);
+    expect(mechanicalFailure.stdout).toContain('MOCKLENS SANITY CHECK — FAIL');
+    expect(mechanicalFailure.stdout).toContain('UX PROOF — PASS');
+    expect(mechanicalFailure.stdout).toContain('VISUAL PROOF — PASS');
+    expect(mechanicalFailure.stdout).toContain('DELIVERY READINESS — FAIL');
+    copyFixture(cwd, path.join('project', 'screens', 'behavior.js'), path.join('screens', 'behavior.js'));
+    expect((await cli(cwd, ['check'])).code).toBe(0);
+
+    const filtered = await cli(cwd, ['check', '--screen', 'home', '--device', 'phone']);
+    expectFixtureResult(
+      '05-filtered.txt',
+      cwd,
+      'mocklens check --screen home --device phone',
+      0,
+      filtered,
+    );
+    expect(filtered.code, filtered.stderr).toBe(0);
+    expect(filtered.stdout).toContain('UX proof scope: FILTERED');
+    expect(filtered.stdout).toContain('Project delivery readiness was not evaluated.');
+    expect(filtered.stdout).not.toContain('DELIVERY READINESS — PASS');
+    report = JSON.parse(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')) as Report;
+    expect(report.readiness.ready).toBe(false);
+    expect(report.readiness.visual).toHaveLength(1);
+
+    copyFixture(cwd, path.join('variants', 'shared-edited.css'), path.join('screens', 'shared.css'));
+    const stale = await cli(cwd, ['check']);
+    expectFixtureResult('06-stale.txt', cwd, 'mocklens check', 1, stale);
+    expect(stale.code, stale.stderr).toBe(1);
+    expect(stale.stdout).toContain('STALE clear-primary-action [screen]');
+    expect(stale.stdout).toContain('recorded hash:');
+    expect(stale.stdout).toContain('current hash:');
+    expect(stale.stdout).toContain('cause: stylesheet screens/shared.css changed');
+    report = JSON.parse(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')) as Report;
+    expect(report.readiness.counts.ux.stale).toBe(2);
+    expect(report.readiness.counts.visual.stale).toBe(2);
+    const firstReport = fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8');
+    expect((await cli(cwd, ['check'])).code).toBe(1);
+    expect(fs.readFileSync(path.join(cwd, '.mocklens', 'report.json'), 'utf8')).toBe(firstReport);
+  }, 120_000);
 });

@@ -1,0 +1,86 @@
+Mocklens checked-in CLI fixture result
+Test file: tests/checkpoint.test.ts
+Test case: check readiness end to end > enforces missing, current, filtered, and stale proof with schema v3 agreement
+Fixture input: fixtures/readiness/
+Command: mocklens check
+Expected exit: 1
+
+--- stdout ---
+wrote .mocklens/screenshots/phone/detail.png
+wrote .mocklens/screenshots/phone/home.png
+wrote .mocklens/screenshots/phone/unrelated.png
+wrote .mocklens/screenshots/manifest.json
+MOCKLENS SANITY CHECK — PASS
+Coverage: FULL
+Config: mocklens.config.json
+Configured: 3 unique screens × 1 devices = 3 combinations
+Checked: 3 unique screens × 1 devices = 3 combinations
+Rules checked (9): document-overflow, element-overflow-left, element-overflow-right, clipped-text, broken-image, page-error, external-request, fixed-bottom-cover, fixed-overlay-cover
+Scope: Sanity check only: this does not judge composition, hierarchy, consistency, aesthetics, usability, or fidelity to the brief.
+
+detail (phone 390×844)
+  source: screens/detail.html
+  screenshot: .mocklens/screenshots/phone/detail.png
+  ok — no findings
+
+home (phone 390×844)
+  source: screens/home.html
+  screenshot: .mocklens/screenshots/phone/home.png
+  ok — no findings
+
+unrelated (phone 390×844)
+  source: screens/unrelated.html
+  screenshot: .mocklens/screenshots/phone/unrelated.png
+  ok — no findings
+
+SANITY CHECK PASS: 3 unique screens × 1 devices = 3 combinations; 0 errors, 0 warnings, 0 suppressed.
+Sanity check only: this does not judge composition, hierarchy, consistency, aesthetics, usability, or fidelity to the brief.
+
+Mocklens verifies proof presence and freshness; it does not judge the truth or quality of subjective UX claims.
+
+UX PROOF — FAIL
+UX proof scope: FULL
+Current: 0; missing: 0; stale: 2; total: 2.
+  STALE clear-primary-action [screen] — The primary action is discoverable.
+    screens: home
+    devices: phone
+    recorded hash: d5d1749217731d8ea782764dab36c48bf9d90f4e6a4a1ad40f50184a7d677a7f
+    current hash: 6ecdb8124bd45060115603879501a37b1ec0916fff53c234e6a3b081aa98d8b9
+    cause: stylesheet screens/shared.css changed
+    Re-review the affected targets and replace this checkpoint.
+    Run after review: mocklens checkpoint ux clear-primary-action --proof "<specific evidence after review>"
+  STALE detail-flow [flow] — The flow connects home and detail.
+    screens: detail, home
+    devices: phone
+    recorded hash: 3b2653f8e725e63c53db13981bf2da9e7cd70fd95218cc49c138547237b7fdf0
+    current hash: 482578a6cbd02c7a98eb843e668be10f370b0e961740684f71ad507df07434b3
+    cause: stylesheet screens/shared.css changed
+    Re-review the affected targets and replace this checkpoint.
+    Run after review: mocklens checkpoint ux detail-flow --proof "<specific evidence after review>"
+
+VISUAL PROOF — FAIL
+Delivery coverage: 2 screens × 1 devices = 2 visual targets (project: 2 × 1 = 2).
+Current: 0; missing: 0; stale: 2; total: 2.
+  STALE detail@phone
+    screen: detail
+    device: phone
+    recorded hash: 804747ae97f65699c63f536d2471ec829d690e25c67efad256631812d9140999
+    current hash: fb85deb6a7c6ee34f662248c9c366e90dc9ce340ec858867aff7dc9400aa6324
+    cause: stylesheet screens/shared.css changed
+    Re-review the current screenshot and replace this checkpoint.
+    Run after review: mocklens checkpoint visual --screen detail --device phone --proof "<specific evidence after review>"
+  STALE home@phone
+    screen: home
+    device: phone
+    recorded hash: 9998a9f8cf9d928c3817e9a164f55fbfe2392875e64ae5c2dafe793c8549a16e
+    current hash: 61655b5c3f90242badc592c2df1e802c76b559a995a2493536685823eaba4873
+    cause: stylesheet screens/shared.css changed
+    Re-review the current screenshot and replace this checkpoint.
+    Run after review: mocklens checkpoint visual --screen home --device phone --proof "<specific evidence after review>"
+
+DELIVERY READINESS — FAIL
+
+report written to .mocklens/report.json
+
+--- stderr ---
+(empty)

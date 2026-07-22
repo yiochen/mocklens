@@ -1,0 +1,3 @@
+@import "theme/tokens.css";
+main { color: var(--ink); }
+/* edited shared stylesheet */

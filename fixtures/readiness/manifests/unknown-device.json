@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "goal": "Reject unknown devices.",
+  "delivery": { "screens": ["home"], "devices": ["tablet"] },
+  "requirements": [
+    { "id": "known-screen", "kind": "screen", "description": "Evidence.", "screens": ["home"] }
+  ]
+}
