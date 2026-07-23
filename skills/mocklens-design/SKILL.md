@@ -1,11 +1,12 @@
 ---
 name: mocklens-design
-description: Design, redesign, stress-test, and review task-complete static product mockups with the Mocklens CLI. Use when turning a product brief into plain HTML/CSS screen families and edge states; defining interaction hierarchy and stable navigation shells; creating a mocklens.ux.json manifest; using mocklens init, new-screen, check, screenshots, or checkpoints; coordinating parallel mockup work; or preparing UX- and visually-verified screens for delivery.
+description: Design, redesign, stress-test, review, and iterate on task-complete static product mockups with the Mocklens CLI. Use when turning a product brief or user feedback into plain HTML/CSS screen families and edge states; defining interaction hierarchy and stable navigation shells; creating or revising a mocklens.ux.json manifest; using mocklens init, new-screen, check, screenshots, or checkpoints; coordinating parallel mockup work; or preparing UX- and visually-verified screens for delivery.
 ---
 
 # Mocklens task-first design loop
 
-Use this loop from the start:
+Use this loop from the start and repeat it after each material round of user
+feedback:
 
 **Intent → Model → Cover → Establish system → Compose → Stress → Check → Task-review → Visual-review → Deliver**
 
@@ -22,7 +23,10 @@ Define the stages before doing them:
 - **Visual-review** compares the complete requested screen/device set and records current screenshot evidence.
 - **Deliver** reports the artifacts and readiness result only after every gate passes.
 
-The stopping condition is strict: a design is ready only when a full, unfiltered `mocklens check` reports current sanity, UX proof, visual proof, and `DELIVERY READINESS — PASS` for every required screen/device. A focused check, attractive screenshot, or sanity pass alone is not completion.
+The stopping condition is strict for every iteration: a design is ready only
+when a full, unfiltered `mocklens check` reports current sanity, UX proof,
+visual proof, and `DELIVERY READINESS — PASS` for every required screen/device.
+A focused check, attractive screenshot, or sanity pass alone is not completion.
 
 ## 1. Intent
 
@@ -309,3 +313,38 @@ mocklens check
 ```
 
 Deliver only when it exits 0 and prints `DELIVERY READINESS — PASS`. Report the completed screen families and devices, important product assumptions, check coverage, screenshot paths, UX/visual checkpoints, and any intentional suppressions or known limitations. Do not claim completion while evidence is missing or stale.
+
+## 11. Iterate on user feedback
+
+After presenting the screens, treat user feedback as the next input to this
+loop, not as an informal patch outside the evidence contract.
+
+1. Translate each feedback item into the user outcome, decision, task, state,
+   or visual-system change it implies. Clarify only when materially different
+   interpretations would change the product.
+2. Reconcile the feedback with the existing `mocklens.ux.json` before editing
+   screens. Update an existing requirement when the feedback changes the same
+   outcome; merge overlapping requirements while preserving their strongest
+   testable claims; add a requirement only for a genuinely distinct need; and
+   replace or remove obsolete requirements when the user reverses an earlier
+   direction. Preserve stable requirement IDs when their meaning remains the
+   same, and update their screen and device references when coverage changes.
+3. Check the revised manifest as a whole for duplicate, contradictory, stale,
+   or uncovered requirements. Treat the user's latest explicit direction as
+   authoritative when it clearly supersedes an earlier assumption.
+4. Re-enter the earliest affected stage: Intent for a changed product goal,
+   Model for changed entities or behavior, Cover for changed requirements or
+   states, Establish system for shared interaction or visual rules, or Compose
+   for a local presentation change. Do not reduce structural feedback to a
+   cosmetic edit.
+5. Implement the coherent feedback set. When shared CSS, shell behavior,
+   components, task paths, or requirements change, inspect all affected screen
+   families rather than only the screen the user mentioned.
+6. Treat affected UX and visual checkpoints as stale. Run focused checks for
+   changed screens and their affected neighbors, repeat task-review and
+   visual-review against the revised manifest, replace stale checkpoints, and
+   run the full unfiltered `mocklens check`.
+7. Present the revised screens with a concise mapping from feedback to changes.
+   Complete the iteration only when every accepted feedback item is represented
+   in `mocklens.ux.json`, the current evidence passes, and the full check prints
+   `DELIVERY READINESS — PASS`.
