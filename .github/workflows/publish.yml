@@ -1,0 +1,66 @@
+name: Publish to npm
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Verify and publish
+    if: github.repository == 'yiochen/mocklens'
+    runs-on: ubuntu-latest
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Require a commit from main
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run release gates
+        run: npm run release:check
+
+      - name: Verify release metadata
+        run: >-
+          npm run release:verify --
+          --tag "$GITHUB_REF_NAME"
+          --prerelease "${{ github.event.release.prerelease }}"
+
+      - name: Select npm distribution tag
+        id: distribution
+        env:
+          IS_PRERELEASE: ${{ github.event.release.prerelease }}
+        run: |
+          if [[ "$IS_PRERELEASE" == "true" ]]; then
+            echo "tag=next" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=latest" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Publish package
+        run: npm publish --tag "${{ steps.distribution.outputs.tag }}"
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

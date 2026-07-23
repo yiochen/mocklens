@@ -618,7 +618,7 @@ skills/     the repo-local Mocklens design-loop skill
 npm install
 npm run build   # compiles src/ to dist/ (TypeScript, strict)
 npm test        # builds dist/ via a vitest globalSetup, then runs the suite
-                # (~60s, 31 tests — real Chromium launches)
+                # (browser-backed end-to-end tests launch real Chromium)
 npm pack --dry-run
 ```
 
@@ -626,6 +626,10 @@ npm pack --dry-run
 published package intentionally contains the compiled `dist/` files plus
 package metadata, README, and license; fixtures, tests, examples, and source
 files stay out of the tarball.
+
+Maintainers publish releases through the guarded GitHub Actions workflow.
+See [the release guide](docs/releasing.md) for the versioning and changelog
+policy, first-publish setup, prerelease behavior, and exact checklist.
 
 Fixture philosophy: one fixture per finding, minimal and readable, with a
 header comment stating what it demonstrates and what it expects. To add one:
