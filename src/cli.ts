@@ -12,6 +12,7 @@ import { startViewer } from './viewer.js';
 import { runInit } from './init.js';
 import { runNewScreen } from './new-screen.js';
 import type { Device } from './types.js';
+import { GLOBAL_HELP, helpFor } from './help.js';
 import {
   checkpointUx,
   checkpointVisual,
@@ -20,36 +21,6 @@ import {
   recordSanityState,
   renderReadinessReport,
 } from './checkpoint.js';
-
-const USAGE = `mocklens — static mobile UI mockup tool
-
-Usage: mocklens <command> [options]
-
-Commands:
-  init         Idempotently initialize config and shared screen files
-  new-screen   Atomically create one or more device-targeted screens
-  list         List discovered screens and configured devices
-  screenshot   Render PNG screenshots for every screen × device
-  validate     Check screens for layout problems in a real browser
-  check        screenshot + validate in one run
-  checkpoint ux <id> --proof <text>
-               Record hash-aware evidence for one UX requirement
-  checkpoint visual --screen <name>... --device <name>... --proof <text>
-               Record an atomically validated visual review batch
-  serve        Start the local phone-sized viewer (default port 4173)
-
-Options:
-  --config <path>   Path to mocklens.config.json
-  --dir <path>      Screens directory for init (default screens)
-  --form-factor <n> Form factor metadata for new-screen (default phone)
-  --force           Replace init-owned config/shared files during init
-  --screen <name>   Limit to one screen (repeatable)
-  --device <name>   Limit to one device (repeatable)
-  --proof <text>    Specific evidence for a checkpoint
-  --full-page       Also capture full-page screenshots
-  --port <n>        Viewer port (default 4173)
-  --help            Show this help
-`;
 
 interface ParsedArgs {
   command: string | undefined;
@@ -163,11 +134,11 @@ function selectDevices(all: Device[], names: string[]): Device[] {
 async function main(argv: string[]): Promise<number> {
   const args = parseArgs(argv);
   if (args.help) {
-    console.log(USAGE);
+    console.log(helpFor(args.command, args.commandArgs));
     return 0;
   }
   if (args.command === undefined) {
-    console.error(USAGE);
+    console.error(GLOBAL_HELP);
     return 2;
   }
 
@@ -329,7 +300,7 @@ async function main(argv: string[]): Promise<number> {
       return 0;
     }
     default:
-      console.error(USAGE);
+      console.error(GLOBAL_HELP);
       throw new MocklensError(`unknown command: ${args.command}`);
   }
 }

@@ -61,7 +61,7 @@ Pass `--force` to replace only init-owned config, CSS, and guidance files.
 Try it against the bundled example project (a budgeting app, "Ledgerly"):
 
 ```sh
-# 1. Browse the screens in the phone-sized viewer
+# 1. Browse and annotate screens in the phone-sized viewer
 npx mocklens serve --config example/mocklens.config.json
 #    → open http://localhost:4173
 
@@ -137,11 +137,26 @@ not sufficient.
   relevant HTML/CSS, device dimensions, and (for visual review) the PNG. A
   checkpoint records review; it does not score or judge UX quality.
 - **`list`** — prints discovered screens and configured devices.
-- **`serve`** — the local viewer: sidebar of screens, device picker, each
-  screen in an `<iframe>` sized exactly to the device in a CSS phone bezel.
-  State lives in the URL hash (`#home/iphone-14`), so views are shareable.
+- **`serve`** — the local viewer and annotation queue: sidebar of screens,
+  device picker, each screen in an `<iframe>` sized exactly to the device in a
+  CSS phone bezel, plus project-wide review notes. View state lives in the URL
+  hash (`#home/iphone-14`), so views are shareable.
 
 ## CLI reference
+
+Use `mocklens --help` for the command overview, then drill into any command:
+
+```sh
+mocklens serve --help
+mocklens check --help
+mocklens checkpoint --help
+mocklens checkpoint ux --help
+mocklens checkpoint visual --help
+```
+
+Command help lists only the options accepted by that command and includes
+focused examples. Help is resolved before project configuration, so it works
+from any directory.
 
 ```
 mocklens init      [--dir <path>] [--force]
@@ -152,7 +167,7 @@ mocklens validate   [--screen <name>]... [--device <name>]...
 mocklens check      [--full-page] [--screen <name>]... [--device <name>]...
 mocklens checkpoint ux <requirement-id> --proof "<specific evidence>"
 mocklens checkpoint visual --screen <name>... --device <name>... --proof "<specific evidence>"
-mocklens serve      [--port <n>]          # default 4173
+mocklens serve      [--port <n>]          # viewer + annotations; default 4173
 mocklens --help
 ```
 
@@ -232,6 +247,85 @@ settings stay aligned.
   `external-request` error (see below).
 
 Malformed config (bad JSON, wrong shapes) exits 2 with a specific message.
+
+## Viewer annotations
+
+`mocklens serve` includes a project-wide review queue for design feedback.
+Click **Annotate** to enter element-picking mode, hover the rendered mock, and
+click a target to add a plain-text note. Normal mode leaves the mock's own
+links and controls interactive.
+
+Element picking prefers the nearest semantic control or region (including
+`data-mocklens-action`, buttons, links, fields, roles, list items, forms,
+sections, navigation, and dialogs). Review outlines and numbered pins are
+injected only into the served page; Mocklens never edits the screen HTML.
+
+All notes appear together in the right panel, grouped by screen. Clicking a
+note navigates to its recorded screen/device, enters annotation mode, scrolls
+the target into view, and highlights it. A note whose selector no longer
+matches remains in the queue with a `target no longer found` message.
+
+Each note has a checkbox for batch work:
+
+- **Copy** creates an agent-ready Markdown brief from exactly the checked
+  notes, in displayed order. If clipboard access is unavailable, the viewer
+  opens a selectable preview.
+- **Resolve** atomically resolves every checked open note and moves it into the
+  collapsed resolved section.
+- **Delete** confirms once, then atomically removes every checked note.
+
+**Select all open** and **Clear selection** make larger reviews faster.
+Selection is browser-session state: loading the viewer selects nothing, while
+saving a new note selects only that note. Notes can also be edited, resolved,
+reopened, or deleted individually.
+
+The first saved note creates `mocklens.notes.json` beside
+`mocklens.config.json`. The file is intended to be readable by people and
+agents and may be committed to source control:
+
+```json
+{
+  "version": 1,
+  "notes": [
+    {
+      "id": "f742d665-9f2c-4a66-8f71-90de743d53ca",
+      "status": "open",
+      "screen": "today.iphone-14",
+      "device": "iphone-14",
+      "source": "screens/today.iphone-14.html",
+      "selector": "main > section.summary > button#add",
+      "element": { "tag": "button", "text": "Add expense" },
+      "viewport": { "width": 390, "height": 844 },
+      "rect": { "x": 24, "y": 180, "width": 342, "height": 48 },
+      "message": "Make this action less visually dominant.",
+      "createdAt": "2026-07-23T01:00:00.000Z",
+      "updatedAt": "2026-07-23T01:00:00.000Z",
+      "resolvedAt": null
+    }
+  ]
+}
+```
+
+The viewer validates this file, reloads it before every mutation, and writes
+changes by atomic rename. It will report malformed content rather than
+overwriting it. Annotation status is a review backlog and is deliberately
+independent of sanity, UX checkpoint, visual checkpoint, and delivery-readiness
+results from `mocklens check`.
+
+The localhost-only viewer exposes these endpoints for its UI:
+
+```text
+GET    /api/notes
+POST   /api/notes
+PATCH  /api/notes/:id
+DELETE /api/notes/:id
+POST   /api/notes/batch
+POST   /api/notes/markdown
+```
+
+Batch requests contain unique note IDs and an `action` of `resolve` or
+`delete`; every ID is validated before an all-or-nothing write. Markdown
+requests contain the checked note IDs and return only those notes.
 
 ## UX requirements and checkpoints
 
@@ -512,7 +606,7 @@ with `path` relative to the screenshots dir (`iphone-14/home.png`,
 
 ```
 src/        the tool (types, config, screens, browser, screenshot, validate,
-            report, viewer, cli — plain TypeScript, strict, ESM)
+            report, notes, viewer client/server, cli — plain TypeScript, strict, ESM)
 fixtures/   the main test project plus focused overlay-coverage fixtures
 fixture_results/ checked-in CLI transcripts generated from named fixture tests
 example/    the Ledgerly budgeting dogfood project (all readiness gates pass)
