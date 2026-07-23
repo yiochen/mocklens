@@ -144,6 +144,20 @@ not sufficient.
 
 ## CLI reference
 
+Use `mocklens --help` for the command overview, then drill into any command:
+
+```sh
+mocklens serve --help
+mocklens check --help
+mocklens checkpoint --help
+mocklens checkpoint ux --help
+mocklens checkpoint visual --help
+```
+
+Command help lists only the options accepted by that command and includes
+focused examples. Help is resolved before project configuration, so it works
+from any directory.
+
 ```
 mocklens init      [--dir <path>] [--force]
 mocklens new-screen <name>... --device <name> [--form-factor <name>]
