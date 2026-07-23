@@ -52,6 +52,7 @@ describe('init command', () => {
     expect(guidance).toContain('Intent → Model → Cover');
     expect(guidance).toContain('hardest credible content state');
     expect(guidance).toContain('data-mocklens-action');
+    expect(guidance).toContain('mocklens.notes.json');
     expect(guidance).toContain('mocklens checkpoint ux');
     expect(guidance).toContain('DELIVERY READINESS — PASS');
 

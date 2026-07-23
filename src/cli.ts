@@ -36,7 +36,7 @@ Commands:
                Record hash-aware evidence for one UX requirement
   checkpoint visual --screen <name>... --device <name>... --proof <text>
                Record an atomically validated visual review batch
-  serve        Start the local phone-sized viewer (default port 4173)
+  serve        Start the local viewer and annotation queue (default port 4173)
 
 Options:
   --config <path>   Path to mocklens.config.json
