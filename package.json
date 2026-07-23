@@ -19,6 +19,10 @@
     "type": "git",
     "url": "git+https://github.com/yiochen/mocklens.git"
   },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "files": [
     "dist"
   ],
@@ -30,7 +34,11 @@
     "build": "tsc -p tsconfig.build.json",
     "prepack": "npm run build",
     "test": "vitest run",
+    "test:package": "vitest run tests/package.test.ts",
     "ci": "npm run lint && npm run build && npm test",
+    "package:dry-run": "npm pack --dry-run",
+    "release:check": "npm run ci && npm run package:dry-run",
+    "release:verify": "node scripts/verify-release.mjs",
     "mocklens": "npm run build && node dist/cli.js"
   },
   "engines": {

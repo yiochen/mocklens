@@ -38,3 +38,6 @@ jobs:
 
       - name: Test
         run: npm test
+
+      - name: Inspect package contents
+        run: npm run package:dry-run
